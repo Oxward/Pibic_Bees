@@ -80,7 +80,6 @@ public class MainMenuActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.menuRegOcor)
         {
-
             return true;
         }
 
