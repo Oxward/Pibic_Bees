@@ -25,7 +25,8 @@ public class MainMenuActivity extends AppCompatActivity
     private Toolbar toolbar = null;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -82,6 +83,11 @@ public class MainMenuActivity extends AppCompatActivity
         {
             return true;
         }
+        else if (id == R.id.menuExit)
+        {
+
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -96,24 +102,31 @@ public class MainMenuActivity extends AppCompatActivity
         switch (id)
         {
             case R.id.menuRegOcor:
-                try {
-                    Intent i = new Intent(MainMenuActivity.this, RegisterOcActivity.class);
-                    startActivity(i);
+                try
+                {
+                  Intent i = new Intent(MainMenuActivity.this, RegisterOcActivity.class);
+                  startActivity(i);
                 }catch( Exception e)
                 {
-                    Log.d("Exceção", ""+e.getMessage());
+                  Log.d("Exceção", ""+e.getMessage());
                 }
                 break;
 
             case R.id.menuRegLoc:
                 try
                 {
-                    Intent i = new Intent(MainMenuActivity.this, MapsActivity.class);
-                    startActivity(i);
+                  Intent i = new Intent(MainMenuActivity.this, MapsActivity.class);
+                  startActivity(i);
                 } catch(Exception e)
                 {
-                    Log.d("Exceção", ""+e.getMessage());
+                  Log.d("Exceção", ""+e.getMessage());
                 }
+                break;
+
+            case R.id.menuExit:
+                moveTaskToBack(true );
+                android.os.Process.killProcess( android.os.Process.myPid() );
+                System.exit(1 );
                 break;
         }
 
