@@ -29,7 +29,7 @@ public class MarkerTest {
     public MarkerTest() {
     }
 
-    public MarkerTest(String email, float latitude) {
+    public MarkerTest(String email, float latitude, float longitude) {
         this.email = email;
         this.latitude = latitude;
     }
