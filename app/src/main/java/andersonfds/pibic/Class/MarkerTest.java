@@ -19,15 +19,19 @@ public class MarkerTest {
     private String email;
 
     @NonNull
-    @ColumnInfo(name = "ponto")
-    private float ponto;
+    @ColumnInfo(name = "latitude")
+    private float latitude;
+
+    @NonNull
+    @ColumnInfo(name = "longitude")
+    private float longitude;
 
     public MarkerTest() {
     }
 
-    public MarkerTest(String email, float ponto) {
+    public MarkerTest(String email, float latitude) {
         this.email = email;
-        this.ponto = ponto;
+        this.latitude = latitude;
     }
 
     public int getId() {
@@ -46,16 +50,24 @@ public class MarkerTest {
         this.email = email;
     }
 
-    public float getPonto() {
-        return ponto;
+    public float getLatitude() {
+        return latitude;
     }
 
-    public void setPonto(float ponto) {
-        this.ponto = ponto;
+    public void setLatitude(float latitude) {
+        this.latitude = latitude;
+    }
+
+    public float getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(float longitude) {
+        this.longitude = longitude;
     }
 
     @Override
     public String toString() {
-        return "MarkerTest{" + "email='" + email + '\'' + ", ponto=" + ponto + '}';
+        return "MarkerTest{" + "email='" + email + '\'' + ", latitude=" + latitude + '}';
     }
 }
