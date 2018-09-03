@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="andersonfds.pibic.MapsActivity">
+    tools:context="andersonfds.pibic.Activities.MapsActivity">
     <!-- xmlns:map="http://schemas.android.com/apk/res-auto" L2-->
 
 
@@ -20,7 +20,7 @@
         app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="parent"
-        tools:context="andersonfds.pibic.MapsActivity" />
+        tools:context="andersonfds.pibic.Activities.MapsActivity" />
     <!-- xmlns:map="http://schemas.android.com/apk/res-auto" L2-->
 
 </android.support.constraint.ConstraintLayout>
@@ -33,5 +33,5 @@
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="andersonfds.pibic.MapsActivity" />
+    tools:context="andersonfds.pibic.Activities.MapsActivity" />
 -->

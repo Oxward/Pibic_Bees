@@ -1,10 +1,12 @@
-package andersonfds.pibic;
+package andersonfds.pibic.Activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import andersonfds.pibic.R;
 
 public class RegisterOcActivity extends AppCompatActivity
 {

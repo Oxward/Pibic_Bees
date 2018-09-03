@@ -24,7 +24,7 @@
             android:value="AIzaSyAIrtmjxM3sA0wZTTbI_1hwCGAPJEwZd0Q" />
 
         <activity
-            android:name=".MainMenuActivity"
+            android:name=".Activities.MainMenuActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -34,17 +34,17 @@
         </activity>
 
         <activity
-            android:name=".RegisterOcActivity"
+            android:name=".Activities.RegisterOcActivity"
             android:label="Registro de Ocorrências">
         </activity>
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".Activities.MapsActivity"
             android:label="Registrar Localização">
         </activity>
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activities.LoginActivity"
             android:label="@string/title_activity_login">
         </activity>
 

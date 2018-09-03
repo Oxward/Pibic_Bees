@@ -1,4 +1,4 @@
-package andersonfds.pibic;
+package andersonfds.pibic.Activities;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -35,6 +35,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+
+import andersonfds.pibic.MapsRouteTracer.DirectionsParser;
+import andersonfds.pibic.R;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 

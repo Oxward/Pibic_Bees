@@ -1,4 +1,4 @@
-package andersonfds.pibic;
+package andersonfds.pibic.MapsRouteTracer;
 
 import com.google.android.gms.maps.model.LatLng;
 
