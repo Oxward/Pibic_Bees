@@ -1,7 +1,7 @@
-package andersonfds.pibic.Repository;
+package andersonfds.pibic.Database.Repository;
 
 import andersonfds.pibic.Class.MarkerTest;
-import andersonfds.pibic.Interfaces.Interface_MarkerTestDataSource;
+import andersonfds.pibic.Database.Interface.Interface_MarkerTestDataSource;
 import io.reactivex.Flowable;
 
 public class MarkerTestRepository implements Interface_MarkerTestDataSource {

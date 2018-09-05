@@ -1,8 +1,8 @@
 package andersonfds.pibic.Database;
 
 import andersonfds.pibic.Class.MarkerTest;
-import andersonfds.pibic.DAO.MarkerTestDAO;
-import andersonfds.pibic.Interfaces.Interface_MarkerTestDataSource;
+import andersonfds.pibic.Database.DAO.MarkerTestDAO;
+import andersonfds.pibic.Database.Interface.Interface_MarkerTestDataSource;
 import io.reactivex.Flowable;
 
 public class MarkerTestDataSouce implements Interface_MarkerTestDataSource {

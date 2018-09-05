@@ -1,4 +1,4 @@
-<android.support.constraint.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,23 +7,47 @@
     tools:context="andersonfds.pibic.Activities.MapsActivity">
     <!-- xmlns:map="http://schemas.android.com/apk/res-auto" L2-->
 
-
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="383dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="0dp"
         app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="parent"
         tools:context="andersonfds.pibic.Activities.MapsActivity" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/faSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:clickable="true"
+        android:src="@android:drawable/ic_menu_save"
+        app:backgroundTint="@android:color/holo_green_dark"
+        app:rippleColor="@android:color/holo_green_dark" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/faDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/faSave"
+        android:layout_marginBottom="63dp"
+        android:clickable="true"
+        android:src="@android:drawable/ic_menu_delete"
+        app:backgroundTint="@android:color/holo_red_dark" />
     <!-- xmlns:map="http://schemas.android.com/apk/res-auto" L2-->
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
 
 <!--
 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
