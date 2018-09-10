@@ -27,11 +27,11 @@ public class RegisterOcActivity extends AppCompatActivity
         imageView = findViewById( R.id.imgTiraFoto );
     }
 
-    public void buttonPress( View view )
+    public void buttonPress( View view)
     {
         switch ( view.getId() )
         {
-            case R.id.imgTiraFoto:
+            case R.id.btFoto:
                 takePicture(view);
                 break;
 

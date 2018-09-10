@@ -1,32 +1,33 @@
 package andersonfds.pibic.Classes;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 import io.reactivex.annotations.NonNull;
 
-@Entity ( tableName = "mapMarkers" )
-public class Markers
+@Entity( tableName = "mapMarkers")
+public class Marker
 {
 
-    @PrimaryKey( autoGenerate = true )
+    @PrimaryKey(autoGenerate = true)
     private int id;
 
     @NonNull
     private String email;
 
     @NonNull
-    private float latitute;
+    private float latitude;
 
     @NonNull
     private float longitude;
 
-    public Markers(){}
+    public Marker(){}
 
-    public Markers(String email, float latitute, float longitude)
-    {
+    @Ignore
+    public Marker(String email, float latitude, float longitude) {
         this.email = email;
-        this.latitute = latitute;
+        this.latitude = latitude;
         this.longitude = longitude;
     }
 
@@ -39,6 +40,7 @@ public class Markers
     }
 
     public String getEmail() {
+
         return email;
     }
 
@@ -46,12 +48,12 @@ public class Markers
         this.email = email;
     }
 
-    public float getLatitute() {
-        return latitute;
+    public float getLatitude() {
+        return latitude;
     }
 
-    public void setLatitute(float latitute) {
-        this.latitute = latitute;
+    public void setLatitude(float latitude) {
+        this.latitude = latitude;
     }
 
     public float getLongitude() {
@@ -61,4 +63,5 @@ public class Markers
     public void setLongitude(float longitude) {
         this.longitude = longitude;
     }
+
 }
