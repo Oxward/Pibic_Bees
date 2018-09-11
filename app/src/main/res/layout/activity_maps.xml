@@ -23,7 +23,7 @@
         tools:context="andersonfds.pibic.Activities.MapsActivity" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/faSave"
+        android:id="@+id/fabSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -31,18 +31,20 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:clickable="true"
+        android:focusable="true"
         android:src="@android:drawable/ic_menu_save"
         app:backgroundTint="@android:color/holo_green_dark"
         app:rippleColor="@android:color/holo_green_dark" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/faDelete"
+        android:id="@+id/fabDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/faSave"
+        android:layout_alignStart="@+id/fabSave"
         android:layout_marginBottom="63dp"
         android:clickable="true"
+        android:focusable="true"
         android:src="@android:drawable/ic_menu_delete"
         app:backgroundTint="@android:color/holo_red_dark" />
     <!-- xmlns:map="http://schemas.android.com/apk/res-auto" L2-->
