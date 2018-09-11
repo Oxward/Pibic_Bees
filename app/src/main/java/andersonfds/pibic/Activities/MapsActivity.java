@@ -113,25 +113,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void setMapLongClick(final GoogleMap map)
     {
-        map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener()
-        {
-            @Override
-            public void onMapLongClick(LatLng latLng)
-            {
-                Intent edit = new Intent(MapsActivity.this, EditMarkerActivity.class);
-                edit.putExtra("location", latLng);
-                MapsActivity.this.startActivityForResult(edit, EDIT_REQUEST);
+        map.setOnMapLongClickListener(latLng -> {
+            Intent edit = new Intent(MapsActivity.this, EditMarkerActivity.class);
+            edit.putExtra("location", latLng);
+            MapsActivity.this.startActivityForResult(edit, EDIT_REQUEST);
 
-                /*
-                MarkerOptions marker = new MarkerOptions();
-                marker.position(latLng);
+            /*
+            MarkerOptions marker = new MarkerOptions();
+            marker.position(latLng);
 
-                String info = String.format(Locale.getDefault(), "Lat: %1$.5f, Long: %1$.5f",
-                        latLng.latitude, latLng.longitude);
-                map.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
-                        .position(latLng).draggable(true).flat(true).alpha(0.6f).snippet(info));
-                */
-            }
+            String info = String.format(Locale.getDefault(), "Lat: %1$.5f, Long: %1$.5f",
+                    latLng.latitude, latLng.longitude);
+            map.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
+                    .position(latLng).draggable(true).flat(true).alpha(0.6f).snippet(info));
+            */
         });
     }
 
@@ -152,6 +147,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
     }
+
 
     private void markerClick(final GoogleMap map)
     {
