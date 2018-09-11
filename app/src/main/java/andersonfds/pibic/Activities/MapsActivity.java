@@ -1,6 +1,7 @@
 package andersonfds.pibic.Activities;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -12,7 +13,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -37,7 +37,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 import andersonfds.pibic.MapsRouteTracer.DirectionsParser;
 import andersonfds.pibic.R;
@@ -66,24 +65,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         fabAdd = findViewById( R.id.fabSave );
-        fabAdd.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-
-            }
-        });
+        fabAdd.setOnClickListener(v ->
+                Toast.makeText(MapsActivity.this, "Mensagem Save", Toast.LENGTH_SHORT).show());
 
         fabDel = findViewById( R.id.fabDelete );
-        fabDel.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-
-            }
-        });
+        fabDel.setOnClickListener(v -> Toast.makeText(MapsActivity.this, "Mensagem Delete", Toast.LENGTH_SHORT).show());
 
         //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 //.setAction("Action", null).show();
@@ -103,7 +89,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap)
     {
         mMap = googleMap;
-
         // Marcador no CTF
         LatLng ctf = new LatLng(-6.785604, -43.041879);
         mMap.addMarker(new MarkerOptions().position(ctf).title("Otávio"));
@@ -136,15 +121,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Intent edit = new Intent(MapsActivity.this, EditMarkerActivity.class);
                 edit.putExtra("location", latLng);
                 MapsActivity.this.startActivityForResult(edit, EDIT_REQUEST);
+
+                /*
                 MarkerOptions marker = new MarkerOptions();
                 marker.position(latLng);
 
                 String info = String.format(Locale.getDefault(), "Lat: %1$.5f, Long: %1$.5f",
                         latLng.latitude, latLng.longitude);
                 map.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
-                        .position(latLng).draggable(true).flat(true).alpha(0.6f).title("Marcador").snippet(info));
+                        .position(latLng).draggable(true).flat(true).alpha(0.6f).snippet(info));
+                */
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case (EDIT_REQUEST): {
+                if (resultCode == Activity.RESULT_OK) {
+                    MarkerOptions markerOptions = data.getParcelableExtra("marker");
+                    mMap.addMarker(markerOptions.draggable(true)
+                            .flat(true)
+                            .alpha(0.6f)
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
+                    );
+                }
+                break;
+            }
+        }
     }
 
     private void markerClick(final GoogleMap map)
@@ -185,18 +191,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String output = "json";
         return "https://maps.googleapis.com/maps/api/directions/" + output + "?" + param;
     }
-
-    /*private String getRequestedUrl(LatLng orig, LatLng dest)
-    {
-        String origem = "origin="+orig.latitude+ ","+orig.longitude;  //LatLong ponto de origem
-        String destino = "destination="+dest.latitude+ ","+dest.longitude; //LatLong ponto de destino
-        String sensor = "sensor=false";
-        String mode = "mode=driving";
-        String param = origem+ "&" +destino+ "&" +sensor+ "&" +mode;
-        String output = "json";
-        String url = "https://maps.googleapis.com/maps/api/directions/" +output+ "?" +param;
-        return url;
-    }*/
 
     //Traça uma Rota Entre os Pontos Demarcados
     private String requestDirections(String reqUrl)
@@ -299,7 +293,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public class TaskParser extends AsyncTask<String, Void, List<List<HashMap<String, String>>> >
     {
-
         @Override
         protected List<List<HashMap<String, String>>> doInBackground(String... strings)
         {
