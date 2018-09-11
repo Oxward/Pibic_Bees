@@ -1,15 +1,18 @@
 package andersonfds.pibic.Activities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -21,6 +24,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.common.collect.Maps;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,15 +43,18 @@ import java.util.Locale;
 import andersonfds.pibic.MapsRouteTracer.DirectionsParser;
 import andersonfds.pibic.R;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
+{
+
+    private static final int REQUEST_LOCATION_PERMISSION = 1;
+    private static final int EDIT_REQUEST = 1;
+    private final float zoom = 15.0f;
 
     private GoogleMap mMap;
-    private static final int REQUEST_LOCATION_PERMISSION = 1;
+    private FloatingActionButton fabAdd;
+    private FloatingActionButton fabDel;
 
-    private ArrayList<LatLng> listaPontos = new ArrayList<>();
     private ArrayList<Marker> listaMark = new ArrayList<>();
-
-    private final float zoom = 15.0f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -58,6 +65,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        fabAdd = findViewById( R.id.fabSave );
+        fabAdd.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+
+            }
+        });
+
+        fabDel = findViewById( R.id.fabDelete );
+        fabDel.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+
+            }
+        });
+
+        //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                //.setAction("Action", null).show();
     }
 
 
@@ -75,7 +105,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
+        // Marcador no CTF
         LatLng ctf = new LatLng(-6.785604, -43.041879);
         mMap.addMarker(new MarkerOptions().position(ctf).title("Otávio"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ctf, zoom));
@@ -104,22 +134,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onMapLongClick(LatLng latLng)
             {
-                listaPontos.add(latLng);
+                Intent edit = new Intent(MapsActivity.this, EditMarkerActivity.class);
+                edit.putExtra("location", latLng);
+                MapsActivity.this.startActivityForResult(edit, EDIT_REQUEST);
                 MarkerOptions marker = new MarkerOptions();
                 marker.position(latLng);
 
-                //map.addMarker(marker);
                 String info = String.format(Locale.getDefault(), "Lat: %1$.5f, Long: %1$.5f",
                         latLng.latitude, latLng.longitude);
                 map.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
-                        .position(latLng).title("Marcador").snippet(info));
-
-                /*if(listaPontos.size() == 2)
-                {
-                    String url = getRequestedUrl(listaPontos.get(0), listaPontos.get(1));
-                    TaskRequestDirections taskRequestDirections = new TaskRequestDirections();
-                    taskRequestDirections.execute(url);
-                }*/
+                        .position(latLng).draggable(true).flat(true).alpha(0.6f).title("Marcador").snippet(info));
             }
         });
     }
