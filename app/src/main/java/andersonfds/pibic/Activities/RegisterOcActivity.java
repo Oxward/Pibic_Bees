@@ -8,9 +8,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import andersonfds.pibic.R;
 
@@ -68,24 +66,6 @@ public class RegisterOcActivity extends AppCompatActivity
             case R.id.btCanc:
                 break;
 
-        }
-    }
-
-    public void buttonTeste( View v )
-    {
-        if(v.getId() == R.id.btTestar)
-        {
-            EditText txtNome = findViewById(R.id.txtNome);
-            EditText txtCont = findViewById(R.id.txtCont);
-
-            String nome, contato;
-            nome = txtNome.getText().toString();
-            contato = txtCont.getText().toString();
-
-            TextView teste = findViewById(R.id.labelTesteNome);
-            TextView teste2 = findViewById(R.id.labelTesteContato);
-            teste.setText(""+nome);
-            teste2.setText(""+contato);
         }
     }
 
