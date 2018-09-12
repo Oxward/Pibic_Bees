@@ -21,10 +21,10 @@ public class DirectionsParser
      */
     public List<List<HashMap<String, String>>> parse(JSONObject jObject) {
 
-        ArrayList<List<HashMap<String, String>>> routes = new ArrayList<List<HashMap<String, String>>>();
-        JSONArray jRoutes = null;
-        JSONArray jLegs = null;
-        JSONArray jSteps = null;
+        ArrayList<List<HashMap<String, String>>> routes = new ArrayList<>();
+        JSONArray jRoutes;
+        JSONArray jLegs;
+        JSONArray jSteps;
 
         try {
 

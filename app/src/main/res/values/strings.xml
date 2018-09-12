@@ -27,4 +27,16 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="descricao">Descrição</string>
     <string name="salvar">Salvar</string>
+    <string name="nome">Nome</string>
+    <string name="contato">Contato</string>
+    <string name="whatsapp">Whatsapp</string>
+    <string name="informe_seu_nome">Informe seu Nome</string>
+    <string name="telefone_para_contato">Telefone para Contato</string>
+    <string name="whatsapp_para_contato">Whatsapp para Contato</string>
+    <string name="todo">TODO</string>
+    <string name="enviar">Enviar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="testar">Testar</string>
+    <string name="tirar_foto">Tirar Foto</string>
+    <string name="galeria">Galeria</string>
 </resources>

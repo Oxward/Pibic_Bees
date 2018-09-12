@@ -10,8 +10,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.nio.file.Files;
-
 import andersonfds.pibic.R;
 
 public class RegisterOcActivity extends AppCompatActivity
@@ -19,6 +17,7 @@ public class RegisterOcActivity extends AppCompatActivity
 
     private ImageView imageView;
     public static final int REQUEST_IMAGE_CAPTURE = 101;
+    public static final int PICK_IMAGE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

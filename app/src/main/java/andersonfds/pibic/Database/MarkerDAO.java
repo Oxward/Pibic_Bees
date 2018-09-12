@@ -25,7 +25,7 @@ public interface MarkerDAO
     @Delete
     void deleteMarker( Marker m );
 
-    // @Query( "DELETE FROM mapMarkersLocation WHERE email = :email AND lat = :lat AND lon = :lon" )
+    // @Query( "DELETE FROM mapMarkers WHERE email = :email AND latitude = :lat AND longitude = :lon" )
     // void deleteMarker( String email, float lat, float lon );
 
 }
