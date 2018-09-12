@@ -12,9 +12,13 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
+    <!-- Gallery access permission -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <!-- Camera Feature -->
     <uses-feature
-        android:name="android.hardware.Camera"
+        android:name="android.hardware.camera2"
         android:required="true" />
 
     <application
