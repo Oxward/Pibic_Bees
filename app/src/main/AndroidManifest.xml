@@ -49,9 +49,6 @@
             android:name=".Activities.MapsActivity"
             android:label="Registrar Localização" />
         <activity
-            android:name=".Activities.LoginActivity"
-            android:label="@string/title_activity_login" />
-        <activity
             android:name=".Activities.EditMarkerActivity"
             android:label="Editar Título dos Marcadores" />
     </application>
