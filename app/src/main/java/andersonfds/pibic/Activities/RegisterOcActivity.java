@@ -47,7 +47,8 @@ public class RegisterOcActivity extends AppCompatActivity {
         imageView = findViewById(R.id.imgTiraFoto);
         lbTest = findViewById(R.id.lbTest);
         btEnv = findViewById(R.id.btEnv);
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION))
+        {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
         } else
           {
@@ -61,11 +62,9 @@ public class RegisterOcActivity extends AppCompatActivity {
             btEnv.setOnClickListener(view ->
             {
               if (ActivityCompat.checkSelfPermission(RegisterOcActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) !=
-                  PackageManager.PERMISSION_GRANTED &&
-                  ActivityCompat.checkSelfPermission(RegisterOcActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) !=
                   PackageManager.PERMISSION_GRANTED)
                 {
-                    Toast.makeText(this, "Certifique-se de aceitar as permissões!", Toast.LENGTH_SHORT).show();
+                  Toast.makeText(this, "Certifique-se de aceitar as permissões!", Toast.LENGTH_SHORT).show();
                   return;
                 }
                 mFusedLocationProviderClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
