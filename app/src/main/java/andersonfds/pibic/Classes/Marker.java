@@ -1,5 +1,6 @@
 package andersonfds.pibic.Classes;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
@@ -11,15 +12,19 @@ public class Marker
 {
 
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "idMarker", typeAffinity = ColumnInfo.INTEGER)
     private int id;
 
     @NonNull
+    @ColumnInfo(name = "emailMarker", typeAffinity = ColumnInfo.TEXT)
     private String email;
 
     @NonNull
+    @ColumnInfo(name = "latMarker", typeAffinity = ColumnInfo.REAL)
     private float latitude;
 
     @NonNull
+    @ColumnInfo(name = "lonMarker", typeAffinity = ColumnInfo.REAL)
     private float longitude;
 
     public Marker(){}

@@ -14,7 +14,7 @@ public class Task implements Runnable
         {
           try
           {
-            Thread.sleep(1500);
+              Thread.sleep(3000);
           } catch (InterruptedException ieE)
           {
               Log.d(TAG, "run: Task Error");
