@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Location;
-import android.location.LocationListener;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.MediaStore;
@@ -14,21 +13,17 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.gms.common.api.GoogleApi;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.GoogleMap;
 
-import java.nio.file.Files;
-
+import andersonfds.pibic.Classes.Task;
 import andersonfds.pibic.R;
 
 public class RegisterOcActivity extends AppCompatActivity {
@@ -70,10 +65,12 @@ public class RegisterOcActivity extends AppCompatActivity {
                   ActivityCompat.checkSelfPermission(RegisterOcActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) !=
                   PackageManager.PERMISSION_GRANTED)
                 {
-
+                    Toast.makeText(this, "Certifique-se de aceitar as permissões!", Toast.LENGTH_SHORT).show();
                   return;
                 }
                 mFusedLocationProviderClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
+                //new Thread( new Task() ).start();
+                //mFusedLocationProviderClient.removeLocationUpdates(mLocationCallback);
             });
         }
 

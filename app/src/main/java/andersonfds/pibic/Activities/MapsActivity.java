@@ -239,8 +239,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     class Task implements Runnable {
         @Override
-        public void run() {
-            for (int i = 0; i < 2; i++) {
+        public void run()
+        {
+            for (int i = 0; i < 2; i++)
+            {
                 try {
                     Thread.sleep(1500);
                 } catch (InterruptedException ieE) {
