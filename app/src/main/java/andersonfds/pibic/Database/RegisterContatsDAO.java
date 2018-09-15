@@ -18,7 +18,7 @@ public interface RegisterContatsDAO {
     @Query("SELECT * FROM contacts")
     List<RegisterContacts> selectContacts();
 
-    @Query("SELECT * FROM contacts WHERE nome = :nome")
+    @Query("SELECT * FROM contacts WHERE idRegCon = :nome")
     List<RegisterContacts> selecContacts(String nome);
 
     @Delete

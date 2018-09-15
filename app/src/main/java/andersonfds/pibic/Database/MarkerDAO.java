@@ -19,7 +19,7 @@ public interface MarkerDAO
     @Query( "SELECT * FROM mapMarkers" )
     List<Marker> selectMarkers();
 
-    @Query( "SELECT * FROM mapMarkers WHERE email = :email" )
+    @Query("SELECT * FROM mapMarkers WHERE emailMarker = :email")
     List<Marker> selectMarkers( String email );
 
     @Delete
