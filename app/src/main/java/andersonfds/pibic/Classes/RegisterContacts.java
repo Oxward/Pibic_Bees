@@ -32,31 +32,38 @@ public class RegisterContacts {
     @ColumnInfo(name = "locLonRegCon", typeAffinity = ColumnInfo.REAL)
     private float locLon;
 
+    @NonNull
+    @ColumnInfo(name = "imgRegCon", typeAffinity = ColumnInfo.BLOB)
+    private byte[] img;
+
     public RegisterContacts() {
     }
 
     @Ignore
-    public RegisterContacts(String nome, float locLat, float locLon) {
+    public RegisterContacts(String nome, float locLat, float locLon, byte[] img) {
         this.nome = nome;
         this.locLat = locLat;
         this.locLon = locLon;
+        this.img = img;
     }
 
     @Ignore
-    public RegisterContacts(String nome, long numTel, float locLat, float locLon) {
+    public RegisterContacts(String nome, long numTel, float locLat, float locLon, byte[] img) {
         this.nome = nome;
         this.numTel = numTel;
         this.locLat = locLat;
         this.locLon = locLon;
+        this.img = img;
     }
 
     @Ignore
-    public RegisterContacts(String nome, long numTel, long numWpp, float locLat, float locLon) {
+    public RegisterContacts(String nome, long numTel, long numWpp, float locLat, float locLon, byte[] img) {
         this.nome = nome;
         this.numTel = numTel;
         this.numWpp = numWpp;
         this.locLat = locLat;
         this.locLon = locLon;
+        this.img = img;
     }
 
     public int getId() {
@@ -107,4 +114,11 @@ public class RegisterContacts {
         this.locLon = locLon;
     }
 
+    public byte[] getImg() {
+        return img;
+    }
+
+    public void setImg(byte[] img) {
+        this.img = img;
+    }
 }
