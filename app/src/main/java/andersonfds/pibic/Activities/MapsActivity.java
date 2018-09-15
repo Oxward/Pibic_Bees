@@ -1,11 +1,14 @@
 package andersonfds.pibic.Activities;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
@@ -34,7 +37,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 import andersonfds.pibic.MapsRouteTracer.DirectionsParser;
 import andersonfds.pibic.R;
@@ -42,13 +44,15 @@ import andersonfds.pibic.R;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 {
 
-    private GoogleMap mMap;
     private static final int REQUEST_LOCATION_PERMISSION = 1;
-
-    private ArrayList<LatLng> listaPontos = new ArrayList<>();
-    private ArrayList<Marker> listaMark = new ArrayList<>();
-
+    private static final int EDIT_REQUEST = 1;
     private final float zoom = 15.0f;
+
+    private GoogleMap mMap;
+    private FloatingActionButton fabAdd;
+    private FloatingActionButton fabDel;
+
+    private ArrayList<Marker> listaMark = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -59,6 +63,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        fabAdd = findViewById( R.id.fabSave );
+        fabAdd.setOnClickListener(v ->
+                Toast.makeText(MapsActivity.this, "Mensagem Save", Toast.LENGTH_SHORT).show());
+
+        fabDel = findViewById( R.id.fabDelete );
+        fabDel.setOnClickListener(v -> Toast.makeText(MapsActivity.this, "Mensagem Delete", Toast.LENGTH_SHORT).show());
+
+        //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                //.setAction("Action", null).show();
     }
 
 
@@ -75,8 +89,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap)
     {
         mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
+        // Marcador no CTF
         LatLng ctf = new LatLng(-6.785604, -43.041879);
         mMap.addMarker(new MarkerOptions().position(ctf).title("Otávio"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ctf, zoom));
@@ -100,30 +113,41 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void setMapLongClick(final GoogleMap map)
     {
-        map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener()
-        {
-            @Override
-            public void onMapLongClick(LatLng latLng)
-            {
-                listaPontos.add(latLng);
-                MarkerOptions marker = new MarkerOptions();
-                marker.position(latLng);
+        map.setOnMapLongClickListener(latLng -> {
+            Intent edit = new Intent(MapsActivity.this, EditMarkerActivity.class);
+            edit.putExtra("location", latLng);
+            MapsActivity.this.startActivityForResult(edit, EDIT_REQUEST);
 
-                //map.addMarker(marker);
-                String info = String.format(Locale.getDefault(), "Lat: %1$.5f, Long: %1$.5f",
-                        latLng.latitude, latLng.longitude);
-                map.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
-                        .position(latLng).title("Marcador").snippet(info));
+            /*
+            MarkerOptions marker = new MarkerOptions();
+            marker.position(latLng);
 
-                /*if(listaPontos.size() == 2)
-                {
-                    String url = getRequestedUrl(listaPontos.get(0), listaPontos.get(1));
-                    TaskRequestDirections taskRequestDirections = new TaskRequestDirections();
-                    taskRequestDirections.execute(url);
-                }*/
-            }
+            String info = String.format(Locale.getDefault(), "Lat: %1$.5f, Long: %1$.5f",
+                    latLng.latitude, latLng.longitude);
+            map.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
+                    .position(latLng).draggable(true).flat(true).alpha(0.6f).snippet(info));
+            */
         });
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case (EDIT_REQUEST): {
+                if (resultCode == Activity.RESULT_OK) {
+                    MarkerOptions markerOptions = data.getParcelableExtra("marker");
+                    mMap.addMarker(markerOptions.draggable(true)
+                            .flat(true)
+                            .alpha(0.6f)
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
+                    );
+                }
+                break;
+            }
+        }
+    }
+
 
     private void markerClick(final GoogleMap map)
     {
@@ -152,49 +176,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
-    class Task implements Runnable
-    {
-        @Override
-        public void run()
-        {
-            for (int i = 0; i < 2; i++)
-            {
-                final int value = i;
-                try
-                {
-                  Thread.sleep(1500);
-                }catch(InterruptedException ieE)
-                  {
-                    Toast.makeText(getApplicationContext(), "Deu Pau.", Toast.LENGTH_LONG);
-                  }
-            }
-        }
-    }
-
-    /*private String getRequestedUrl(LatLng orig, LatLng dest)
-    {
-        String origem = "origin="+orig.latitude+ ","+orig.longitude;  //LatLong ponto de origem
-        String destino = "destination="+dest.latitude+ ","+dest.longitude; //LatLong ponto de destino
-        String sensor = "sensor=false";
-        String mode = "mode=driving";
-        String param = origem+ "&" +destino+ "&" +sensor+ "&" +mode;
-        String output = "json";
-        String url = "https://maps.googleapis.com/maps/api/directions/" +output+ "?" +param;
-        return url;
-    }*/
-
-    private String getRequestedUrl(Marker orig, Marker dest)
-    {
+    private String getRequestedUrl(Marker orig, Marker dest) {
         Log.d("getRequestedUrl", "Teste de LatLong orig: "+orig.getPosition().latitude+ ", "+orig.getPosition().longitude);
         Log.d("getRequestedUrl", "Teste de LatLong dest: "+dest.getPosition().latitude+", "+dest.getPosition().longitude);
         String origem = "origin="+orig.getPosition().latitude+","+orig.getPosition().longitude;  //LatLong ponto de origem
         String destino = "destination="+dest.getPosition().latitude+","+dest.getPosition().longitude; //LatLong ponto de destino
         String sensor = "sensor=false";
         String mode = "mode=driving";
-        String param = origem+ "&" +destino+ "&" +sensor+ "&" +mode;
+        String param = origem + "&" + destino + "&" + sensor + "&" + mode;
         String output = "json";
-        String url = "https://maps.googleapis.com/maps/api/directions/" +output+ "?" +param;
-        return url;
+        return "https://maps.googleapis.com/maps/api/directions/" + output + "?" + param;
     }
 
     //Traça uma Rota Entre os Pontos Demarcados
@@ -214,8 +205,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
-            StringBuffer stringBuffer = new StringBuffer();
-            String linha = "";
+            StringBuilder stringBuffer = new StringBuilder();
+            String linha;
 
             while( (linha = bufferedReader.readLine()) != null)
             {
@@ -240,9 +231,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     e.getStackTrace();
                 }
 
+            assert httpURLConnection != null;
             httpURLConnection.disconnect();
         }
         return respString;
+    }
+
+    class Task implements Runnable {
+        @Override
+        public void run() {
+            for (int i = 0; i < 2; i++) {
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException ieE) {
+                    Toast.makeText(getApplicationContext(), "Deu Pau.", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
     }
 
     //Ativa a Localização Atual(GPS)
@@ -266,7 +271,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         @Override
         protected String doInBackground(String... strings)
         {
-            String responseString = "";
+            String responseString;
             responseString = requestDirections(strings[0]);
 
             return responseString;
@@ -284,11 +289,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public class TaskParser extends AsyncTask<String, Void, List<List<HashMap<String, String>>> >
     {
-
         @Override
         protected List<List<HashMap<String, String>>> doInBackground(String... strings)
         {
-            JSONObject jsonObject = null;
+            JSONObject jsonObject;
             List<List<HashMap<String, String>>> routes = null;
             try
             {
@@ -307,7 +311,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         protected void onPostExecute(List<List<HashMap<String, String>>> lists)
         {
             //mostra as rotas no mapa
-            ArrayList pontos = null;
+            ArrayList pontos;
             PolylineOptions polylineOptions = null;
 
             for(List<HashMap<String, String>> caminho : lists)

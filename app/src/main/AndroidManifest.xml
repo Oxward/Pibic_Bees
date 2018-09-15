@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="andersonfds.pibic">
 
     <!-- Real-Time location permissions -->
@@ -12,9 +11,13 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
+    <!-- Gallery access permission -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <!-- Camera Feature -->
     <uses-feature
-        android:name="android.hardware.Camera"
+        android:name="android.hardware.camera2"
         android:required="true" />
 
     <application
@@ -34,6 +37,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -44,8 +48,11 @@
             android:name=".Activities.MapsActivity"
             android:label="Registrar Localização" />
         <activity
+            android:name=".Activities.EditMarkerActivity"
+            android:label="Editar Título dos Marcadores" />
+        <activity
             android:name=".Activities.LoginActivity"
-            android:label="@string/title_activity_login" />
+            android:label="@string/title_activity_login"></activity>
     </application>
 
 </manifest>

@@ -40,7 +40,6 @@ public class Marker
     }
 
     public String getEmail() {
-
         return email;
     }
 
