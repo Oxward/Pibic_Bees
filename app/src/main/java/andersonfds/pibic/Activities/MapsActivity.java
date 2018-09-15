@@ -39,7 +39,8 @@ import java.util.Locale;
 import andersonfds.pibic.MapsRouteTracer.DirectionsParser;
 import andersonfds.pibic.R;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
+{
 
     private GoogleMap mMap;
     private static final int REQUEST_LOCATION_PERMISSION = 1;
