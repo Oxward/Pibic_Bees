@@ -14,14 +14,17 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 
 import andersonfds.pibic.R;
 
@@ -39,6 +42,8 @@ public class RegisterOcActivity extends AppCompatActivity {
     private TextView lbTest;
     private Button btEnv;
     private Button btGal;
+
+    private LatLng location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,19 +106,12 @@ public class RegisterOcActivity extends AppCompatActivity {
                 if (grantResults.length > 0) {
                     if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
                     {
-                        // TODO: Consider calling
-                        //    ActivityCompat#requestPermissions
-                        // here to request the missing permissions, and then overriding
-                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                        //                                          int[] grantResults)
-                        // to handle the case where the user grants the permission. See the documentation
-                        // for ActivityCompat#requestPermissions for more details.
-                        return;
+                        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
                     }
                     else
                       if( grantResults[0] == PackageManager.PERMISSION_DENIED)
                       {
-
+                          Toast.makeText(getApplicationContext(), "Permissões não aceitas.", Toast.LENGTH_SHORT).show();
                       }
                 }
             }
@@ -132,12 +130,22 @@ public class RegisterOcActivity extends AppCompatActivity {
                 break;
 
             case R.id.btEnv:
+                saveData();
                 break;
 
             case R.id.btCanc:
                 break;
 
         }
+    }
+
+    private void saveData() {
+        EditText txtNome = findViewById(R.id.txtNome);
+        EditText txtCont = findViewById(R.id.txtCont);
+        EditText txtWpp = findViewById(R.id.txtWpp);
+        ImageView imgTiraFoto = findViewById(R.id.imgTiraFoto);
+
+
     }
 
     public void takePicture( View view )
@@ -164,7 +172,7 @@ public class RegisterOcActivity extends AppCompatActivity {
         mLocationRequest.setSmallestDisplacement(10);
     }
 
-    private void buildLocationCallback()
+    private LatLng buildLocationCallback()
     {
         mLocationCallback = new LocationCallback()
         {
@@ -173,10 +181,14 @@ public class RegisterOcActivity extends AppCompatActivity {
             {
                 for ( Location l : locationResult.getLocations() )
                 {
+                    //lbTest.setText(String.valueOf(l.getLatitude() + "/" + String.valueOf(l.getLongitude())));
                     lbTest.setText(String.valueOf(l.getLatitude() + "/" + String.valueOf(l.getLongitude())));
+                    location = new LatLng(l.getLatitude(), l.getLongitude());
                 }
             }
         };
+
+        return location;
     }
 
 }
