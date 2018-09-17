@@ -15,10 +15,13 @@ import android.view.MenuItem;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
+import andersonfds.pibic.Database.ApplicationDatabase;
 import andersonfds.pibic.R;
 
 public class MainMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public static ApplicationDatabase applicationDatabase;
 
     private DrawerLayout drawer;
     private NavigationView navigationView;
@@ -40,6 +43,8 @@ public class MainMenuActivity extends AppCompatActivity
 
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
     }
 
     @Override

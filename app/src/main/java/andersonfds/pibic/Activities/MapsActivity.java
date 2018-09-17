@@ -124,7 +124,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             String info = String.format(Locale.getDefault(), "Lat: %1$.5f, Long: %1$.5f",
                     latLng.latitude, latLng.longitude);
-            map.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
+            map.insertMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
                     .position(latLng).draggable(true).flat(true).alpha(0.6f).snippet(info));
             */
         });

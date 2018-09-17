@@ -1,5 +1,6 @@
 package andersonfds.pibic.Database;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -13,13 +14,13 @@ import andersonfds.pibic.Classes.RegisterContacts;
 public interface RegisterContactsDAO {
 
     @Insert
-    void registerContacs(RegisterContacts rc);
+    void insertContacs(RegisterContacts rc);
 
     @Query("SELECT * FROM contacts")
-    List<RegisterContacts> selectContacts();
+    LiveData<List<RegisterContacts>> selectAllContacts();
 
     @Query("SELECT * FROM contacts WHERE idRegCon = :nome")
-    List<RegisterContacts> selecContacts(String nome);
+    LiveData<List<RegisterContacts>> selectContacts(String nome);
 
     @Delete
     void deleteContact(RegisterContacts rc);

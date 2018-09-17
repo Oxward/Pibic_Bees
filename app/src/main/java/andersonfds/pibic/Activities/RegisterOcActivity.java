@@ -26,6 +26,7 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 
+import andersonfds.pibic.Classes.RegisterContacts;
 import andersonfds.pibic.R;
 
 public class RegisterOcActivity extends AppCompatActivity {
@@ -143,7 +144,13 @@ public class RegisterOcActivity extends AppCompatActivity {
         EditText txtNome = findViewById(R.id.txtNome);
         EditText txtCont = findViewById(R.id.txtCont);
         EditText txtWpp = findViewById(R.id.txtWpp);
-        ImageView imgTiraFoto = findViewById(R.id.imgTiraFoto);
+        //ImageView imgTiraFoto = findViewById(R.id.imgTiraFoto);
+
+        String nome = txtNome.getText().toString();
+        long cont = Long.parseLong(txtCont.getText().toString());
+        long wpp = Long.parseLong(txtWpp.getText().toString());
+
+        RegisterContacts registerContacts = new RegisterContacts(nome, cont, wpp, location.latitude, location.longitude);
 
 
     }
@@ -172,7 +179,7 @@ public class RegisterOcActivity extends AppCompatActivity {
         mLocationRequest.setSmallestDisplacement(10);
     }
 
-    private LatLng buildLocationCallback()
+    private void buildLocationCallback()
     {
         mLocationCallback = new LocationCallback()
         {
@@ -187,8 +194,6 @@ public class RegisterOcActivity extends AppCompatActivity {
                 }
             }
         };
-
-        return location;
     }
 
 }

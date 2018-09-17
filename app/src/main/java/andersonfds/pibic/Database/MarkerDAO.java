@@ -15,13 +15,13 @@ public interface MarkerDAO
 {
 
     @Insert
-    void addMarker( Marker m );
+    void insertMarker(Marker m);
 
     @Query( "SELECT * FROM mapMarkers" )
-    LiveData<List<Marker>> selectMarkers();
+    LiveData<List<Marker>> selectAllMarkers();
 
     @Query("SELECT * FROM mapMarkers WHERE emailMarker = :email")
-    LiveData<List<Marker>> selectMarkers(String email);
+    LiveData<List<Marker>> selectMarkersByEmail(String email);
 
     @Delete
     void deleteMarker( Marker m );

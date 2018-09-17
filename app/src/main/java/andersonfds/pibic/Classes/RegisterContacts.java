@@ -26,11 +26,11 @@ public class RegisterContacts {
 
     @NonNull
     @ColumnInfo(name = "locLatRegCon", typeAffinity = ColumnInfo.REAL)
-    private float locLat;
+    private double locLat;
 
     @NonNull
     @ColumnInfo(name = "locLonRegCon", typeAffinity = ColumnInfo.REAL)
-    private float locLon;
+    private double locLon;
 
     @NonNull
     @ColumnInfo(name = "imgRegCon", typeAffinity = ColumnInfo.BLOB)
@@ -45,6 +45,15 @@ public class RegisterContacts {
         this.locLat = locLat;
         this.locLon = locLon;
         this.img = img;
+    }
+
+    @Ignore
+    public RegisterContacts(String nome, long numTel, long numWpp, double locLat, double locLon) {
+        this.nome = nome;
+        this.numTel = numTel;
+        this.numWpp = numWpp;
+        this.locLat = locLat;
+        this.locLon = locLon;
     }
 
     @Ignore
@@ -98,7 +107,7 @@ public class RegisterContacts {
         this.numWpp = numWpp;
     }
 
-    public float getLocLat() {
+    public double getLocLat() {
         return locLat;
     }
 
@@ -106,7 +115,7 @@ public class RegisterContacts {
         this.locLat = locLat;
     }
 
-    public float getLocLon() {
+    public double getLocLon() {
         return locLon;
     }
 
