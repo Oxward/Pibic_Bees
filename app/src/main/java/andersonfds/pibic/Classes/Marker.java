@@ -7,7 +7,7 @@ import android.arch.persistence.room.PrimaryKey;
 
 import io.reactivex.annotations.NonNull;
 
-@Entity( tableName = "mapMarkers")
+@Entity(tableName = "mapMarkers")
 public class Marker
 {
 
