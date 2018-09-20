@@ -8,23 +8,23 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
-import andersonfds.pibic.Classes.Marker;
+import andersonfds.pibic.Classes.Markers;
 
 @Dao
-public interface MarkerDAO
+public interface Marker_DAO
 {
 
     @Insert
-    void insertMarker(Marker m);
+    void insertMarker(Markers m);
 
-    @Query( "SELECT * FROM mapMarkers" )
-    LiveData<List<Marker>> selectAllMarkers();
+    @Query("SELECT * FROM mapMarkers")
+    LiveData<List<Markers>> selectAllMarkers();
 
     @Query("SELECT * FROM mapMarkers WHERE emailMarker = :email")
-    LiveData<List<Marker>> selectMarkersByEmail(String email);
+    LiveData<List<Markers>> selectMarkersByEmail(String email);
 
     @Delete
-    void deleteMarker( Marker m );
+    void deleteMarker(Markers m);
 
     // @Query( "DELETE FROM mapMarkers WHERE email = :email AND latitude = :lat AND longitude = :lon" )
     // void deleteMarker( String email, float lat, float lon );

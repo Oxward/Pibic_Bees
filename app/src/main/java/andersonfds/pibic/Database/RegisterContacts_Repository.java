@@ -8,13 +8,13 @@ import java.util.List;
 
 import andersonfds.pibic.Classes.RegisterContacts;
 
-public class RegisterContactsRepository {
+public class RegisterContacts_Repository {
 
-    private RegisterContactsDAO registerContactsDAO;
+    private RegisterContacts_DAO registerContactsDAO;
     private LiveData<List<RegisterContacts>> allContacts;
 
     //Administra o BD e inicializa as variáveis
-    public RegisterContactsRepository(Application application) {
+    public RegisterContacts_Repository(Application application) {
         ApplicationDatabase applicationDatabase = ApplicationDatabase.getDatabase(application);
         registerContactsDAO = applicationDatabase.regConDAO();
         allContacts = registerContactsDAO.selectAllContacts();
@@ -25,21 +25,21 @@ public class RegisterContactsRepository {
         return allContacts;
     }
 
-    public void insert(RegisterContacts registerContacts) {
+    public void insertContact(RegisterContacts registerContacts) {
         new insertAsyncTask(registerContactsDAO).execute(registerContacts);
     }
 
     private static class insertAsyncTask extends AsyncTask<RegisterContacts, Void, Void> {
-        private RegisterContactsDAO mAsyncTaskDAO;
+        private RegisterContacts_DAO mAsyncTaskRegisterContactsDAO;
 
-        insertAsyncTask(RegisterContactsDAO registerContactsDAO) {
-            mAsyncTaskDAO = registerContactsDAO;
+        insertAsyncTask(RegisterContacts_DAO registerContactsDAO) {
+            mAsyncTaskRegisterContactsDAO = registerContactsDAO;
         }
 
 
         @Override
         protected Void doInBackground(RegisterContacts... registerContacts) {
-            mAsyncTaskDAO.insertContacs(registerContacts[0]);
+            mAsyncTaskRegisterContactsDAO.insertContacs(registerContacts[0]);
             return null;
         }
     }

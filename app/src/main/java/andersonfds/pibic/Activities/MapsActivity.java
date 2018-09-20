@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import andersonfds.pibic.Database.RegisterContacts_ViewModel;
 import andersonfds.pibic.MapsRouteTracer.DirectionsParser;
 import andersonfds.pibic.R;
 
@@ -53,6 +54,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private FloatingActionButton fabDel;
 
     private ArrayList<Marker> listaMark = new ArrayList<>();
+
+    private RegisterContacts_ViewModel registerContactsViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -73,6 +76,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 //.setAction("Action", null).show();
+
+
     }
 
 
@@ -95,6 +100,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ctf, zoom));
         setMapLongClick(mMap);
         markerClick(mMap);
+
     }
 
     @Override
@@ -151,27 +157,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void markerClick(final GoogleMap map)
     {
-        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener()
-        {
-            @Override
-            public boolean onMarkerClick(Marker marker)
-            {
-                Log.d("markerClick", "Entrou no evento. Lista de Pontos: "+listaMark.size());
-                listaMark.add(marker);
-                if (listaMark.size() % 2 == 0)
-                {
-                    String url = getRequestedUrl(listaMark.get(0), listaMark.get(1));
-                    new TaskRequestDirections().execute(url);
-                    Log.d("markerClick", "Traçou a rota. Lista de Pontos: "+listaMark.size());
-                    new Thread( new Task()).start();
-                    listaMark.clear();
-                    return true;
-                }
-                else
-                {
-                    Log.d("markerClick", "Fez nada. Lista de Pontos: "+listaMark.size());
-                    return false;
-                }
+        map.setOnMarkerClickListener(marker -> {
+            Log.d("markerClick", "Entrou no evento. Lista de Pontos: " + listaMark.size());
+            listaMark.add(marker);
+            if (listaMark.size() % 2 == 0) {
+                String url = getRequestedUrl(listaMark.get(0), listaMark.get(1));
+                new TaskRequestDirections().execute(url);
+                Log.d("markerClick", "Traçou a rota. Lista de Pontos: " + listaMark.size());
+                new Thread(new Task()).start();
+                listaMark.clear();
+                return true;
+            } else {
+                Log.d("markerClick", "Fez nada. Lista de Pontos: " + listaMark.size());
+                return false;
             }
         });
     }

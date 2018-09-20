@@ -2,6 +2,10 @@ apply plugin: 'com.android.application'
 apply plugin: 'androidx.navigation.safeargs'
 
 android {
+    signingConfigs {
+        config {
+        }
+    }
     compileSdkVersion 27
     defaultConfig {
         applicationId "andersonfds.pibic"
@@ -16,6 +20,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            signingConfig signingConfigs.config
+        }
     }
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
@@ -25,12 +32,10 @@ android {
 }
 
 dependencies {
-
     def room_version = "1.1.1"
     def paging_version = "1.0.0"
     def nav_version = "1.0.0-alpha05"
     def work_version = "1.0.0-alpha08"
-
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:support-v4:27.1.1'
@@ -100,5 +105,4 @@ dependencies {
 
     //Work Manager Test helpers
     androidTestImplementation "android.arch.work:work-testing:$work_version"
-
 }

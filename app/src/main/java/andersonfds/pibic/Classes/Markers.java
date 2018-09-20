@@ -8,12 +8,16 @@ import android.arch.persistence.room.PrimaryKey;
 import io.reactivex.annotations.NonNull;
 
 @Entity(tableName = "mapMarkers")
-public class Marker
+public class Markers
 {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "idMarker", typeAffinity = ColumnInfo.INTEGER)
     private int id;
+
+    @NonNull
+    @ColumnInfo(name = "nameMarker", typeAffinity = ColumnInfo.TEXT)
+    private String nome;
 
     @NonNull
     @ColumnInfo(name = "emailMarker", typeAffinity = ColumnInfo.TEXT)
@@ -27,11 +31,13 @@ public class Marker
     @ColumnInfo(name = "lonMarker", typeAffinity = ColumnInfo.REAL)
     private float longitude;
 
-    public Marker(){}
+    public Markers() {
+    }
 
     @Ignore
-    public Marker(String email, float latitude, float longitude) {
+    public Markers(String email, String nome, float latitude, float longitude) {
         this.email = email;
+        this.nome = nome;
         this.latitude = latitude;
         this.longitude = longitude;
     }
@@ -50,6 +56,14 @@ public class Marker
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public float getLatitude() {

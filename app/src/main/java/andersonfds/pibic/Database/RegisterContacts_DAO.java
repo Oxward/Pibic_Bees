@@ -11,7 +11,7 @@ import java.util.List;
 import andersonfds.pibic.Classes.RegisterContacts;
 
 @Dao
-public interface RegisterContactsDAO {
+public interface RegisterContacts_DAO {
 
     @Insert
     void insertContacs(RegisterContacts rc);
