@@ -13,7 +13,7 @@ import static andersonfds.pibic.Database.ApplicationDatabase.DATABASE_VERSION;
 @Database(entities = {Markers.class, RegisterContacts.class}, exportSchema = false, version = DATABASE_VERSION)
 public abstract class ApplicationDatabase extends RoomDatabase {
 
-    protected static final int DATABASE_VERSION = 1;
+    static final int DATABASE_VERSION = 1;
     private static volatile ApplicationDatabase INSTANCE;
 
     static ApplicationDatabase getDatabase(final Context context) {

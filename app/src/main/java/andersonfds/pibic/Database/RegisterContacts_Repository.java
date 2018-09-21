@@ -39,7 +39,7 @@ public class RegisterContacts_Repository {
 
         @Override
         protected Void doInBackground(RegisterContacts... registerContacts) {
-            mAsyncTaskRegisterContactsDAO.insertContacs(registerContacts[0]);
+            mAsyncTaskRegisterContactsDAO.insertContacts(registerContacts[0]);
             return null;
         }
     }

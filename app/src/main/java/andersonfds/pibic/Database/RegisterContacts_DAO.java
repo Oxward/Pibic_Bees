@@ -14,7 +14,7 @@ import andersonfds.pibic.Classes.RegisterContacts;
 public interface RegisterContacts_DAO {
 
     @Insert
-    void insertContacs(RegisterContacts rc);
+    void insertContacts(RegisterContacts rc);
 
     @Query("SELECT * FROM contacts")
     LiveData<List<RegisterContacts>> selectAllContacts();
