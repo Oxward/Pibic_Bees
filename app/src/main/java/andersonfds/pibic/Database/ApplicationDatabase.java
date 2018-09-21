@@ -21,7 +21,8 @@ public abstract class ApplicationDatabase extends RoomDatabase {
             synchronized (ApplicationDatabase.class) {
                 if (INSTANCE == null) {
                     //BD criado aqui
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), ApplicationDatabase.class, "pibees_project").build();
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                            ApplicationDatabase.class, "pibees_project").build();
                 }
             }
         }
