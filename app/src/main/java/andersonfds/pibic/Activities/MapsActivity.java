@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import andersonfds.pibic.Database.Markers_ViewModel;
 import andersonfds.pibic.Database.RegisterContacts_ViewModel;
 import andersonfds.pibic.MapsRouteTracer.DirectionsParser;
 import andersonfds.pibic.R;
@@ -56,6 +57,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ArrayList<Marker> listaMark = new ArrayList<>();
 
     private RegisterContacts_ViewModel registerContactsViewModel;
+    private Markers_ViewModel markers_viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -67,6 +69,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+
         fabAdd = findViewById( R.id.fabSave );
         fabAdd.setOnClickListener(v ->
                 Toast.makeText(MapsActivity.this, "Mensagem Save", Toast.LENGTH_SHORT).show());
@@ -76,8 +79,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 //.setAction("Action", null).show();
-
-
     }
 
 
