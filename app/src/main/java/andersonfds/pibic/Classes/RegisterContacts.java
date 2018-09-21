@@ -40,7 +40,7 @@ public class RegisterContacts {
     }
 
     @Ignore
-    public RegisterContacts(String nome, float locLat, float locLon, byte[] img) {
+    public RegisterContacts(String nome, double locLat, double locLon, byte[] img) {
         this.nome = nome;
         this.locLat = locLat;
         this.locLon = locLon;
@@ -57,7 +57,7 @@ public class RegisterContacts {
     }
 
     @Ignore
-    public RegisterContacts(String nome, long numTel, float locLat, float locLon, byte[] img) {
+    public RegisterContacts(String nome, long numTel, double locLat, double locLon, byte[] img) {
         this.nome = nome;
         this.numTel = numTel;
         this.locLat = locLat;
@@ -66,7 +66,7 @@ public class RegisterContacts {
     }
 
     @Ignore
-    public RegisterContacts(String nome, long numTel, long numWpp, float locLat, float locLon, byte[] img) {
+    public RegisterContacts(String nome, long numTel, long numWpp, double locLat, double locLon, byte[] img) {
         this.nome = nome;
         this.numTel = numTel;
         this.numWpp = numWpp;
@@ -111,7 +111,7 @@ public class RegisterContacts {
         return locLat;
     }
 
-    public void setLocLat(float locLat) {
+    public void setLocLat(double locLat) {
         this.locLat = locLat;
     }
 
@@ -119,7 +119,7 @@ public class RegisterContacts {
         return locLon;
     }
 
-    public void setLocLon(float locLon) {
+    public void setLocLon(double locLon) {
         this.locLon = locLon;
     }
 

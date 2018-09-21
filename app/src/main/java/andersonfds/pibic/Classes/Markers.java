@@ -25,17 +25,17 @@ public class Markers
 
     @NonNull
     @ColumnInfo(name = "latMarker", typeAffinity = ColumnInfo.REAL)
-    private float latitude;
+    private double latitude;
 
     @NonNull
     @ColumnInfo(name = "lonMarker", typeAffinity = ColumnInfo.REAL)
-    private float longitude;
+    private double longitude;
 
     public Markers() {
     }
 
     @Ignore
-    public Markers(String email, String nome, float latitude, float longitude) {
+    public Markers(String email, String nome, double latitude, double longitude) {
         this.email = email;
         this.nome = nome;
         this.latitude = latitude;
@@ -66,19 +66,19 @@ public class Markers
         this.nome = nome;
     }
 
-    public float getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
