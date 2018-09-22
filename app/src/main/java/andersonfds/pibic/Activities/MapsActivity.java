@@ -101,7 +101,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         // Marcador no CTF
         LatLng ctf = new LatLng(-6.785604, -43.041879);
-        mMap.addMarker(new MarkerOptions().position(ctf).title("Otávio"));
+        mMap.addMarker(new MarkerOptions().position(ctf).title("CTF"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ctf, zoom));
         setMapLongClick(mMap);
         markerClick(mMap);
