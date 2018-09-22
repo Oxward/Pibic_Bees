@@ -23,7 +23,7 @@ public abstract class ApplicationDatabase extends RoomDatabase {
     private final MutableLiveData<Boolean> mIsDatabaseCreated = new MutableLiveData<>();
     private static volatile ApplicationDatabase INSTANCE;
 
-    static ApplicationDatabase getDatabase(final Context context, final AppExecutors executors) {
+    public static ApplicationDatabase getDatabase(final Context context, final AppExecutors executors) {
         if (INSTANCE == null) {
             synchronized (ApplicationDatabase.class) {
                 if (INSTANCE == null) {

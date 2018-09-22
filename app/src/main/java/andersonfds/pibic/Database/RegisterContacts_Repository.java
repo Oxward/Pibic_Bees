@@ -15,7 +15,7 @@ public class RegisterContacts_Repository {
 
     //Administra o BD e inicializa as variáveis
     public RegisterContacts_Repository(Application application) {
-        ApplicationDatabase applicationDatabase = ApplicationDatabase.getDatabase(application);
+        ApplicationDatabase applicationDatabase = ApplicationDatabase.getDatabase(application, new AppExecutors());
         registerContactsDAO = applicationDatabase.regConDAO();
         allContacts = registerContactsDAO.selectAllContacts();
     }

@@ -15,7 +15,7 @@ public class Marker_Repository {
 
 
     public Marker_Repository(Application application) {
-        ApplicationDatabase applicationDatabase = ApplicationDatabase.getDatabase(application);
+        ApplicationDatabase applicationDatabase = ApplicationDatabase.getDatabase(application, new AppExecutors());
         markerDAO = applicationDatabase.markerDAO();
         allMarkers = markerDAO.selectAllMarkers();
     }
@@ -23,7 +23,7 @@ public class Marker_Repository {
     /*LiveData<List<Markers>> getAllMarkers() {
         return allMarkers;
     }*/
-    List<Markers> getAllMarkers() {
+    public List<Markers> getAllMarkers() {
         return allMarkers;
     }
 
