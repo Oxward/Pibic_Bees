@@ -12,7 +12,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import andersonfds.pibic.Classes.Markers;
-import andersonfds.pibic.Database.Markers_ViewModel;
+import andersonfds.pibic.Database.Marker_Repository;
 import andersonfds.pibic.R;
 
 public class EditMarkerActivity extends AppCompatActivity
@@ -23,7 +23,7 @@ public class EditMarkerActivity extends AppCompatActivity
     private EditText txtMarkerTitle;
     private Button btSaveMTitle;
 
-    private Markers_ViewModel markers_viewModel;
+    private Marker_Repository marker_repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -31,7 +31,7 @@ public class EditMarkerActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_marker);
 
-        markers_viewModel = new Markers_ViewModel(getApplication());
+        marker_repository = new Marker_Repository(getApplication());
         final LatLng latLng = getIntent().getParcelableExtra("location");
         txtMarkerTitle = findViewById( R.id.txtMarkerTitle );
         btSaveMTitle = findViewById( R.id.btSaveMTitle );
@@ -41,8 +41,10 @@ public class EditMarkerActivity extends AppCompatActivity
             if (txtMarkerTitle.getText() != null) {
                 marker.title(txtMarkerTitle.getText().toString());
             }
-            markers_viewModel.insertMarker(new Markers("teste@teste.com", marker.getTitle(),
-                    latLng.latitude, latLng.longitude));
+            Markers m = new Markers("teste@teste.com", marker.getTitle(),
+                    latLng.latitude, latLng.longitude);
+            marker_repository.insertMarker(m);
+            Log.d(TAG, "onCreate: m.getNome(): " + m.getNome() + " marker.getTitle(): " + marker.getTitle());
             /*new Marker_Repository(getApplication())
                     .insertMarker(new Markers("teste@teste.com", marker.getTitle(),
                             latLng.latitude, latLng.longitude));*/

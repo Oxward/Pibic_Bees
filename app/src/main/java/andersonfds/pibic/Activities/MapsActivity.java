@@ -39,10 +39,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import andersonfds.pibic.Classes.Markers;
-import andersonfds.pibic.Database.ApplicationDatabase;
 import andersonfds.pibic.Database.Marker_Repository;
-import andersonfds.pibic.Database.Markers_ViewModel;
-import andersonfds.pibic.Database.RegisterContacts_ViewModel;
 import andersonfds.pibic.MapsRouteTracer.DirectionsParser;
 import andersonfds.pibic.R;
 
@@ -59,10 +56,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private List<Marker> listaMark = new ArrayList<>();
     private List<Markers> list = new ArrayList<>();
-
-    private RegisterContacts_ViewModel registerContactsViewModel;
-    private Markers_ViewModel markers_viewModel;
-    private ApplicationDatabase applicationDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -111,7 +104,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         for (Markers markers : list) {
             mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
-                    .position(new LatLng(markers.getLatitude(), markers.getLongitude())).alpha(0.6f).snippet(markers.getNome()));
+                    .position(new LatLng(markers.getLatitude(), markers.getLongitude())).alpha(0.6f).title(markers.getNome()));
         }
 
     }
