@@ -2,7 +2,6 @@ package andersonfds.pibic.Database;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
 import java.util.List;
@@ -12,7 +11,8 @@ import andersonfds.pibic.Classes.Markers;
 public class Markers_ViewModel extends AndroidViewModel {
 
     private Marker_Repository marker_repository;
-    private LiveData<List<Markers>> allMarkers;
+    //private LiveData<List<Markers>> allMarkers;
+    private List<Markers> allMarkers;
 
 
     public Markers_ViewModel(@NonNull Application application) {
@@ -21,7 +21,11 @@ public class Markers_ViewModel extends AndroidViewModel {
         allMarkers = marker_repository.getAllMarkers();
     }
 
-    public LiveData<List<Markers>> getAllMarkers() {
+    /*public LiveData<List<Markers>> getAllMarkers() {
+        return allMarkers;
+    }*/
+
+    public List<Markers> getAllMarkers() {
         return allMarkers;
     }
 

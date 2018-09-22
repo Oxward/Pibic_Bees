@@ -1,7 +1,6 @@
 package andersonfds.pibic.Database;
 
 import android.app.Application;
-import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
 import java.util.List;
@@ -11,7 +10,8 @@ import andersonfds.pibic.Classes.Markers;
 public class Marker_Repository {
 
     private Marker_DAO markerDAO;
-    private LiveData<List<Markers>> allMarkers;
+    //private LiveData<List<Markers>> allMarkers;
+    private List<Markers> allMarkers;
 
 
     public Marker_Repository(Application application) {
@@ -20,7 +20,10 @@ public class Marker_Repository {
         allMarkers = markerDAO.selectAllMarkers();
     }
 
-    LiveData<List<Markers>> getAllMarkers() {
+    /*LiveData<List<Markers>> getAllMarkers() {
+        return allMarkers;
+    }*/
+    List<Markers> getAllMarkers() {
         return allMarkers;
     }
 

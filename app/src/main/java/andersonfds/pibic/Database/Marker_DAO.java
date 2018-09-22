@@ -18,7 +18,8 @@ public interface Marker_DAO
     void insertMarker(Markers m);
 
     @Query("SELECT * FROM mapMarkers")
-    LiveData<List<Markers>> selectAllMarkers();
+        //LiveData<List<Markers>> selectAllMarkers();
+    List<Markers> selectAllMarkers();
 
     @Query("SELECT * FROM mapMarkers WHERE emailMarker = :email")
     LiveData<List<Markers>> selectMarkersByEmail(String email);

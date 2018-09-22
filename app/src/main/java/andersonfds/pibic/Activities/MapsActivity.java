@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import andersonfds.pibic.Classes.Markers;
 import andersonfds.pibic.Database.Markers_ViewModel;
 import andersonfds.pibic.Database.RegisterContacts_ViewModel;
 import andersonfds.pibic.MapsRouteTracer.DirectionsParser;
@@ -54,7 +55,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private FloatingActionButton fabAdd;
     private FloatingActionButton fabDel;
 
-    private ArrayList<Marker> listaMark = new ArrayList<>();
+    private List<Marker> listaMark = new ArrayList<>();
+    private List<Markers> list = new ArrayList<>();
 
     private RegisterContacts_ViewModel registerContactsViewModel;
     private Markers_ViewModel markers_viewModel;
@@ -69,6 +71,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        markers_viewModel = new Markers_ViewModel(getApplication());
+        list.addAll(markers_viewModel.getAllMarkers());
 
         fabAdd = findViewById( R.id.fabSave );
         fabAdd.setOnClickListener(v ->
@@ -101,6 +105,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ctf, zoom));
         setMapLongClick(mMap);
         markerClick(mMap);
+
+        for (Markers markers : list) {
+            mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
+                    .position(new LatLng(markers.getLatitude(), markers.getLongitude())).alpha(0.6f).snippet(markers.getNome()));
+        }
 
     }
 
