@@ -39,6 +39,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import andersonfds.pibic.Classes.Markers;
+import andersonfds.pibic.Database.ApplicationDatabase;
 import andersonfds.pibic.Database.Markers_ViewModel;
 import andersonfds.pibic.Database.RegisterContacts_ViewModel;
 import andersonfds.pibic.MapsRouteTracer.DirectionsParser;
@@ -60,6 +61,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private RegisterContacts_ViewModel registerContactsViewModel;
     private Markers_ViewModel markers_viewModel;
+    private ApplicationDatabase applicationDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -70,6 +72,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
 
         markers_viewModel = new Markers_ViewModel(getApplication());
         list.addAll(markers_viewModel.getAllMarkers());
