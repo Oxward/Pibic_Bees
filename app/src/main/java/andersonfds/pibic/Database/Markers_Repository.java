@@ -7,17 +7,14 @@ import java.util.List;
 
 import andersonfds.pibic.Classes.Markers;
 
-public class Marker_Repository {
+public class Markers_Repository {
 
     private Markers_DAO markerDAO;
-    //private LiveData<List<Markers>> allMarkers;
     private List<Markers> allMarkers;
 
-
-    public Marker_Repository(Application application) {
+    Markers_Repository(Application application) {
         ApplicationDatabase applicationDatabase = ApplicationDatabase.getDatabase(application, new AppExecutors());
         markerDAO = applicationDatabase.markerDAO();
-        allMarkers = markerDAO.selectAllMarkers();
     }
 
     /*LiveData<List<Markers>> getAllMarkers() {
@@ -25,6 +22,13 @@ public class Marker_Repository {
     }*/
 
     public List<Markers> getAllMarkers() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                allMarkers.addAll(markerDAO.selectAllMarkers());
+
+            }
+        }).start();
         return allMarkers;
     }
 
