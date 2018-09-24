@@ -11,7 +11,7 @@ import java.util.List;
 import andersonfds.pibic.Classes.Markers;
 
 @Dao
-public interface Marker_DAO
+public interface Markers_DAO
 {
 
     @Insert

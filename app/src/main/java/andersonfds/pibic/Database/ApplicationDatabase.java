@@ -17,7 +17,7 @@ import static andersonfds.pibic.Database.ApplicationDatabase.DATABASE_VERSION;
 @Database(entities = {Markers.class, RegisterContacts.class}, exportSchema = false, version = DATABASE_VERSION)
 public abstract class ApplicationDatabase extends RoomDatabase {
 
-    static final String DATABASE_NAME = "pibees_project";
+    private static final String DATABASE_NAME = "pibees_project";
     static final int DATABASE_VERSION = 1;
 
     private final MutableLiveData<Boolean> mIsDatabaseCreated = new MutableLiveData<>();
@@ -48,7 +48,7 @@ public abstract class ApplicationDatabase extends RoomDatabase {
                             database.setDatabaseCreated();
                         });
                     }
-                }).build();
+                }).allowMainThreadQueries().build();
     }
 
     private static void addDelay() {
@@ -73,10 +73,9 @@ public abstract class ApplicationDatabase extends RoomDatabase {
     }
 
     //Markers DAO
-    public abstract Marker_DAO markerDAO();
+    public abstract Markers_DAO markerDAO();
 
     //RegisterContacts DAO
     public abstract RegisterContacts_DAO regConDAO();
-
 
 }

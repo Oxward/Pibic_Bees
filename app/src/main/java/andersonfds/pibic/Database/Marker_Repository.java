@@ -9,7 +9,7 @@ import andersonfds.pibic.Classes.Markers;
 
 public class Marker_Repository {
 
-    private Marker_DAO markerDAO;
+    private Markers_DAO markerDAO;
     //private LiveData<List<Markers>> allMarkers;
     private List<Markers> allMarkers;
 
@@ -23,6 +23,7 @@ public class Marker_Repository {
     /*LiveData<List<Markers>> getAllMarkers() {
         return allMarkers;
     }*/
+
     public List<Markers> getAllMarkers() {
         return allMarkers;
     }
@@ -33,9 +34,9 @@ public class Marker_Repository {
 
 
     private static class insertAsyncTask extends AsyncTask<Markers, Void, Void> {
-        private Marker_DAO mAsyncTaskMarkerDAO;
+        private Markers_DAO mAsyncTaskMarkerDAO;
 
-        insertAsyncTask(Marker_DAO markerDAO) {
+        insertAsyncTask(Markers_DAO markerDAO) {
             mAsyncTaskMarkerDAO = markerDAO;
         }
 
