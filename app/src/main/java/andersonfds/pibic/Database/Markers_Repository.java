@@ -22,13 +22,7 @@ public class Markers_Repository {
     }*/
 
     public List<Markers> getAllMarkers() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                allMarkers.addAll(markerDAO.selectAllMarkers());
-
-            }
-        }).start();
+        new Thread(() -> allMarkers.addAll(markerDAO.selectAllMarkers())).start();
         return allMarkers;
     }
 
