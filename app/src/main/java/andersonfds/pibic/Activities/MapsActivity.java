@@ -67,8 +67,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        //markers_viewModel = new Markers_ViewModel(getApplication());
-        list.addAll(new Markers_ViewModel(getApplication()).getAllMarkers());
+        Markers_ViewModel markers_viewModel = new Markers_ViewModel(getApplication());
+        list.addAll(markers_viewModel.getAllMarkers());
 
         fabAdd = findViewById( R.id.fabSave );
         fabAdd.setOnClickListener(v ->
@@ -248,7 +248,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             for (int i = 0; i < 2; i++)
             {
                 try {
-                    Thread.sleep(1500);
+                    Thread.sleep(2000);
                 } catch (InterruptedException ieE) {
                     Toast.makeText(getApplicationContext(), "Deu Pau.", Toast.LENGTH_LONG).show();
                 }

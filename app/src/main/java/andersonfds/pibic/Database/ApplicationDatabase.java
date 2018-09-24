@@ -48,7 +48,7 @@ public abstract class ApplicationDatabase extends RoomDatabase {
                             database.setDatabaseCreated();
                         });
                     }
-                }).build();
+                }).allowMainThreadQueries().build();
     }
 
     private static void addDelay() {
