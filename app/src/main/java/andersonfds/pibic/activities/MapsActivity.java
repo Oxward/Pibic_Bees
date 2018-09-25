@@ -64,9 +64,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        Markers_ViewModel markers_viewModel = new Markers_ViewModel(getApplication());
-        new selectAsync(markers_viewModel, mList).execute();
-
         //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 //.setAction("Action", null).show();
     }
@@ -84,6 +81,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap)
     {
         mMap = googleMap;
+        mMap.clear();
         // Marcador no CTF
         LatLng ctf = new LatLng(-6.785604, -43.041879);
         mMap.addMarker(new MarkerOptions().position(ctf).title("CTF"));
@@ -93,6 +91,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         markerClick(mMap);
 
         Markers_ViewModel markers_viewModel = new Markers_ViewModel(getApplication());
+        new selectAsync(markers_viewModel, mList).execute();
+
         mMap.setOnInfoWindowClickListener(marker -> {
             markers_viewModel.deleteMarker(new Markers(marker.getId(),
                     marker.getPosition().latitude,
@@ -151,7 +151,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
     }
-
 
     private void markerClick(final GoogleMap map)
     {
@@ -236,28 +235,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static class selectAsync extends AsyncTask<Void, Void, List<Markers>> {
 
         private Markers_ViewModel markers_viewModel;
-        private List<Markers> l;
+        private List<Markers> mAsyncList;
 
         private selectAsync(Markers_ViewModel markers_viewModel, List<Markers> mList) {
             this.markers_viewModel = markers_viewModel;
-            this.l = mList;
+            this.mAsyncList = mList;
         }
 
         @Override
         protected List<Markers> doInBackground(Void... voids) {
-            l.addAll(markers_viewModel.getAllMarkers());
-            return l;
+            mAsyncList.addAll(markers_viewModel.getAllMarkers());
+            return mAsyncList;
         }
 
         @Override
         protected void onPostExecute(List<Markers> list) {
-            mList.addAll(list);
+            mList = list;
             for (Markers markers : mList) {
                 mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
                         .position(new LatLng(markers.getLatitude(), markers.getLongitude())).alpha(0.6f).title(markers.getNome()));
             }
-
-            l.clear();
+            mAsyncList.clear();
             mList.clear();
         }
     }

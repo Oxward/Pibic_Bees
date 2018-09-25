@@ -15,7 +15,7 @@ public interface Markers_DAO
     @Insert
     void insertMarker(Markers m);
 
-    @Query("SELECT * FROM mapMarkers")
+    @Query("SELECT DISTINCT * FROM mapMarkers")
     List<Markers> selectAllMarkers();
 
     @Query("SELECT * FROM mapMarkers WHERE emailMarker = :email")
