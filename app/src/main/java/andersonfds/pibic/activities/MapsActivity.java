@@ -49,11 +49,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private static final int REQUEST_LOCATION_PERMISSION = 1;
     private static final int EDIT_REQUEST = 1;
-    private final float zoom = 15.0f;
 
-    private static GoogleMap mMap;
     private static List<Markers> mList = new ArrayList<>();
     private List<Marker> listMark = new ArrayList<>();
+
+    private static GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -79,7 +79,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 //.setAction("Action", null).show();
     }
 
-
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -96,10 +95,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Marcador no CTF
         LatLng ctf = new LatLng(-6.785604, -43.041879);
         mMap.addMarker(new MarkerOptions().position(ctf).title("CTF"));
+        float zoom = 15.0f;
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ctf, zoom));
         setMapLongClick(mMap);
         markerClick(mMap);
-
     }
 
     @Override
