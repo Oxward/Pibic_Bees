@@ -1,4 +1,4 @@
-package andersonfds.pibic.Database;
+package andersonfds.pibic.database;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
@@ -8,16 +8,18 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
-import andersonfds.pibic.Classes.Markers;
-import andersonfds.pibic.Classes.RegisterContacts;
+import andersonfds.pibic.classes.Markers;
+import andersonfds.pibic.classes.RegisterContacts;
 
-import static andersonfds.pibic.Database.ApplicationDatabase.DATABASE_VERSION;
+import static andersonfds.pibic.database.ApplicationDatabase.DATABASE_VERSION;
 
 @Database(entities = {Markers.class, RegisterContacts.class}, exportSchema = false, version = DATABASE_VERSION)
 public abstract class ApplicationDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "pibees_project";
+    private static final String TAG = "ApplicationDatabase";
     static final int DATABASE_VERSION = 1;
 
     private final MutableLiveData<Boolean> mIsDatabaseCreated = new MutableLiveData<>();
@@ -55,6 +57,7 @@ public abstract class ApplicationDatabase extends RoomDatabase {
         try {
             Thread.sleep(4000);
         } catch (InterruptedException ignored) {
+            Log.d(TAG, "addDelay: Thread error.");
         }
     }
 

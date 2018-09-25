@@ -1,4 +1,4 @@
-package andersonfds.pibic.Database;
+package andersonfds.pibic.database;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
-import andersonfds.pibic.Classes.Markers;
+import andersonfds.pibic.classes.Markers;
 
 public class Markers_ViewModel extends AndroidViewModel {
 

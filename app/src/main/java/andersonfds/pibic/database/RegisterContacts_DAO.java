@@ -1,4 +1,4 @@
-package andersonfds.pibic.Database;
+package andersonfds.pibic.database;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
@@ -8,7 +8,7 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
-import andersonfds.pibic.Classes.RegisterContacts;
+import andersonfds.pibic.classes.RegisterContacts;
 
 @Dao
 public interface RegisterContacts_DAO {

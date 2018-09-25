@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package andersonfds.pibic.Database;
+package andersonfds.pibic.database;
 
 import android.os.Handler;
 import android.os.Looper;

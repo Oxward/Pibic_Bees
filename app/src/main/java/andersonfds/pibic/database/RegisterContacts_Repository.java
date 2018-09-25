@@ -1,4 +1,4 @@
-package andersonfds.pibic.Database;
+package andersonfds.pibic.database;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 
 import java.util.List;
 
-import andersonfds.pibic.Classes.RegisterContacts;
+import andersonfds.pibic.classes.RegisterContacts;
 
 public class RegisterContacts_Repository {
 

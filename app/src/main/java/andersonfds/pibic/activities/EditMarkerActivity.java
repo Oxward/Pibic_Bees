@@ -1,4 +1,4 @@
-package andersonfds.pibic.Activities;
+package andersonfds.pibic.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,9 +11,9 @@ import android.widget.EditText;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import andersonfds.pibic.Classes.Markers;
-import andersonfds.pibic.Database.Markers_ViewModel;
 import andersonfds.pibic.R;
+import andersonfds.pibic.classes.Markers;
+import andersonfds.pibic.database.Markers_ViewModel;
 
 public class EditMarkerActivity extends AppCompatActivity
 {

@@ -1,4 +1,4 @@
-package andersonfds.pibic.Database;
+package andersonfds.pibic.database;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
-import andersonfds.pibic.Classes.RegisterContacts;
+import andersonfds.pibic.classes.RegisterContacts;
 
 public class RegisterContacts_ViewModel extends AndroidViewModel {
 

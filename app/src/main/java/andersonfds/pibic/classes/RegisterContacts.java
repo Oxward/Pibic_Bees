@@ -1,4 +1,4 @@
-package andersonfds.pibic.Classes;
+package andersonfds.pibic.classes;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;

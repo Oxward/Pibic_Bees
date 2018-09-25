@@ -22,7 +22,9 @@
         android:name="android.hardware.camera2"
         android:required="true" />
 
+
     <application
+        android:name=".ApplicationContextProvider"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -34,7 +36,7 @@
             android:value="AIzaSyAIrtmjxM3sA0wZTTbI_1hwCGAPJEwZd0Q" />
 
         <activity
-            android:name=".Activities.MainMenuActivity"
+            android:name=".activities.MainMenuActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -44,17 +46,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.RegisterOcActivity"
+            android:name=".activities.RegisterOcActivity"
             android:label="Registro de Ocorrências" />
         <activity
-            android:name=".Activities.MapsActivity"
+            android:name=".activities.MapsActivity"
             android:label="Registrar Localização" />
         <activity
-            android:name=".Activities.EditMarkerActivity"
+            android:name=".activities.EditMarkerActivity"
             android:label="Editar Título dos Marcadores" />
-        <activity
-            android:name=".Activities.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
     </application>
 
 </manifest>

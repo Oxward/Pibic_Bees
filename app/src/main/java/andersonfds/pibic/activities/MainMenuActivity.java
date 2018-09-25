@@ -1,4 +1,4 @@
-package andersonfds.pibic.Activities;
+package andersonfds.pibic.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,8 +15,8 @@ import android.view.MenuItem;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
-import andersonfds.pibic.Database.ApplicationDatabase;
 import andersonfds.pibic.R;
+import andersonfds.pibic.database.ApplicationDatabase;
 
 public class MainMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

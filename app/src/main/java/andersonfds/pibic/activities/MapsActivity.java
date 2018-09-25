@@ -1,4 +1,4 @@
-package andersonfds.pibic.Activities;
+package andersonfds.pibic.activities;
 
 import android.Manifest;
 import android.app.Activity;
@@ -38,10 +38,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import andersonfds.pibic.Classes.Markers;
-import andersonfds.pibic.Database.Markers_ViewModel;
+import andersonfds.pibic.ApplicationContextProvider;
 import andersonfds.pibic.MapsRouteTracer.DirectionsParser;
 import andersonfds.pibic.R;
+import andersonfds.pibic.classes.Markers;
+import andersonfds.pibic.database.Markers_ViewModel;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 {
@@ -187,7 +188,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     //Traça uma Rota Entre os Pontos Demarcados
-    private String requestDirections(String reqUrl)
+    private static String requestDirections(String reqUrl)
     {
         String respString = "";
         InputStream inputStream = null;
@@ -291,7 +292,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     //CLASSES PARA TRAÇAR AS ROTAS(Utiliza Internet, estilo GoogleMaps)
-    public class TaskRequestDirections extends AsyncTask<String, Void, String>
+    public static class TaskRequestDirections extends AsyncTask<String, Void, String>
     {
 
         @Override
@@ -313,7 +314,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    public class TaskParser extends AsyncTask<String, Void, List<List<HashMap<String, String>>> >
+    public static class TaskParser extends AsyncTask<String, Void, List<List<HashMap<String, String>>>>
     {
         @Override
         protected List<List<HashMap<String, String>>> doInBackground(String... strings)
@@ -364,7 +365,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mMap.addPolyline(polylineOptions);
             } else
             {
-                Toast.makeText(getApplicationContext(), "Rota não encontrada!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ApplicationContextProvider.getContext(), "Rota não encontrada!", Toast.LENGTH_SHORT).show();
             }
         }
     }

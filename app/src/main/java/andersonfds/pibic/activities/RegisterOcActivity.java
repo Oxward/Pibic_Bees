@@ -1,4 +1,4 @@
-package andersonfds.pibic.Activities;
+package andersonfds.pibic.activities;
 
 import android.Manifest;
 import android.content.Intent;
@@ -26,8 +26,8 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 
-import andersonfds.pibic.Classes.RegisterContacts;
 import andersonfds.pibic.R;
+import andersonfds.pibic.classes.RegisterContacts;
 
 public class RegisterOcActivity extends AppCompatActivity {
 

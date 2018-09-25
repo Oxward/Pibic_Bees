@@ -1,11 +1,11 @@
-package andersonfds.pibic.Database;
+package andersonfds.pibic.database;
 
 import android.app.Application;
 import android.os.AsyncTask;
 
 import java.util.List;
 
-import andersonfds.pibic.Classes.Markers;
+import andersonfds.pibic.classes.Markers;
 
 public class Markers_Repository {
 
