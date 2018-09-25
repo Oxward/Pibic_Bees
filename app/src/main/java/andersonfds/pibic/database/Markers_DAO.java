@@ -1,7 +1,6 @@
 package andersonfds.pibic.database;
 
 import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
@@ -22,8 +21,8 @@ public interface Markers_DAO
     @Query("SELECT * FROM mapMarkers WHERE emailMarker = :email")
     List<Markers> selectMarkersByEmail(String email);
 
-    @Delete
-    boolean deleteMarker(Markers m);
+    @Query("DELETE FROM mapMarkers WHERE latMarker = :lat AND lonMarker = :lon")
+    void deleteMarker(double lat, double lon);
 
     // @Query( "DELETE FROM mapMarkers WHERE email = :email AND latitude = :lat AND longitude = :lon" )
     // void deleteMarker( String email, float lat, float lon );

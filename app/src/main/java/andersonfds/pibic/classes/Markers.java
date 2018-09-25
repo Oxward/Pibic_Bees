@@ -16,6 +16,10 @@ public class Markers
     private int id;
 
     @NonNull
+    @ColumnInfo(name = "stringIDMarker", typeAffinity = ColumnInfo.TEXT)
+    private String idString;
+
+    @NonNull
     @ColumnInfo(name = "nameMarker", typeAffinity = ColumnInfo.TEXT)
     private String nome;
 
@@ -35,11 +39,35 @@ public class Markers
     }
 
     @Ignore
+    public Markers(String idString, double latitude, double longitude) {
+        this.idString = idString;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+    @Ignore
     public Markers(String email, String nome, double latitude, double longitude) {
         this.email = email;
         this.nome = nome;
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    @Ignore
+    public Markers(String idString, String email, String nome, double latitude, double longitude) {
+        this.idString = idString;
+        this.email = email;
+        this.nome = nome;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+    public String getIdString() {
+        return idString;
+    }
+
+    public void setIdString(String idString) {
+        this.idString = idString;
     }
 
     public int getId() {

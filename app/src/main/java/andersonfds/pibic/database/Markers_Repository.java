@@ -2,11 +2,9 @@ package andersonfds.pibic.database;
 
 import android.app.Application;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import java.util.List;
 
-import andersonfds.pibic.ApplicationContextProvider;
 import andersonfds.pibic.classes.Markers;
 
 public class Markers_Repository {
@@ -46,7 +44,7 @@ public class Markers_Repository {
         }
     }
 
-    private static class deleteAsyncTask extends AsyncTask<Markers, Void, Boolean> {
+    private static class deleteAsyncTask extends AsyncTask<Markers, Void, Void> {
 
         private Markers_DAO mAsyncTaskMarkerDAO;
 
@@ -55,19 +53,11 @@ public class Markers_Repository {
         }
 
         @Override
-        protected Boolean doInBackground(Markers... markers) {
-            return (mAsyncTaskMarkerDAO.deleteMarker(markers[0]));
+        protected Void doInBackground(Markers... markers) {
+            mAsyncTaskMarkerDAO.deleteMarker(markers[0].getLatitude(), markers[0].getLongitude());
+            return null;
         }
 
-        @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            if (aBoolean)
-                Toast.makeText(ApplicationContextProvider.getContext(), "Excluído com sucesso.",
-                        Toast.LENGTH_SHORT).show();
-            else
-                Toast.makeText(ApplicationContextProvider.getContext(), "Erro ao remover marcador.",
-                        Toast.LENGTH_SHORT).show();
-        }
     }
 
 }

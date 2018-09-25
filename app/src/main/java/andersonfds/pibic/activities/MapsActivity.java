@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
@@ -68,17 +67,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Markers_ViewModel markers_viewModel = new Markers_ViewModel(getApplication());
         new selectAsync(markers_viewModel, mList).execute();
 
-        FloatingActionButton fabAdd = findViewById(R.id.fabSave);
-        fabAdd.setOnClickListener(v ->
-                Toast.makeText(MapsActivity.this, "Mensagem Save", Toast.LENGTH_SHORT).show());
-
-        FloatingActionButton fabDel = findViewById(R.id.fabDelete);
-        fabDel.setOnClickListener(v ->
-        {
-            markers_viewModel.deleteMarker(new Markers());
-            Toast.makeText(MapsActivity.this, "Mensagem Delete", Toast.LENGTH_SHORT).show();
-        });
-
         //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 //.setAction("Action", null).show();
     }
@@ -103,6 +91,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ctf, zoom));
         setMapLongClick(mMap);
         markerClick(mMap);
+
+        Markers_ViewModel markers_viewModel = new Markers_ViewModel(getApplication());
+        mMap.setOnInfoWindowClickListener(marker -> {
+            markers_viewModel.deleteMarker(new Markers(marker.getId(),
+                    marker.getPosition().latitude,
+                    marker.getPosition().longitude));
+            marker.remove();
+        });
     }
 
     @Override
@@ -260,6 +256,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
                         .position(new LatLng(markers.getLatitude(), markers.getLongitude())).alpha(0.6f).title(markers.getNome()));
             }
+
+            l.clear();
+            mList.clear();
         }
     }
 
