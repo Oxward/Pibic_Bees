@@ -36,6 +36,8 @@ public class RegisterOcActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 1000;
     private static final int PICK_IMAGE = 1;
 
+
+    private  ImageView imageView2;
     private ImageView imageView;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private LocationRequest mLocationRequest;
@@ -43,6 +45,8 @@ public class RegisterOcActivity extends AppCompatActivity {
     private TextView lbTest;
     private Button btEnv;
     private Button btGal;
+    private Button btGal2;
+
 
     private LatLng location;
 
@@ -52,6 +56,7 @@ public class RegisterOcActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_oc);
 
         imageView = findViewById(R.id.imgTiraFoto);
+        imageView2 = findViewById(R.id.imageView2);
         lbTest = findViewById(R.id.lbTest);
         btEnv = findViewById(R.id.btEnv);
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
@@ -80,7 +85,14 @@ public class RegisterOcActivity extends AppCompatActivity {
         mFusedLocationProviderClient.removeLocationUpdates(mLocationCallback);
 
         btGal = findViewById(R.id.btGal);
+        btGal2 = findViewById(R.id.btGal2);
+
         btGal.setOnClickListener(view ->
+        {
+            openGallery();
+        });
+
+        btGal2.setOnClickListener(view ->
         {
             openGallery();
         });
@@ -89,13 +101,22 @@ public class RegisterOcActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+
+
+
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            imageView.setImageBitmap(imageBitmap);
+            if( imageView.getDrawable() == null)
+                imageView.setImageBitmap(imageBitmap);
+            else
+                imageView2.setImageBitmap(imageBitmap);
         } else if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
             Uri uri = data.getData();
             imageView.setImageURI(uri);
+
+
         }
     }
 
@@ -129,6 +150,11 @@ public class RegisterOcActivity extends AppCompatActivity {
 
             case R.id.btGal:
                 break;
+
+
+            case R.id.btGal2:
+                break;
+
 
             case R.id.btEnv:
                 saveData();
