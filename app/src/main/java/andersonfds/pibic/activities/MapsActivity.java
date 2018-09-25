@@ -52,8 +52,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private final float zoom = 15.0f;
 
     private static GoogleMap mMap;
-    private FloatingActionButton fabAdd;
-    private FloatingActionButton fabDel;
     private static List<Markers> mList = new ArrayList<>();
     private List<Marker> listMark = new ArrayList<>();
 
@@ -70,11 +68,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Markers_ViewModel markers_viewModel = new Markers_ViewModel(getApplication());
         new selectAsync(markers_viewModel, mList).execute();
 
-        fabAdd = findViewById( R.id.fabSave );
+        FloatingActionButton fabAdd = findViewById(R.id.fabSave);
         fabAdd.setOnClickListener(v ->
                 Toast.makeText(MapsActivity.this, "Mensagem Save", Toast.LENGTH_SHORT).show());
 
-        fabDel = findViewById( R.id.fabDelete );
+        FloatingActionButton fabDel = findViewById(R.id.fabDelete);
         fabDel.setOnClickListener(v -> Toast.makeText(MapsActivity.this, "Mensagem Delete", Toast.LENGTH_SHORT).show());
 
         //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
