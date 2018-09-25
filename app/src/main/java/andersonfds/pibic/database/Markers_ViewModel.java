@@ -18,16 +18,16 @@ public class Markers_ViewModel extends AndroidViewModel {
         markers_repository = new Markers_Repository(application);
     }
 
-    /*public LiveData<List<Markers>> getAllMarkers() {
-        return allMarkers;
-    }*/
-
     public List<Markers> getAllMarkers() {
         return markers_repository.getAllMarkers();
     }
 
     public void insertMarker(Markers markers) {
         markers_repository.insertMarker(markers);
+    }
+
+    public void deleteMarker(Markers markers) {
+        markers_repository.deleteMarker(markers);
     }
 
 }

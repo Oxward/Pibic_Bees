@@ -73,7 +73,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Toast.makeText(MapsActivity.this, "Mensagem Save", Toast.LENGTH_SHORT).show());
 
         FloatingActionButton fabDel = findViewById(R.id.fabDelete);
-        fabDel.setOnClickListener(v -> Toast.makeText(MapsActivity.this, "Mensagem Delete", Toast.LENGTH_SHORT).show());
+        fabDel.setOnClickListener(v ->
+        {
+            markers_viewModel.deleteMarker(new Markers());
+            Toast.makeText(MapsActivity.this, "Mensagem Delete", Toast.LENGTH_SHORT).show();
+        });
 
         //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 //.setAction("Action", null).show();

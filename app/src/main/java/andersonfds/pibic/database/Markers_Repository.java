@@ -2,9 +2,11 @@ package andersonfds.pibic.database;
 
 import android.app.Application;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import java.util.List;
 
+import andersonfds.pibic.ApplicationContextProvider;
 import andersonfds.pibic.classes.Markers;
 
 public class Markers_Repository {
@@ -18,13 +20,7 @@ public class Markers_Repository {
         //allMarkers = new ArrayList<>();
     }
 
-    /*LiveData<List<Markers>> getAllMarkers() {
-        return allMarkers;
-    }*/
-
     public List<Markers> getAllMarkers() {
-        //allMarkers.addAll(markerDAO.selectAllMarkers());
-        //return allMarkers;
         return markerDAO.selectAllMarkers();
     }
 
@@ -32,6 +28,9 @@ public class Markers_Repository {
         new insertAsyncTask(markerDAO).execute(markers);
     }
 
+    public void deleteMarker(Markers markers) {
+        new deleteAsyncTask(markerDAO).execute(markers);
+    }
 
     private static class insertAsyncTask extends AsyncTask<Markers, Void, Void> {
         private Markers_DAO mAsyncTaskMarkerDAO;
@@ -47,26 +46,28 @@ public class Markers_Repository {
         }
     }
 
-    /*private static class selectAsyncTask extends AsyncTask<Void, Void, List<Markers>>{
+    private static class deleteAsyncTask extends AsyncTask<Markers, Void, Boolean> {
 
-        private List<Markers> mAsyncList;
-        private Markers_DAO markers_dao;
+        private Markers_DAO mAsyncTaskMarkerDAO;
 
-        private selectAsyncTask(List<Markers> mAsyncList, Markers_DAO markers_dao) {
-            this.mAsyncList = mAsyncList;
-            this.markers_dao = markers_dao;
+        private deleteAsyncTask(Markers_DAO mAsyncTaskMarkerDAO) {
+            this.mAsyncTaskMarkerDAO = mAsyncTaskMarkerDAO;
         }
 
         @Override
-        protected List<Markers> doInBackground(Void... voids){
-            mAsyncList.addAll(markers_dao.selectAllMarkers());
-            return mAsyncList;
+        protected Boolean doInBackground(Markers... markers) {
+            return (mAsyncTaskMarkerDAO.deleteMarker(markers[0]));
         }
 
         @Override
-        protected void onPostExecute(List<Markers> list){
-
+        protected void onPostExecute(Boolean aBoolean) {
+            if (aBoolean)
+                Toast.makeText(ApplicationContextProvider.getContext(), "Excluído com sucesso.",
+                        Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(ApplicationContextProvider.getContext(), "Erro ao remover marcador.",
+                        Toast.LENGTH_SHORT).show();
         }
-    }*/
+    }
 
 }
