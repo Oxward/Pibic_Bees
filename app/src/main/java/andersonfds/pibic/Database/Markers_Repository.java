@@ -3,7 +3,6 @@ package andersonfds.pibic.Database;
 import android.app.Application;
 import android.os.AsyncTask;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import andersonfds.pibic.Classes.Markers;
@@ -11,12 +10,12 @@ import andersonfds.pibic.Classes.Markers;
 public class Markers_Repository {
 
     private Markers_DAO markerDAO;
-    private List<Markers> allMarkers;
+    //private List<Markers> allMarkers;
 
     Markers_Repository(Application application) {
         ApplicationDatabase applicationDatabase = ApplicationDatabase.getDatabase(application, new AppExecutors());
         markerDAO = applicationDatabase.markerDAO();
-        allMarkers = new ArrayList<>();
+        //allMarkers = new ArrayList<>();
     }
 
     /*LiveData<List<Markers>> getAllMarkers() {
@@ -24,8 +23,9 @@ public class Markers_Repository {
     }*/
 
     public List<Markers> getAllMarkers() {
-        allMarkers.addAll(markerDAO.selectAllMarkers());
-        return allMarkers;
+        //allMarkers.addAll(markerDAO.selectAllMarkers());
+        //return allMarkers;
+        return markerDAO.selectAllMarkers();
     }
 
     public void insertMarker(Markers markers) {
@@ -46,5 +46,27 @@ public class Markers_Repository {
             return null;
         }
     }
+
+    /*private static class selectAsyncTask extends AsyncTask<Void, Void, List<Markers>>{
+
+        private List<Markers> mAsyncList;
+        private Markers_DAO markers_dao;
+
+        private selectAsyncTask(List<Markers> mAsyncList, Markers_DAO markers_dao) {
+            this.mAsyncList = mAsyncList;
+            this.markers_dao = markers_dao;
+        }
+
+        @Override
+        protected List<Markers> doInBackground(Void... voids){
+            mAsyncList.addAll(markers_dao.selectAllMarkers());
+            return mAsyncList;
+        }
+
+        @Override
+        protected void onPostExecute(List<Markers> list){
+
+        }
+    }*/
 
 }

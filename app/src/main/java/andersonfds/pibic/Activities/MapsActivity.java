@@ -50,12 +50,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final int EDIT_REQUEST = 1;
     private final float zoom = 15.0f;
 
-    private GoogleMap mMap;
+    private static GoogleMap mMap;
     private FloatingActionButton fabAdd;
     private FloatingActionButton fabDel;
-
-    private List<Marker> listaMark = new ArrayList<>();
-    private List<Markers> list = new ArrayList<>();
+    private static List<Markers> mList = new ArrayList<>();
+    private List<Marker> listMark = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -68,7 +67,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         Markers_ViewModel markers_viewModel = new Markers_ViewModel(getApplication());
-        list.addAll(markers_viewModel.getAllMarkers());
+        new selectAsync(markers_viewModel, mList).execute();
 
         fabAdd = findViewById( R.id.fabSave );
         fabAdd.setOnClickListener(v ->
@@ -101,11 +100,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ctf, zoom));
         setMapLongClick(mMap);
         markerClick(mMap);
-
-        for (Markers markers : list) {
-            mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
-                    .position(new LatLng(markers.getLatitude(), markers.getLongitude())).alpha(0.6f).title(markers.getNome()));
-        }
 
     }
 
@@ -164,17 +158,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void markerClick(final GoogleMap map)
     {
         map.setOnMarkerClickListener(marker -> {
-            Log.d("markerClick", "Entrou no evento. Lista de Pontos: " + listaMark.size());
-            listaMark.add(marker);
-            if (listaMark.size() % 2 == 0) {
-                String url = getRequestedUrl(listaMark.get(0), listaMark.get(1));
+            Log.d("markerClick", "Entrou no evento. Lista de Pontos: " + listMark.size());
+            listMark.add(marker);
+            if (listMark.size() % 2 == 0) {
+                String url = getRequestedUrl(listMark.get(0), listMark.get(1));
                 new TaskRequestDirections().execute(url);
-                Log.d("markerClick", "Traçou a rota. Lista de Pontos: " + listaMark.size());
+                Log.d("markerClick", "Traçou a rota. Lista de Pontos: " + listMark.size());
                 new Thread(new Task()).start();
-                listaMark.clear();
+                listMark.clear();
                 return true;
             } else {
-                Log.d("markerClick", "Fez nada. Lista de Pontos: " + listaMark.size());
+                Log.d("markerClick", "Fez nada. Lista de Pontos: " + listMark.size());
                 return false;
             }
         });
@@ -241,7 +235,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return respString;
     }
 
-    class Task implements Runnable {
+    private static class selectAsync extends AsyncTask<Void, Void, List<Markers>> {
+
+        private Markers_ViewModel markers_viewModel;
+        private List<Markers> l;
+
+        private selectAsync(Markers_ViewModel markers_viewModel, List<Markers> mList) {
+            this.markers_viewModel = markers_viewModel;
+            this.l = mList;
+        }
+
+        @Override
+        protected List<Markers> doInBackground(Void... voids) {
+            l.addAll(markers_viewModel.getAllMarkers());
+            return l;
+        }
+
+        @Override
+        protected void onPostExecute(List<Markers> list) {
+            mList.addAll(list);
+            for (Markers markers : mList) {
+                mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
+                        .position(new LatLng(markers.getLatitude(), markers.getLongitude())).alpha(0.6f).title(markers.getNome()));
+            }
+        }
+    }
+
+    private class Task implements Runnable {
         @Override
         public void run()
         {
