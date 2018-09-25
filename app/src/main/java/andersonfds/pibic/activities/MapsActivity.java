@@ -244,13 +244,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         @Override
         protected List<Markers> doInBackground(Void... voids) {
+            Log.d("asd", "doInBackground: " + mAsyncList.size());
             mAsyncList.addAll(markers_viewModel.getAllMarkers());
+            Log.d("asd", "doInBackground: " + mAsyncList.size());
             return mAsyncList;
         }
 
         @Override
         protected void onPostExecute(List<Markers> list) {
+            Log.d("asd", "doInBackground: " + list.size());
             mList = list;
+            Log.d("asd", "doInBackground: " + mList.size());
             for (Markers markers : mList) {
                 mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
                         .position(new LatLng(markers.getLatitude(), markers.getLongitude())).alpha(0.6f).title(markers.getNome()));
