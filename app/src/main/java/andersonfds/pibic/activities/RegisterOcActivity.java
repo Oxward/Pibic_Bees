@@ -41,8 +41,6 @@ public class RegisterOcActivity extends AppCompatActivity {
     private LocationRequest mLocationRequest;
     private LocationCallback mLocationCallback;
     private TextView lbTest;
-    private Button btEnv;
-    private Button btGal;
 
     private LatLng location;
 
@@ -53,7 +51,7 @@ public class RegisterOcActivity extends AppCompatActivity {
 
         imageView = findViewById(R.id.imgTiraFoto);
         lbTest = findViewById(R.id.lbTest);
-        btEnv = findViewById(R.id.btEnv);
+        Button btEnv = findViewById(R.id.btEnv);
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
@@ -79,7 +77,7 @@ public class RegisterOcActivity extends AppCompatActivity {
         }
         mFusedLocationProviderClient.removeLocationUpdates(mLocationCallback);
 
-        btGal = findViewById(R.id.btGal);
+        Button btGal = findViewById(R.id.btGal);
         btGal.setOnClickListener(view ->
         {
             openGallery();
@@ -188,7 +186,6 @@ public class RegisterOcActivity extends AppCompatActivity {
             {
                 for ( Location l : locationResult.getLocations() )
                 {
-                    //lbTest.setText(String.valueOf(l.getLatitude() + "/" + String.valueOf(l.getLongitude())));
                     lbTest.setText(String.valueOf(l.getLatitude() + "/" + String.valueOf(l.getLongitude())));
                     location = new LatLng(l.getLatitude(), l.getLongitude());
                 }
