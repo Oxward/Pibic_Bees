@@ -33,7 +33,7 @@ dependencies {
     def paging_version = "1.0.1"
     def archLifecycleVersion = '1.1.1'
     def nav_version = "1.0.0-alpha06"
-    def work_version = "1.0.0-alpha08"
+    def work_version = "1.0.0-alpha09"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:support-v4:27.1.1'

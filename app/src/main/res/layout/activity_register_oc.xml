@@ -7,6 +7,65 @@
     tools:context=".activities.RegisterOcActivity">
     <!--android:background="@mipmap/ic_launcher"-->
 
+    <Button
+        android:id="@+id/btGal1"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="8dp"
+        android:onClick="buttonPress"
+        android:text="Carregar Imagem 1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.013"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.727" />
+
+    <Button
+        android:id="@+id/btGal2"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="8dp"
+        android:onClick="buttonPress"
+        android:text="Carregar Imagem 2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.837"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.727" />
+
+    <ImageView
+        android:id="@+id/imgTiraFoto2"
+        android:layout_width="182dp"
+        android:layout_height="182dp"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:contentDescription="@string/todo"
+        android:focusable="true"
+        android:onClick="buttonPress"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.44"
+        app:srcCompat="@android:drawable/ic_menu_camera" />
+
     <EditText
         android:id="@+id/txtNome"
         android:layout_width="match_parent"
@@ -50,7 +109,6 @@
         android:id="@+id/txtWpp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btGal"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -66,9 +124,9 @@
         app:layout_constraintVertical_bias="0.19" />
 
     <ImageView
-        android:id="@+id/imgTiraFoto"
-        android:layout_width="243dp"
-        android:layout_height="230dp"
+        android:id="@+id/imgTiraFoto1"
+        android:layout_width="182dp"
+        android:layout_height="182dp"
         android:layout_centerInParent="true"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -80,30 +138,11 @@
         android:onClick="buttonPress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.52"
-        app:srcCompat="@android:drawable/ic_menu_camera" />
-
-    <Button
-        android:id="@+id/btGal"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/btFoto"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="212dp"
-        android:layout_marginTop="8dp"
-        android:layout_toEndOf="@+id/btFoto"
-        android:onClick="buttonPress"
-        android:text="@string/galeria"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.823" />
+        app:layout_constraintVertical_bias="0.44"
+        app:srcCompat="@android:drawable/ic_menu_camera" />
 
     <Button
         android:id="@+id/btEnv"
@@ -118,7 +157,7 @@
         android:text="@string/enviar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.345"
+        app:layout_constraintHorizontal_bias="0.283"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
@@ -136,7 +175,7 @@
         android:text="@string/cancelar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.695"
+        app:layout_constraintHorizontal_bias="0.714"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
@@ -155,10 +194,10 @@
         android:text="@string/tirar_foto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.121"
+        app:layout_constraintHorizontal_bias="0.418"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.823" />
+        app:layout_constraintVertical_bias="0.838" />
 
     <TextView
         android:id="@+id/lbTest"

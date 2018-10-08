@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +27,8 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.Optional;
+
 import andersonfds.pibic.R;
 import andersonfds.pibic.classes.RegisterContacts;
 
@@ -37,19 +40,28 @@ public class RegisterOcActivity extends AppCompatActivity {
     private static final int PICK_IMAGE = 1;
 
     private ImageView imageView;
+    private ImageView imageView2;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private LocationRequest mLocationRequest;
     private LocationCallback mLocationCallback;
     private TextView lbTest;
 
     private LatLng location;
+    private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_oc);
 
-        imageView = findViewById(R.id.imgTiraFoto);
+        imageView = findViewById(R.id.imgTiraFoto1);
+        imageView.setOnTouchListener((view, motionEvent) -> {
+            view.performClick();
+            openGallery();
+            imageView.setImageBitmap(bitmap);
+            return true;
+        });
+        imageView2 = findViewById(R.id.imgTiraFoto2);
         lbTest = findViewById(R.id.lbTest);
         Button btEnv = findViewById(R.id.btEnv);
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
@@ -77,11 +89,8 @@ public class RegisterOcActivity extends AppCompatActivity {
         }
         mFusedLocationProviderClient.removeLocationUpdates(mLocationCallback);
 
-        Button btGal = findViewById(R.id.btGal);
-        btGal.setOnClickListener(view ->
-        {
-            openGallery();
-        });
+        Button btGal = findViewById(R.id.btGal1);
+        btGal.setOnClickListener(view -> openGallery());
 
     }
 
@@ -89,8 +98,10 @@ public class RegisterOcActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            imageView.setImageBitmap(imageBitmap);
+            if(extras != null){
+                bitmap = (Bitmap) extras.get("data");
+              //imageView.setImageBitmap(imageBitmap);
+            }
         } else if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
             Uri uri = data.getData();
             imageView.setImageURI(uri);
@@ -125,7 +136,7 @@ public class RegisterOcActivity extends AppCompatActivity {
                 takePicture(view);
                 break;
 
-            case R.id.btGal:
+            case R.id.btGal1:
                 break;
 
             case R.id.btEnv:
@@ -149,8 +160,6 @@ public class RegisterOcActivity extends AppCompatActivity {
         long wpp = Long.parseLong(txtWpp.getText().toString());
 
         RegisterContacts registerContacts = new RegisterContacts(nome, cont, wpp, location.latitude, location.longitude);
-
-
     }
 
     public void takePicture( View view )
