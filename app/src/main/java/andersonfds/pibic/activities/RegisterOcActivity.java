@@ -83,11 +83,13 @@ public class RegisterOcActivity extends AppCompatActivity {
         Button btGal = findViewById(R.id.btGal1);
         btGal.setOnClickListener(view -> {
             openGallery();
+            new Thread(new Task()).start();
             imageView.setImageURI(uri);
         });
         Button btGal2 = findViewById(R.id.btGal2);
         btGal2.setOnClickListener(view -> {
             openGallery();
+            new Thread(new Task()).start();
             imageView2.setImageURI(uri);
         });
 
@@ -99,7 +101,7 @@ public class RegisterOcActivity extends AppCompatActivity {
             Bundle extras = data.getExtras();
             if(extras != null){
                 bitmap = (Bitmap) extras.get("data");
-              //imageView.setImageBitmap(imageBitmap);
+                imageView.setImageBitmap(bitmap);
             }
         } else if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
             uri = data.getData();
@@ -202,6 +204,19 @@ public class RegisterOcActivity extends AppCompatActivity {
                 }
             }
         };
+    }
+
+    private class Task implements Runnable {
+        @Override
+        public void run() {
+            for (int i = 0; i < 2; i++) {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException ieE) {
+                    Toast.makeText(getApplicationContext(), "Deu Pau.", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
     }
 
 }
