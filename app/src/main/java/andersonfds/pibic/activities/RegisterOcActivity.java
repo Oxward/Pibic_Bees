@@ -1,6 +1,7 @@
 package andersonfds.pibic.activities;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -12,7 +13,6 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,8 +26,6 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
-
-import java.util.Optional;
 
 import andersonfds.pibic.R;
 import andersonfds.pibic.classes.RegisterContacts;
@@ -48,11 +46,14 @@ public class RegisterOcActivity extends AppCompatActivity {
 
     private LatLng location;
     private Bitmap bitmap;
+    private Uri uri;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_oc);
+
 
         imageView = findViewById(R.id.imgTiraFoto1);
         imageView.setOnTouchListener((view, motionEvent) -> {
@@ -62,6 +63,13 @@ public class RegisterOcActivity extends AppCompatActivity {
             return true;
         });
         imageView2 = findViewById(R.id.imgTiraFoto2);
+        imageView2.setOnTouchListener((view, motionEvent) -> {
+            view.performClick();
+            openGallery();
+            imageView2.setImageBitmap(bitmap);
+            return true;
+        });
+
         lbTest = findViewById(R.id.lbTest);
         Button btEnv = findViewById(R.id.btEnv);
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
@@ -69,8 +77,7 @@ public class RegisterOcActivity extends AppCompatActivity {
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                             Manifest.permission.ACCESS_COARSE_LOCATION,
                             Manifest.permission.ACCESS_NETWORK_STATE}, REQUEST_CODE);
-        } else
-        {
+        } else {
             //Permissions granted
             buildLocationRequest();
             buildLocationCallback();
@@ -80,17 +87,25 @@ public class RegisterOcActivity extends AppCompatActivity {
 
             btEnv.setOnClickListener(view ->
             {
-              if (ActivityCompat.checkSelfPermission(RegisterOcActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) !=
-                      PackageManager.PERMISSION_GRANTED) {
-                  ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
-              }
+                if (ActivityCompat.checkSelfPermission(RegisterOcActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                        PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
+                }
                 mFusedLocationProviderClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
             });
         }
         mFusedLocationProviderClient.removeLocationUpdates(mLocationCallback);
 
         Button btGal = findViewById(R.id.btGal1);
-        btGal.setOnClickListener(view -> openGallery());
+        btGal.setOnClickListener(view -> {
+            openGallery();
+            imageView.setImageURI(uri);
+        });
+        Button btGal2 = findViewById(R.id.btGal2);
+        btGal2.setOnClickListener(view -> {
+            openGallery();
+            imageView2.setImageURI(uri);
+        });
 
     }
 
@@ -103,8 +118,8 @@ public class RegisterOcActivity extends AppCompatActivity {
               //imageView.setImageBitmap(imageBitmap);
             }
         } else if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
-            Uri uri = data.getData();
-            imageView.setImageURI(uri);
+            uri = data.getData();
+            //imageView.setImageURI(uri);
         }
     }
 
@@ -137,6 +152,9 @@ public class RegisterOcActivity extends AppCompatActivity {
                 break;
 
             case R.id.btGal1:
+                break;
+
+            case R.id.btGal2:
                 break;
 
             case R.id.btEnv:
