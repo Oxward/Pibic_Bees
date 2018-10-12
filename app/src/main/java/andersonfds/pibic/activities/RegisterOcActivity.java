@@ -54,22 +54,6 @@ public class RegisterOcActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_oc);
 
-
-        imageView = findViewById(R.id.imgTiraFoto1);
-        imageView.setOnTouchListener((view, motionEvent) -> {
-            view.performClick();
-            openGallery();
-            imageView.setImageBitmap(bitmap);
-            return true;
-        });
-        imageView2 = findViewById(R.id.imgTiraFoto2);
-        imageView2.setOnTouchListener((view, motionEvent) -> {
-            view.performClick();
-            openGallery();
-            imageView2.setImageBitmap(bitmap);
-            return true;
-        });
-
         lbTest = findViewById(R.id.lbTest);
         Button btEnv = findViewById(R.id.btEnv);
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
