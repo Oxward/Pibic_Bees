@@ -5,6 +5,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -45,7 +47,6 @@ public class RegisterOcActivity extends AppCompatActivity {
     private TextView lbTest;
 
     private LatLng location;
-    private Bitmap bitmap;
     private Uri uri;
 
     @SuppressLint("ClickableViewAccessibility")
@@ -80,7 +81,19 @@ public class RegisterOcActivity extends AppCompatActivity {
         }
         mFusedLocationProviderClient.removeLocationUpdates(mLocationCallback);
 
-        Button btGal = findViewById(R.id.btGal1);
+        imageView = findViewById(R.id.imgTiraFoto1);
+        imageView.setImageDrawable(null);
+        imageView.setOnClickListener(view -> {
+            Toast.makeText(RegisterOcActivity.this, "Click", Toast.LENGTH_SHORT).show();
+        });
+
+        imageView2 = findViewById(R.id.imgTiraFoto2);
+        imageView2.setImageDrawable(null);
+        imageView2.setOnClickListener(view -> {
+            Toast.makeText(RegisterOcActivity.this, "Click", Toast.LENGTH_SHORT).show();
+        });
+
+        /*Button btGal = findViewById(R.id.btGal1);
         btGal.setOnClickListener(view -> {
             openGallery();
             new Thread(new Task()).start();
@@ -91,19 +104,25 @@ public class RegisterOcActivity extends AppCompatActivity {
             openGallery();
             new Thread(new Task()).start();
             imageView2.setImageURI(uri);
-        });
+        });*/
 
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             if(extras != null){
-                bitmap = (Bitmap) extras.get("data");
-                imageView.setImageBitmap(bitmap);
+                Bitmap bitmap = (Bitmap) extras.get("data");
+                if (imageView.getDrawable() == null)
+                    imageView.setImageBitmap(bitmap);
+                else
+                    imageView2.setImageBitmap(bitmap);
             }
         } else if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
+            uri = null;
             uri = data.getData();
             //imageView.setImageURI(uri);
         }
@@ -129,6 +148,17 @@ public class RegisterOcActivity extends AppCompatActivity {
         }
     }
 
+    private boolean hasImage(@NonNull ImageView view) {
+        Drawable drawable = view.getDrawable();
+        boolean hasImage = drawable != null;
+
+        if (hasImage && (drawable instanceof BitmapDrawable)) {
+            hasImage = ((BitmapDrawable) drawable).getBitmap() != null;
+        }
+
+        return hasImage;
+    }
+
     public void buttonPress(View view)
     {
         switch ( view.getId() )
@@ -138,9 +168,13 @@ public class RegisterOcActivity extends AppCompatActivity {
                 break;
 
             case R.id.btGal1:
+                openGallery();
+                imageView.setImageURI(uri);
                 break;
 
             case R.id.btGal2:
+                openGallery();
+                imageView2.setImageURI(uri);
                 break;
 
             case R.id.btEnv:
@@ -149,7 +183,6 @@ public class RegisterOcActivity extends AppCompatActivity {
 
             case R.id.btCanc:
                 break;
-
         }
     }
 
@@ -166,7 +199,7 @@ public class RegisterOcActivity extends AppCompatActivity {
         RegisterContacts registerContacts = new RegisterContacts(nome, cont, wpp, location.latitude, location.longitude);
     }
 
-    public void takePicture( View view )
+    private void takePicture(View view)
     {
         Intent imageTakeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
