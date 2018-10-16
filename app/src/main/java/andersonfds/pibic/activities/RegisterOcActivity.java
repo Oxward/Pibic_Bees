@@ -39,21 +39,26 @@ public class RegisterOcActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 1000;
     private static final int PICK_IMAGE = 1;
 
+    private FusedLocationProviderClient mFusedLocationProviderClient;
+    private LocationCallback mLocationCallback;
+    private LocationRequest mLocationRequest;
+
     private ImageView imageView;
     private ImageView imageView2;
-    private FusedLocationProviderClient mFusedLocationProviderClient;
-    private LocationRequest mLocationRequest;
-    private LocationCallback mLocationCallback;
     private TextView lbTest;
+    private TextView PI, SI;
 
     private LatLng location;
-    private Uri uri;
+    private byte img;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_oc);
+
+        PI = findViewById(R.id.primImg);
+        SI = findViewById(R.id.segImg);
 
         lbTest = findViewById(R.id.lbTest);
         Button btEnv = findViewById(R.id.btEnv);
@@ -81,30 +86,22 @@ public class RegisterOcActivity extends AppCompatActivity {
         }
         mFusedLocationProviderClient.removeLocationUpdates(mLocationCallback);
 
+
         imageView = findViewById(R.id.imgTiraFoto1);
-        imageView.setImageDrawable(null);
-        imageView.setOnClickListener(view -> {
-            Toast.makeText(RegisterOcActivity.this, "Click", Toast.LENGTH_SHORT).show();
-        });
-
         imageView2 = findViewById(R.id.imgTiraFoto2);
-        imageView2.setImageDrawable(null);
-        imageView2.setOnClickListener(view -> {
-            Toast.makeText(RegisterOcActivity.this, "Click", Toast.LENGTH_SHORT).show();
-        });
 
-        /*Button btGal = findViewById(R.id.btGal1);
+        Button btGal = findViewById(R.id.btGal1);
         btGal.setOnClickListener(view -> {
+            img = 1;
             openGallery();
-            new Thread(new Task()).start();
-            imageView.setImageURI(uri);
+            PI.setText(null);
         });
         Button btGal2 = findViewById(R.id.btGal2);
         btGal2.setOnClickListener(view -> {
+            img = 2;
             openGallery();
-            new Thread(new Task()).start();
-            imageView2.setImageURI(uri);
-        });*/
+            SI.setText(null);
+        });
 
     }
 
@@ -116,15 +113,20 @@ public class RegisterOcActivity extends AppCompatActivity {
             Bundle extras = data.getExtras();
             if(extras != null){
                 Bitmap bitmap = (Bitmap) extras.get("data");
-                if (imageView.getDrawable() == null)
+                if (!hasImage(imageView)) {
                     imageView.setImageBitmap(bitmap);
-                else
+                    PI.setText(null);
+                } else {
                     imageView2.setImageBitmap(bitmap);
+                    SI.setText(null);
+                }
             }
         } else if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
-            uri = null;
-            uri = data.getData();
-            //imageView.setImageURI(uri);
+            Uri uri = data.getData();
+            if (img == 1)
+                imageView.setImageURI(uri);
+            else
+                imageView2.setImageURI(uri);
         }
     }
 
@@ -164,17 +166,15 @@ public class RegisterOcActivity extends AppCompatActivity {
         switch ( view.getId() )
         {
             case R.id.btFoto:
-                takePicture(view);
+                takePicture();
                 break;
 
             case R.id.btGal1:
                 openGallery();
-                imageView.setImageURI(uri);
                 break;
 
             case R.id.btGal2:
                 openGallery();
-                imageView2.setImageURI(uri);
                 break;
 
             case R.id.btEnv:
@@ -199,13 +199,13 @@ public class RegisterOcActivity extends AppCompatActivity {
         RegisterContacts registerContacts = new RegisterContacts(nome, cont, wpp, location.latitude, location.longitude);
     }
 
-    private void takePicture(View view)
+    private void takePicture()
     {
         Intent imageTakeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-        if( imageTakeIntent.resolveActivity( getPackageManager()) != null)
+        if (imageTakeIntent.resolveActivity(getPackageManager()) != null)
         {
-            startActivityForResult( imageTakeIntent, REQUEST_IMAGE_CAPTURE);
+            startActivityForResult(imageTakeIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
 
@@ -237,19 +237,6 @@ public class RegisterOcActivity extends AppCompatActivity {
                 }
             }
         };
-    }
-
-    private class Task implements Runnable {
-        @Override
-        public void run() {
-            for (int i = 0; i < 2; i++) {
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException ieE) {
-                    Toast.makeText(getApplicationContext(), "Deu Pau.", Toast.LENGTH_LONG).show();
-                }
-            }
-        }
     }
 
 }
