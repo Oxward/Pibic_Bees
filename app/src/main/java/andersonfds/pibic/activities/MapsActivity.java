@@ -121,7 +121,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Intent edit = new Intent(MapsActivity.this, EditMarkerActivity.class);
             edit.putExtra("location", latLng);
             MapsActivity.this.startActivityForResult(edit, EDIT_REQUEST);
-
             /*
             MarkerOptions marker = new MarkerOptions();
             marker.position(latLng);
@@ -340,12 +339,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         protected void onPostExecute(List<List<HashMap<String, String>>> lists)
         {
             //mostra as rotas no mapa
-            ArrayList pontos;
+            ArrayList<LatLng> pontos;
             PolylineOptions polylineOptions = null;
 
             for(List<HashMap<String, String>> caminho : lists)
             {
-                pontos = new ArrayList();
+                pontos = new ArrayList<>();
                 polylineOptions = new PolylineOptions();
 
                 for(HashMap<String, String> ponto : caminho)
