@@ -8,6 +8,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_teste">Teste</string>
     <string name="title_activity_login">Sign in</string>
+    <string name="api_key">AIzaSyAIrtmjxM3sA0wZTTbI_1hwCGAPJEwZd0Q</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
