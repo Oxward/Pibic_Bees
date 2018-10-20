@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -21,17 +20,12 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CustomCap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.maps.DirectionsApiRequest;
 import com.google.maps.GeoApiContext;
-import com.google.maps.PendingResult;
-import com.google.maps.internal.PolylineEncoding;
-import com.google.maps.model.DirectionsResult;
-import com.google.maps.model.DirectionsRoute;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -176,12 +170,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Log.d("markerClick", "Entrou no evento. Lista de Pontos: " + listMark.size());
             listMark.add(marker);
             if (listMark.size() % 2 == 0) {
-                calculateDirections(listMark.get(0), listMark.get(1));
-                //String url = getRequestedUrl(listMark.get(0), listMark.get(1));
-                //new TaskRequestDirections().execute(url);
-                //Log.d("markerClick", "Traçou a rota. Lista de Pontos: " + listMark.size());
-                // new Thread(new Task()).start();
-                //listMark.clear();
+                //calculateDirections(listMark.get(0), listMark.get(1));
+                String url = getRequestedUrl(listMark.get(0), listMark.get(1));
+                Log.d(TAG, "markerClick: " + url);
+                new TaskRequestDirections().execute(url);
+                Log.d("markerClick", "Traçando a rota.... Lista de Pontos: " + listMark.size());
+                new Thread(new Task()).start();
+                listMark.clear();
                 return true;
             } else {
                 Log.d("markerClick", "Fez nada. Lista de Pontos: " + listMark.size());
@@ -190,6 +185,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
+    /*
     private void calculateDirections(Marker orig, Marker dest) {
         Log.d(TAG, "calculateDirections: calculating directions.");
 
@@ -227,35 +223,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void addPolylinesToMap(final DirectionsResult result) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                Log.d(TAG, "run: result routes: " + result.routes.length);
+        new Handler(Looper.getMainLooper()).post(() -> {
+            Log.d(TAG, "run: result routes: " + result.routes.length);
 
-                for (DirectionsRoute route : result.routes) {
-                    Log.d(TAG, "run: leg: " + route.legs[0].toString());
-                    List<com.google.maps.model.LatLng> decodedPath = PolylineEncoding.decode(route.overviewPolyline.getEncodedPath());
+            for (DirectionsRoute route : result.routes) {
+                Log.d(TAG, "run: leg: " + route.legs[0].toString());
+                List<com.google.maps.model.LatLng> decodedPath = PolylineEncoding.decode(route.overviewPolyline.getEncodedPath());
 
-                    List<LatLng> newDecodedPath = new ArrayList<>();
+                List<LatLng> newDecodedPath = new ArrayList<>();
 
-                    // This loops through all the LatLng coordinates of ONE polyline.
-                    for (com.google.maps.model.LatLng latLng : decodedPath) {
+                // This loops through all the LatLng coordinates of ONE polyline.
+                for (com.google.maps.model.LatLng latLng : decodedPath) {
 
 //                        Log.d(TAG, "run: latlng: " + latLng.toString());
 
-                        newDecodedPath.add(new LatLng(
-                                latLng.lat,
-                                latLng.lng
-                        ));
-                    }
-                    Polyline polyline = mMap.addPolyline(new PolylineOptions().addAll(newDecodedPath));
-                    polyline.setColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
-                    polyline.setClickable(true);
-
+                    newDecodedPath.add(new LatLng(
+                            latLng.lat,
+                            latLng.lng
+                    ));
                 }
+                Polyline polyline = mMap.addPolyline(new PolylineOptions().addAll(newDecodedPath));
+                polyline.setColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+                polyline.setClickable(true);
+
             }
         });
     }
+    */
 
     private String getRequestedUrl(Marker orig, Marker dest) {
         Log.d("getRequestedUrl", "Teste de LatLong orig: "+orig.getPosition().latitude+ ", "+orig.getPosition().longitude);
@@ -266,7 +260,40 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String mode = "mode=driving";
         String param = origem + "&" + destino + "&" + sensor + "&" + mode;
         String output = "json";
-        return "https://maps.googleapis.com/maps/api/directions/" + output + "?" + param;
+        Log.d(TAG, "getRequestedUrl: " + output + " " + param);
+        return "https://maps.googleapis.com/maps/api/directions/" + output + "?" + param + "&key=" + "AIzaSyAIrtmjxM3sA0wZTTbI_1hwCGAPJEwZd0Q";
+    }
+
+    private static class selectAsync extends AsyncTask<Void, Void, List<Markers>> {
+
+        private Markers_ViewModel markers_viewModel;
+        private List<Markers> mAsyncList;
+
+        private selectAsync(Markers_ViewModel markers_viewModel, List<Markers> mList) {
+            this.markers_viewModel = markers_viewModel;
+            this.mAsyncList = mList;
+        }
+
+        @Override
+        protected List<Markers> doInBackground(Void... voids) {
+            Log.d("asd", "doInBackground: " + mAsyncList.size());
+            mAsyncList.addAll(markers_viewModel.getAllMarkers());
+            Log.d("asd", "doInBackground: " + mAsyncList.size());
+            return mAsyncList;
+        }
+
+        @Override
+        protected void onPostExecute(List<Markers> list) {
+            Log.d("asd", "doInBackground: " + list.size());
+            mList = list;
+            Log.d("asd", "doInBackground: " + mList.size());
+            for (Markers markers : mList) {
+                mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
+                        .position(new LatLng(markers.getLatitude(), markers.getLongitude())).alpha(0.6f).title(markers.getNome()));
+            }
+            mAsyncList.clear();
+            mList.clear();
+        }
     }
 
     //Traça uma Rota Entre os Pontos Demarcados
@@ -318,38 +345,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return respString;
     }
 
-    private static class selectAsync extends AsyncTask<Void, Void, List<Markers>> {
-
-        private Markers_ViewModel markers_viewModel;
-        private List<Markers> mAsyncList;
-
-        private selectAsync(Markers_ViewModel markers_viewModel, List<Markers> mList) {
-            this.markers_viewModel = markers_viewModel;
-            this.mAsyncList = mList;
-        }
-
-        @Override
-        protected List<Markers> doInBackground(Void... voids) {
-            Log.d("asd", "doInBackground: " + mAsyncList.size());
-            mAsyncList.addAll(markers_viewModel.getAllMarkers());
-            Log.d("asd", "doInBackground: " + mAsyncList.size());
-            return mAsyncList;
-        }
-
-        @Override
-        protected void onPostExecute(List<Markers> list) {
-            Log.d("asd", "doInBackground: " + list.size());
-            mList = list;
-            Log.d("asd", "doInBackground: " + mList.size());
-            for (Markers markers : mList) {
-                mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
-                        .position(new LatLng(markers.getLatitude(), markers.getLongitude())).alpha(0.6f).title(markers.getNome()));
-            }
-            mAsyncList.clear();
-            mList.clear();
-        }
-    }
-
     //CLASSES PARA TRAÇAR AS ROTAS(Utiliza Internet, estilo GoogleMaps)
     public static class TaskRequestDirections extends AsyncTask<String, Void, String>
     {
@@ -360,6 +355,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             String responseString;
             responseString = requestDirections(strings[0]);
 
+            Log.d(TAG, "doInBackground: " + responseString);
             return responseString;
         }
 
@@ -425,7 +421,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 polylineOptions.addAll(pontos);
                 polylineOptions.width(15);
                 polylineOptions.color(Color.GREEN);
-                polylineOptions.geodesic(true);
+                polylineOptions.geodesic(false);
+                polylineOptions.endCap(new CustomCap(BitmapDescriptorFactory.fromResource(R.drawable.arrow), 16));
             }
 
             if(polylineOptions != null)
