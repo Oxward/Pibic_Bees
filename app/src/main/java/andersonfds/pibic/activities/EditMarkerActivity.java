@@ -21,7 +21,6 @@ public class EditMarkerActivity extends AppCompatActivity
     private final String TAG = EditMarkerActivity.class.toString();
 
     private EditText txtMarkerTitle;
-
     private Markers_ViewModel markers_viewModel;
 
     @Override

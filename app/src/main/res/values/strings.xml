@@ -39,4 +39,9 @@
     <string name="testar">Testar</string>
     <string name="tirar_foto">Tirar Foto</string>
     <string name="galeria">Galeria</string>
+    <string name="login">Login</string>
+    <string name="reg_ocr">Registrar Ocorrência</string>
+    <string name="reg_loc">Registrar Localização</string>
+    <string name="sobre">Sobre</string>
+    <string name="sair">Sair</string>
 </resources>

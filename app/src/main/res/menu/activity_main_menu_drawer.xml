@@ -7,25 +7,26 @@
         <item
             android:id="@+id/menuLogin"
             android:icon="@drawable/login"
-            android:title="Login" />
+            android:title="@string/login" />
         <item
             android:id="@+id/menuRegOcor"
             android:icon="@drawable/ocorrencia"
-            android:title="Registrar Ocorrência" />
+            android:title="@string/reg_ocr" />
         <item
             android:id="@+id/menuRegLoc"
             android:icon="@drawable/location"
-            android:title="Registrar Localização" />
+            android:title="@string/reg_loc" />
         <item
             android:id="@+id/menuInfo"
             android:icon="@drawable/info"
-            android:title="Sobre" />
+            android:title="@string/sobre" />
         <item
             android:id="@+id/menuExit"
             android:icon="@drawable/exit"
-            android:title="Sair"/>
+            android:title="@string/sair" />
     </group>
 
+    <!--
     <item android:title="Communicate">
         <menu>
             <item
@@ -37,6 +38,6 @@
                 android:icon="@drawable/ic_menu_send"
                 android:title="Send" />
         </menu>
-    </item>
+    </item> -->
 
 </menu>
