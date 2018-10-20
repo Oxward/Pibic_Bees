@@ -340,8 +340,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     e.getStackTrace();
                 }
 
-            assert httpURLConnection != null;
-            httpURLConnection.disconnect();
+            if (httpURLConnection != null) {
+                httpURLConnection.disconnect();
+            }
         }
         return respString;
     }
