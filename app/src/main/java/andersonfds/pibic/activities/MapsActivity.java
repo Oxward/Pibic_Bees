@@ -50,6 +50,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 {
 
     private static final String TAG = "MapsActivity";
+    private static final String API_KEY = "AIzaSyAIrtmjxM3sA0wZTTbI_1hwCGAPJEwZd0Q";
     private static final int REQUEST_LOCATION_PERMISSION = 1;
     private static final int LOCATION_UPDATE_INTERVAL = 3000;
     private static final int EDIT_REQUEST = 1;
@@ -261,7 +262,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String param = origem + "&" + destino + "&" + sensor + "&" + mode;
         String output = "json";
         Log.d(TAG, "getRequestedUrl: " + output + " " + param);
-        return "https://maps.googleapis.com/maps/api/directions/" + output + "?" + param + "&key=" + "AIzaSyAIrtmjxM3sA0wZTTbI_1hwCGAPJEwZd0Q";
+        return "https://maps.googleapis.com/maps/api/directions/" + output + "?" + param + "&key=" + API_KEY;
     }
 
     private static class selectAsync extends AsyncTask<Void, Void, List<Markers>> {
