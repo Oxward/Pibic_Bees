@@ -246,7 +246,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Polyline polyline = mMap.addPolyline(new PolylineOptions().addAll(newDecodedPath));
                 polyline.setColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
                 polyline.setClickable(true);
-
+                polyline.setEndCap(new CustomCap(BitmapDescriptorFactory.fromResource(R.drawable.arrow), 16));
             }
         });
     }

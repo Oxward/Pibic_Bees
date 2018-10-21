@@ -45,4 +45,9 @@
     <string name="reg_loc">Registrar Localização</string>
     <string name="sobre">Sobre</string>
     <string name="sair">Sair</string>
+    <string name="carregar_imagem_1">Carregar Imagem 1</string>
+    <string name="carregar_imagem_2">Carregar Imagem 2</string>
+    <string name="primeira_imagem">Primeira Imagem</string>
+    <string name="segunda_imagem">Segunda Imagem</string>
+    <string name="logout">Logout</string>
 </resources>

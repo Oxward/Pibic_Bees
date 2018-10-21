@@ -98,7 +98,7 @@ public class RegisterOcActivity extends AppCompatActivity {
         });
         Button btGal2 = findViewById(R.id.btGal2);
         btGal2.setOnClickListener(view -> {
-            img = 2;
+            img = 0;
             openGallery();
             SI.setText(null);
         });

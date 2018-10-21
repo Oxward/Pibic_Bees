@@ -9,6 +9,10 @@
             android:icon="@drawable/login"
             android:title="@string/login" />
         <item
+            android:id="@+id/menuLogout"
+            android:icon="@drawable/login"
+            android:title="@string/logout" />
+        <item
             android:id="@+id/menuRegOcor"
             android:icon="@drawable/ocorrencia"
             android:title="@string/reg_ocr" />
