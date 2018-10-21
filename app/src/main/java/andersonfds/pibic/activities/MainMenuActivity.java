@@ -10,7 +10,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -28,9 +30,9 @@ public class MainMenuActivity extends AppCompatActivity
     private static final int RC_SIGN_IN = 1;
 
     private MenuItem menuLogin;
-    private MenuItem menuLogOut;
+    private MenuItem menuLogout;
 
-    private GoogleSignInOptions mGoogleSignInOptions;
+    //private GoogleSignInOptions mGoogleSignInOptions;
     private GoogleSignInClient mGoogleSignInClient;
 
     @Override
@@ -47,13 +49,13 @@ public class MainMenuActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        menuLogin = findViewById(R.id.menuLogin);
-        menuLogOut = findViewById(R.id.menuLogout);
-
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        Menu m = navigationView.getMenu();
+        menuLogin = m.findItem(R.id.menuLogin);
+        menuLogout = m.findItem(R.id.menuLogout);
 
-        mGoogleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        GoogleSignInOptions mGoogleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail().build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, mGoogleSignInOptions);
     }
@@ -91,6 +93,7 @@ public class MainMenuActivity extends AppCompatActivity
                 } catch (Exception e) {
                     Log.d(TAG, "onNavigationItemSelected: erro no logout, " + e.getMessage());
                 }
+                break;
 
             case R.id.menuRegOcor:
                 try
@@ -130,6 +133,9 @@ public class MainMenuActivity extends AppCompatActivity
     protected void onStart() {
         super.onStart();
         GoogleSignInAccount googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this);
+        if (googleSignInAccount != null) {
+            Log.d(TAG, "onStart: " + googleSignInAccount.getEmail());
+        }
         updateUi(googleSignInAccount);
     }
 
@@ -146,10 +152,10 @@ public class MainMenuActivity extends AppCompatActivity
     private void updateUi(GoogleSignInAccount signInAccount) {
         if (signInAccount != null) {
             menuLogin.setVisible(false);
-            menuLogOut.setVisible(true);
+            menuLogout.setVisible(true);
         } else {
             menuLogin.setVisible(true);
-            menuLogOut.setVisible(false);
+            menuLogout.setVisible(false);
         }
     }
 
@@ -160,7 +166,9 @@ public class MainMenuActivity extends AppCompatActivity
 
     private void signOut() {
         if (mGoogleSignInClient != null) {
-            mGoogleSignInClient.signOut();
+            mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> {
+                Toast.makeText(this, "Desconectado com Sucesso", Toast.LENGTH_SHORT).show();
+            });
             updateUi(null);
         }
     }
@@ -172,6 +180,8 @@ public class MainMenuActivity extends AppCompatActivity
         } catch (ApiException e) {
             Log.d(TAG, "handleSignInResult: " + e.getMessage());
             updateUi(null);
+        } catch (Exception e) {
+            Log.d(TAG, "handleSignInResult: " + e.getMessage());
         }
     }
 }
