@@ -81,9 +81,16 @@ public class MainMenuActivity extends AppCompatActivity
                 try {
                     signIn();
                 } catch (Exception e) {
-                    Log.d(TAG, "onNavigationItemSelected: " + e.getMessage());
+                    Log.d(TAG, "onNavigationItemSelected: erro no login, " + e.getMessage());
                 }
                 break;
+
+            case R.id.menuLogout:
+                try {
+                    signOut();
+                } catch (Exception e) {
+                    Log.d(TAG, "onNavigationItemSelected: erro no logout, " + e.getMessage());
+                }
 
             case R.id.menuRegOcor:
                 try
@@ -92,7 +99,7 @@ public class MainMenuActivity extends AppCompatActivity
                   startActivity(i);
                 }catch( Exception e)
                 {
-                    Log.d(TAG, "" + e.getMessage());
+                    Log.d(TAG, "onNavigationItemSelected: erro ao abrir tela regOc, " + e.getMessage());
                 }
                 break;
 
@@ -103,7 +110,7 @@ public class MainMenuActivity extends AppCompatActivity
                   startActivity(i);
                 } catch(Exception e)
                 {
-                    Log.d(TAG, "" + e.getMessage());
+                    Log.d(TAG, "onNavigationItemSelected: erro ao abrir tela regLoc" + e.getMessage());
                 }
                 break;
 
@@ -149,6 +156,13 @@ public class MainMenuActivity extends AppCompatActivity
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    private void signOut() {
+        if (mGoogleSignInClient != null) {
+            mGoogleSignInClient.signOut();
+            updateUi(null);
+        }
     }
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
