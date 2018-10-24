@@ -36,6 +36,7 @@ import java.io.ByteArrayOutputStream;
 
 import andersonfds.pibic.R;
 import andersonfds.pibic.classes.RegisterContacts;
+import es.dmoral.toasty.Toasty;
 
 public class RegisterOcActivity extends AppCompatActivity {
 
@@ -200,32 +201,33 @@ public class RegisterOcActivity extends AppCompatActivity {
     }
 
     private void saveData() {
-        EditText txtNome = findViewById(R.id.txtNome);
-        EditText txtCont = findViewById(R.id.txtCont);
-        EditText txtWpp = findViewById(R.id.txtWpp);
-        ImageView imgTiraFoto = findViewById(R.id.imgTiraFoto1);
-        ImageView imgTiraFoto2 = findViewById(R.id.imgTiraFoto2);
-
-        Bitmap b1 = ((BitmapDrawable) imgTiraFoto.getDrawable()).getBitmap();
-        Bitmap b2 = ((BitmapDrawable) imgTiraFoto2.getDrawable()).getBitmap();
-
-        ByteArrayOutputStream bb1 = new ByteArrayOutputStream();
-        ByteArrayOutputStream bb2 = new ByteArrayOutputStream();
-
-        b1.compress(Bitmap.CompressFormat.JPEG, 100, bb1);
-        b2.compress(Bitmap.CompressFormat.JPEG, 100, bb2);
-
-        String nome = txtNome.getText().toString();
-        long cont = Long.parseLong(txtCont.getText().toString());
-        long wpp = Long.parseLong(txtWpp.getText().toString());
-        byte[] i1 = bb1.toByteArray();
-        byte[] i2 = bb2.toByteArray();
-
         try {
+            EditText txtNome = findViewById(R.id.txtNome);
+            EditText txtCont = findViewById(R.id.txtCont);
+            EditText txtWpp = findViewById(R.id.txtWpp);
+            ImageView imgTiraFoto = findViewById(R.id.imgTiraFoto1);
+            ImageView imgTiraFoto2 = findViewById(R.id.imgTiraFoto2);
+
+            Bitmap b1 = ((BitmapDrawable) imgTiraFoto.getDrawable()).getBitmap();
+            Bitmap b2 = ((BitmapDrawable) imgTiraFoto2.getDrawable()).getBitmap();
+
+            ByteArrayOutputStream bb1 = new ByteArrayOutputStream();
+            ByteArrayOutputStream bb2 = new ByteArrayOutputStream();
+
+            b1.compress(Bitmap.CompressFormat.JPEG, 100, bb1);
+            b2.compress(Bitmap.CompressFormat.JPEG, 100, bb2);
+
+            String nome = txtNome.getText().toString();
+            long cont = Long.parseLong(txtCont.getText().toString());
+            long wpp = Long.parseLong(txtWpp.getText().toString());
+            byte[] i1 = bb1.toByteArray();
+            byte[] i2 = bb2.toByteArray();
+
             RegisterContacts registerContacts = new RegisterContacts(nome, cont, wpp, location.latitude, location.longitude, i1, i2);
             Log.d(TAG, "saveData: " + location.latitude + " " + location.longitude);
-        } catch (NullPointerException e) {
-            Toast.makeText(this, "Erro", Toast.LENGTH_SHORT).show();
+            Toasty.success(this, "Salvo com sucesso", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toasty.error(getApplicationContext(), "Erro ao salvar", Toast.LENGTH_SHORT).show();
         }
     }
 
