@@ -117,6 +117,15 @@ public class MainMenuActivity extends AppCompatActivity
                 }
                 break;
 
+            case R.id.teste:
+                try {
+                    Intent i = new Intent(MainMenuActivity.this, OcorrenciaReportActivity.class);
+                    startActivity(i);
+                } catch (Exception e) {
+                    Log.d(TAG, "onNavigationItemSelected: erro ao abrir tela teste " + e.getMessage());
+                }
+                break;
+
             case R.id.menuExit:
                 moveTaskToBack(true );
                 android.os.Process.killProcess( android.os.Process.myPid() );

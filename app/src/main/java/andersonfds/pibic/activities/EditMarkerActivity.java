@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,9 +37,13 @@ public class EditMarkerActivity extends AppCompatActivity
 
         btSaveMTitle.setOnClickListener(v -> {
             MarkerOptions marker = new MarkerOptions().position(latLng);
-            if (txtMarkerTitle.getText() != null) {
-                marker.title(txtMarkerTitle.getText().toString());
+
+            if ((TextUtils.isEmpty(txtMarkerTitle.getText().toString()))) {
+                txtMarkerTitle.setError("Preencha este campo.");
+                return;
             }
+
+            marker.title(txtMarkerTitle.getText().toString());
             Markers m = new Markers("teste@teste.com", marker.getTitle(),
                     latLng.latitude, latLng.longitude);
             markers_viewModel.insertMarker(m);
