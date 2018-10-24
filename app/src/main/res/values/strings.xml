@@ -50,4 +50,6 @@
     <string name="primeira_imagem">Primeira Imagem</string>
     <string name="segunda_imagem">Segunda Imagem</string>
     <string name="logout">Logout</string>
+    <string name="title_activity_ocorrencia_report">OcorrenciaReport</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>
