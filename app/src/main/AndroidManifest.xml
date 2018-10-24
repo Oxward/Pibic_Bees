@@ -56,7 +56,7 @@
         <activity
             android:name=".activities.OcorrenciaReportActivity"
             android:label="@string/title_activity_ocorrencia_report"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

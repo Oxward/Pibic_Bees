@@ -35,7 +35,7 @@
         android:focusable="true"
         android:src="@android:drawable/ic_menu_save"
         app:backgroundTint="@android:color/holo_green_dark"
-        app:layout_constraintBottom_toTopOf="@+id/fabDelete"
+        app:layout_constraintBottom_toTopOf="@+id/fabBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.975"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +44,7 @@
         app:rippleColor="@android:color/holo_green_dark" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabDelete"
+        android:id="@+id/fabBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -55,7 +55,7 @@
         android:layout_marginTop="8dp"
         android:clickable="true"
         android:focusable="true"
-        android:src="@android:drawable/ic_menu_delete"
+        android:src="@android:drawable/ic_menu_revert"
         app:backgroundTint="@android:color/holo_red_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

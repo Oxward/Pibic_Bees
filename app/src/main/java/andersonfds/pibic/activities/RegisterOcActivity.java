@@ -13,8 +13,10 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,6 +39,7 @@ import andersonfds.pibic.classes.RegisterContacts;
 public class RegisterOcActivity extends AppCompatActivity {
 
     //Constantes
+    private static final String TAG = "RegisterOcActivity";
     private static final int REQUEST_IMAGE_CAPTURE = 101;
     private static final int REQUEST_CODE = 1000;
     private static final int PICK_IMAGE = 1;
@@ -61,9 +64,9 @@ public class RegisterOcActivity extends AppCompatActivity {
 
         PI = findViewById(R.id.primImg);
         SI = findViewById(R.id.segImg);
-
         lbTest = findViewById(R.id.lbTest);
-        Button btEnv = findViewById(R.id.btEnv);
+        FloatingActionButton fabSaveOc = findViewById(R.id.fabSaveOc);
+
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
@@ -77,17 +80,17 @@ public class RegisterOcActivity extends AppCompatActivity {
             //fusedProviderClient
             mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
-            btEnv.setOnClickListener(view ->
+            fabSaveOc.setOnClickListener(view ->
             {
                 if (ActivityCompat.checkSelfPermission(RegisterOcActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) !=
                         PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
                 }
                 mFusedLocationProviderClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
+                saveData();
             });
         }
         mFusedLocationProviderClient.removeLocationUpdates(mLocationCallback);
-
 
         imageView = findViewById(R.id.imgTiraFoto1);
         imageView2 = findViewById(R.id.imgTiraFoto2);
@@ -104,6 +107,9 @@ public class RegisterOcActivity extends AppCompatActivity {
             openGallery();
             SI.setText(null);
         });
+
+        //Button cancel = findViewById(R.id.btCanc);
+        //cancel.setOnClickListener(view -> finish());
 
     }
 
@@ -179,17 +185,17 @@ public class RegisterOcActivity extends AppCompatActivity {
                 openGallery();
                 break;
 
-            case R.id.btEnv:
+            case R.id.fabSaveOc:
                 saveData();
                 break;
 
             case R.id.btCanc:
+                finish();
                 break;
         }
     }
 
     private void saveData() {
-
         EditText txtNome = findViewById(R.id.txtNome);
         EditText txtCont = findViewById(R.id.txtCont);
         EditText txtWpp = findViewById(R.id.txtWpp);
@@ -212,11 +218,11 @@ public class RegisterOcActivity extends AppCompatActivity {
         byte[] i2 = bb2.toByteArray();
 
         RegisterContacts registerContacts = new RegisterContacts(nome, cont, wpp, location.latitude, location.longitude, i1, i2);
+        Log.d(TAG, "saveData: " + location.latitude + ", " + location.longitude);
 
     }
 
-    private void takePicture()
-    {
+    private void takePicture() {
         Intent imageTakeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         if (imageTakeIntent.resolveActivity(getPackageManager()) != null)
@@ -230,8 +236,7 @@ public class RegisterOcActivity extends AppCompatActivity {
         startActivityForResult(gallery, PICK_IMAGE);
     }
 
-    private void buildLocationRequest()
-    {
+    private void buildLocationRequest() {
         mLocationRequest = new LocationRequest();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mLocationRequest.setInterval(5000);
@@ -239,8 +244,7 @@ public class RegisterOcActivity extends AppCompatActivity {
         mLocationRequest.setSmallestDisplacement(10);
     }
 
-    private void buildLocationCallback()
-    {
+    private void buildLocationCallback() {
         mLocationCallback = new LocationCallback()
         {
             @Override
