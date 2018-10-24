@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -87,7 +88,10 @@ public class RegisterOcActivity extends AppCompatActivity {
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
                 }
                 mFusedLocationProviderClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
-                saveData();
+
+                final Handler handler = new Handler();
+                handler.postDelayed(() -> saveData(), 1500);
+
             });
         }
         mFusedLocationProviderClient.removeLocationUpdates(mLocationCallback);
@@ -217,9 +221,12 @@ public class RegisterOcActivity extends AppCompatActivity {
         byte[] i1 = bb1.toByteArray();
         byte[] i2 = bb2.toByteArray();
 
-        RegisterContacts registerContacts = new RegisterContacts(nome, cont, wpp, location.latitude, location.longitude, i1, i2);
-        Log.d(TAG, "saveData: " + location.latitude + ", " + location.longitude);
-
+        try {
+            RegisterContacts registerContacts = new RegisterContacts(nome, cont, wpp, location.latitude, location.longitude, i1, i2);
+            Log.d(TAG, "saveData: " + location.latitude + " " + location.longitude);
+        } catch (NullPointerException e) {
+            Toast.makeText(this, "Erro", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void takePicture() {
@@ -252,8 +259,9 @@ public class RegisterOcActivity extends AppCompatActivity {
             {
                 for ( Location l : locationResult.getLocations() )
                 {
-                    lbTest.setText(String.valueOf(l.getLatitude() + "/" + String.valueOf(l.getLongitude())));
                     location = new LatLng(l.getLatitude(), l.getLongitude());
+                    lbTest.setText(String.valueOf(l.getLatitude() + "/" + String.valueOf(l.getLongitude())));
+                    Log.d(TAG, "onLocationResult: " + location.latitude + " " + location.longitude);
                 }
             }
         };
