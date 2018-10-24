@@ -36,7 +36,7 @@ dependencies {
     def paging_version = "1.0.1"
     def archLifecycleVersion = '1.1.1'
     def nav_version = "1.0.0-alpha06"
-    def work_version = "1.0.0-alpha06"
+    def work_version = "1.0.0-alpha10"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:support-v4:27.1.1'
@@ -51,7 +51,7 @@ dependencies {
     implementation 'org.slf4j:slf4j-nop:1.7.25'
 
     // Maps utils (required for custom markers)
-    implementation 'com.google.maps.android:android-maps-utils:0.5+'
+    implementation 'com.google.maps.android:android-maps-utils:0.5'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
@@ -109,4 +109,7 @@ dependencies {
 
     //Work Manager Test helpers
     androidTestImplementation "android.arch.work:work-testing:$work_version"
+
+    //Reports
+    implementation 'com.itextpdf:itextg:5.5.10'
 }
