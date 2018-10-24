@@ -29,6 +29,8 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.ByteArrayOutputStream;
+
 import andersonfds.pibic.R;
 import andersonfds.pibic.classes.RegisterContacts;
 
@@ -187,16 +189,30 @@ public class RegisterOcActivity extends AppCompatActivity {
     }
 
     private void saveData() {
+
         EditText txtNome = findViewById(R.id.txtNome);
         EditText txtCont = findViewById(R.id.txtCont);
         EditText txtWpp = findViewById(R.id.txtWpp);
-        //ImageView imgTiraFoto = findViewById(R.id.imgTiraFoto);
+        ImageView imgTiraFoto = findViewById(R.id.imgTiraFoto1);
+        ImageView imgTiraFoto2 = findViewById(R.id.imgTiraFoto2);
+
+        Bitmap b1 = ((BitmapDrawable) imgTiraFoto.getDrawable()).getBitmap();
+        Bitmap b2 = ((BitmapDrawable) imgTiraFoto2.getDrawable()).getBitmap();
+
+        ByteArrayOutputStream bb1 = new ByteArrayOutputStream();
+        ByteArrayOutputStream bb2 = new ByteArrayOutputStream();
+
+        b1.compress(Bitmap.CompressFormat.JPEG, 100, bb1);
+        b2.compress(Bitmap.CompressFormat.JPEG, 100, bb2);
 
         String nome = txtNome.getText().toString();
         long cont = Long.parseLong(txtCont.getText().toString());
         long wpp = Long.parseLong(txtWpp.getText().toString());
+        byte[] i1 = bb1.toByteArray();
+        byte[] i2 = bb2.toByteArray();
 
-        RegisterContacts registerContacts = new RegisterContacts(nome, cont, wpp, location.latitude, location.longitude);
+        RegisterContacts registerContacts = new RegisterContacts(nome, cont, wpp, location.latitude, location.longitude, i1, i2);
+
     }
 
     private void takePicture()
