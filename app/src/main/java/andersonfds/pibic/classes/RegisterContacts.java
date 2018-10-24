@@ -33,18 +33,23 @@ public class RegisterContacts {
     private double locLon;
 
     @NonNull
-    @ColumnInfo(name = "imgRegCon", typeAffinity = ColumnInfo.BLOB)
-    private byte[] img;
+    @ColumnInfo(name = "imgRegCon1", typeAffinity = ColumnInfo.BLOB)
+    private byte[] img1;
+
+    @NonNull
+    @ColumnInfo(name = "imgRegCon2", typeAffinity = ColumnInfo.BLOB)
+    private byte[] img2;
 
     public RegisterContacts() {
     }
 
     @Ignore
-    public RegisterContacts(String nome, double locLat, double locLon, byte[] img) {
+    public RegisterContacts(String nome, double locLat, double locLon, byte[] img1, byte[] img2) {
         this.nome = nome;
         this.locLat = locLat;
         this.locLon = locLon;
-        this.img = img;
+        this.img1 = img1;
+        this.img2 = img2;
     }
 
     @Ignore
@@ -57,22 +62,24 @@ public class RegisterContacts {
     }
 
     @Ignore
-    public RegisterContacts(String nome, long numTel, double locLat, double locLon, byte[] img) {
+    public RegisterContacts(String nome, long numTel, double locLat, double locLon, byte[] img1, byte[] img2) {
         this.nome = nome;
         this.numTel = numTel;
         this.locLat = locLat;
         this.locLon = locLon;
-        this.img = img;
+        this.img1 = img1;
+        this.img2 = img2;
     }
 
     @Ignore
-    public RegisterContacts(String nome, long numTel, long numWpp, double locLat, double locLon, byte[] img) {
+    public RegisterContacts(String nome, long numTel, long numWpp, double locLat, double locLon, byte[] img1, byte[] img2) {
         this.nome = nome;
         this.numTel = numTel;
         this.numWpp = numWpp;
         this.locLat = locLat;
         this.locLon = locLon;
-        this.img = img;
+        this.img1 = img1;
+        this.img2 = img2;
     }
 
     public int getId() {
@@ -123,11 +130,20 @@ public class RegisterContacts {
         this.locLon = locLon;
     }
 
-    public byte[] getImg() {
-        return img;
+    public byte[] getImg1() {
+        return img1;
     }
 
-    public void setImg(byte[] img) {
-        this.img = img;
+    public void setImg1(byte[] img1) {
+        this.img1 = img1;
     }
+
+    public byte[] getImg2() {
+        return img2;
+    }
+
+    public void setImg2(byte[] img2) {
+        this.img2 = img2;
+    }
+
 }
