@@ -42,7 +42,7 @@ public class OcorrenciaPendente extends Fragment {
         FloatingActionButton floatingActionButton = view.findViewById(R.id.fabPen);
 
         floatingActionButton.setOnClickListener(v -> {
-            Snackbar.make(view, "Deu certo " + TAG, Snackbar.LENGTH_SHORT);
+            Snackbar.make(view, "Deu certo " + TAG, Snackbar.LENGTH_SHORT).show();
         });
 
         return view;

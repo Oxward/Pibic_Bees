@@ -41,7 +41,7 @@ public class OcorrenciaFinalizada extends Fragment {
 
         FloatingActionButton floatingActionButton = view.findViewById(R.id.fabFin);
         floatingActionButton.setOnClickListener(v -> {
-            Snackbar.make(view, "Deu certo " + TAG, Snackbar.LENGTH_SHORT);
+            Snackbar.make(view, "Deu certo " + TAG, Snackbar.LENGTH_SHORT).show();
         });
 
         return view;
