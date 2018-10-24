@@ -21,7 +21,6 @@
         android:layout_marginTop="8dp"
         android:onClick="buttonPress"
         android:text="@string/carregar_imagem_1"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.013"
@@ -258,6 +257,7 @@
         android:layout_marginStart="328dp"
         android:layout_marginTop="8dp"
         android:clickable="true"
+        android:focusable="true"
         app:backgroundTint="@android:color/holo_green_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
