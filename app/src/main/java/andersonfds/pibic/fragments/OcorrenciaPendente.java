@@ -40,7 +40,6 @@ public class OcorrenciaPendente extends Fragment {
         View view = inflater.inflate(R.layout.fragment_ocorrencia_pendente, container, false);
 
         FloatingActionButton floatingActionButton = view.findViewById(R.id.fabPen);
-
         floatingActionButton.setOnClickListener(v -> {
             Snackbar.make(view, "Deu certo " + TAG, Snackbar.LENGTH_SHORT).show();
         });
