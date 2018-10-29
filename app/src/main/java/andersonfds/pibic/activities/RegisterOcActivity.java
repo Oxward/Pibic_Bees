@@ -34,6 +34,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.io.ByteArrayOutputStream;
 
+import andersonfds.pibic.MaskWatcher;
 import andersonfds.pibic.R;
 import andersonfds.pibic.classes.RegisterContacts;
 import es.dmoral.toasty.Toasty;
@@ -63,6 +64,11 @@ public class RegisterOcActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_oc);
+
+        EditText cont = findViewById(R.id.txtCont);
+        cont.addTextChangedListener(MaskWatcher.buildPhoneNumber());
+        EditText wpp = findViewById(R.id.txtWpp);
+        wpp.addTextChangedListener(MaskWatcher.buildPhoneNumber());
 
         PI = findViewById(R.id.primImg);
         SI = findViewById(R.id.segImg);
@@ -218,8 +224,8 @@ public class RegisterOcActivity extends AppCompatActivity {
             b2.compress(Bitmap.CompressFormat.JPEG, 100, bb2);
 
             String nome = txtNome.getText().toString();
-            long cont = Long.parseLong(txtCont.getText().toString());
-            long wpp = Long.parseLong(txtWpp.getText().toString());
+            String cont = txtCont.getText().toString();
+            String wpp = txtWpp.getText().toString();
             byte[] i1 = bb1.toByteArray();
             byte[] i2 = bb2.toByteArray();
 

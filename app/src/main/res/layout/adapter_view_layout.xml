@@ -6,12 +6,6 @@
     android:id="@+id/mainLinear_avl"
     android:weightSum="100">
 
-    <!--
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:id="@+id/searchBar" /> -->
-
     <LinearLayout
         android:id="@+id/linear2_avl"
         android:layout_width="match_parent"
@@ -23,7 +17,8 @@
             android:id="@+id/IVimg1"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_weight="50" />
+            android:layout_weight="50"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/TVnome"
@@ -48,6 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:gravity="center"
+            android:textAlignment="center"
             android:text="CONT" />
 
         <TextView
@@ -56,6 +52,7 @@
             android:layout_height="30dp"
             android:layout_below="@+id/TVcont"
             android:gravity="center"
+            android:textAlignment="center"
             android:text="WPP" />
     </LinearLayout>
 

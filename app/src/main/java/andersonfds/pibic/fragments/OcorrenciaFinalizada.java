@@ -34,8 +34,17 @@ public class OcorrenciaFinalizada extends Fragment {
         lista.add(new RegisterContacts("Andr", "125", "323"));
         lista.add(new RegisterContacts("Andt", "126", "322"));
         lista.add(new RegisterContacts("Andu", "127", "321"));
+        lista.add(new RegisterContacts("Andu", "127", "321"));
+        lista.add(new RegisterContacts("Andu", "127", "321"));
+        lista.add(new RegisterContacts("Andu", "127", "321"));
+        lista.add(new RegisterContacts("Andu", "127", "321"));
+        lista.add(new RegisterContacts("Andu", "127", "321"));
+        lista.add(new RegisterContacts("Andu", "127", "321"));
+        lista.add(new RegisterContacts("Andu", "127", "321"));
+        lista.add(new RegisterContacts("Andu", "127", "321"));
 
-        ListaAdapter adapter = new ListaAdapter(this, R.layout.adapter_view_layout, mListView);
+        ListaAdapter adapter = new ListaAdapter(getContext(), R.layout.adapter_view_layout, lista);
+        mListView.setAdapter(adapter);
 
         return view;
     }
