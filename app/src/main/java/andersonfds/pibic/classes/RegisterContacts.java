@@ -44,6 +44,13 @@ public class RegisterContacts {
     }
 
     @Ignore
+    public RegisterContacts(String nome, String numTel, String numWpp) {
+        this.nome = nome;
+        this.numTel = numTel;
+        this.numWpp = numWpp;
+    }
+
+    @Ignore
     public RegisterContacts(String nome, double locLat, double locLon, byte[] img1, byte[] img2) {
         this.nome = nome;
         this.locLat = locLat;

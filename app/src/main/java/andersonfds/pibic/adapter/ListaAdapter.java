@@ -24,9 +24,9 @@ import java.util.ArrayList;
 import andersonfds.pibic.R;
 import andersonfds.pibic.classes.RegisterContacts;
 
-public class ListAdapter extends ArrayAdapter<RegisterContacts> {
+public class ListaAdapter extends ArrayAdapter<RegisterContacts> {
 
-    private static final String TAG = "ListAdapter";
+    private static final String TAG = "ListaAdapter";
 
     private Context mContext;
     private int mResource;
@@ -91,7 +91,7 @@ public class ListAdapter extends ArrayAdapter<RegisterContacts> {
         return convertView;
     }
 
-    public ListAdapter(Context mContext, int resource, ArrayList<RegisterContacts> mList) {
+    public ListaAdapter(Context mContext, int resource, ArrayList<RegisterContacts> mList) {
         super(mContext, resource, mList);
         this.mContext = mContext;
         mResource = resource;
