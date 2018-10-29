@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="100">
+
+    <TextView
+        android:id="@+id/TVnome"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_weight="66.6"
+        android:gravity="center"
+        android:text="NOME"
+        android:textAlignment="center" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="33.3"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/TVcont"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:text="CONT" />
+
+        <TextView
+            android:id="@+id/TVwpp"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_below="@+id/TVcont"
+            android:gravity="center"
+            android:text="WPP" />
+    </LinearLayout>
+
+</LinearLayout>

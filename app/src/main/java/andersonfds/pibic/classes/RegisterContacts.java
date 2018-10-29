@@ -18,11 +18,11 @@ public class RegisterContacts {
     @ColumnInfo(name = "nomeRegCon", typeAffinity = ColumnInfo.TEXT)
     private String nome;
 
-    @ColumnInfo(name = "numTelRegCon", typeAffinity = ColumnInfo.INTEGER)
-    private long numTel;
+    @ColumnInfo(name = "numTelRegCon", typeAffinity = ColumnInfo.TEXT)
+    private String numTel;
 
-    @ColumnInfo(name = "numWppRegCon", typeAffinity = ColumnInfo.INTEGER)
-    private long numWpp;
+    @ColumnInfo(name = "numWppRegCon", typeAffinity = ColumnInfo.TEXT)
+    private String numWpp;
 
     @NonNull
     @ColumnInfo(name = "locLatRegCon", typeAffinity = ColumnInfo.REAL)
@@ -53,7 +53,7 @@ public class RegisterContacts {
     }
 
     @Ignore
-    public RegisterContacts(String nome, long numTel, long numWpp, double locLat, double locLon) {
+    public RegisterContacts(String nome, String numTel, String numWpp, double locLat, double locLon) {
         this.nome = nome;
         this.numTel = numTel;
         this.numWpp = numWpp;
@@ -62,7 +62,7 @@ public class RegisterContacts {
     }
 
     @Ignore
-    public RegisterContacts(String nome, long numTel, double locLat, double locLon, byte[] img1, byte[] img2) {
+    public RegisterContacts(String nome, String numTel, double locLat, double locLon, byte[] img1, byte[] img2) {
         this.nome = nome;
         this.numTel = numTel;
         this.locLat = locLat;
@@ -72,12 +72,20 @@ public class RegisterContacts {
     }
 
     @Ignore
-    public RegisterContacts(String nome, long numTel, long numWpp, double locLat, double locLon, byte[] img1, byte[] img2) {
+    public RegisterContacts(String nome, String numTel, String numWpp, double locLat, double locLon, byte[] img1, byte[] img2) {
         this.nome = nome;
         this.numTel = numTel;
         this.numWpp = numWpp;
         this.locLat = locLat;
         this.locLon = locLon;
+        this.img1 = img1;
+        this.img2 = img2;
+    }
+
+    public RegisterContacts(String name, String cont, String wpp, byte[] img1, byte[] img2) {
+        this.nome = name;
+        this.numTel = cont;
+        this.numWpp = wpp;
         this.img1 = img1;
         this.img2 = img2;
     }
@@ -98,19 +106,19 @@ public class RegisterContacts {
         this.nome = nome;
     }
 
-    public long getNumTel() {
+    public String getNumTel() {
         return numTel;
     }
 
-    public void setNumTel(long numTel) {
+    public void setNumTel(String numTel) {
         this.numTel = numTel;
     }
 
-    public long getNumWpp() {
+    public String getNumWpp() {
         return numWpp;
     }
 
-    public void setNumWpp(long numWpp) {
+    public void setNumWpp(String numWpp) {
         this.numWpp = numWpp;
     }
 
