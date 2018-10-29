@@ -8,6 +8,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_teste">Teste</string>
     <string name="title_activity_login">Sign in</string>
+    <string name="api_key">AIzaSyAIrtmjxM3sA0wZTTbI_1hwCGAPJEwZd0Q</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -39,4 +40,21 @@
     <string name="testar">Testar</string>
     <string name="tirar_foto">Tirar Foto</string>
     <string name="galeria">Galeria</string>
+    <string name="login">Login</string>
+    <string name="reg_ocr">Registrar Ocorrência</string>
+    <string name="reg_loc">Registrar Localização</string>
+    <string name="sobre">Sobre</string>
+    <string name="sair">Sair</string>
+    <string name="carregar_imagem_1">Carregar Imagem 1</string>
+    <string name="carregar_imagem_2">Carregar Imagem 2</string>
+    <string name="primeira_imagem">Primeira Imagem</string>
+    <string name="segunda_imagem">Segunda Imagem</string>
+    <string name="logout">Logout</string>
+    <string name="title_activity_ocorrencia_report">OcorrenciaReport</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_3">Tab 3</string>
+    <string name="ocr_pendente">Ocorrências Pendentes</string>
+    <string name="ocr_finalizada">Ocorrências Finalizadas</string>
 </resources>

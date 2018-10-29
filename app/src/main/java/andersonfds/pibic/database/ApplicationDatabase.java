@@ -20,7 +20,7 @@ public abstract class ApplicationDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "pibees_project";
     private static final String TAG = "ApplicationDatabase";
-    static final int DATABASE_VERSION = 1;
+    static final int DATABASE_VERSION = 2;
 
     private final MutableLiveData<Boolean> mIsDatabaseCreated = new MutableLiveData<>();
     private static volatile ApplicationDatabase INSTANCE;
@@ -50,7 +50,7 @@ public abstract class ApplicationDatabase extends RoomDatabase {
                             database.setDatabaseCreated();
                         });
                     }
-                }).build();
+                }).fallbackToDestructiveMigration().build();
     }
 
     private static void addDelay() {

@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -24,6 +25,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.maps.GeoApiContext;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,13 +49,19 @@ import andersonfds.pibic.database.Markers_ViewModel;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 {
 
+    private static final String TAG = "MapsActivity";
+    private static final String API_KEY = "AIzaSyAIrtmjxM3sA0wZTTbI_1hwCGAPJEwZd0Q";
     private static final int REQUEST_LOCATION_PERMISSION = 1;
+    private static final int LOCATION_UPDATE_INTERVAL = 3000;
     private static final int EDIT_REQUEST = 1;
 
     private static List<Markers> mList = new ArrayList<>();
     private List<Marker> listMark = new ArrayList<>();
 
     private static GoogleMap mMap;
+    private GeoApiContext mGeoApiContext = null;
+    private Handler mHandler = new Handler();
+    private Runnable mRunnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -65,15 +73,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        Markers_ViewModel markers_viewModel = new Markers_ViewModel(getApplication());
-        new selectAsync(markers_viewModel, mList).execute();
+        if (mGeoApiContext == null) {
+            mGeoApiContext = new GeoApiContext.Builder().apiKey(getString(R.string.api_key)).build();
+        }
 
-        FloatingActionButton fabAdd = findViewById(R.id.fabSave);
-        fabAdd.setOnClickListener(v ->
-                Toast.makeText(MapsActivity.this, "Mensagem Save", Toast.LENGTH_SHORT).show());
-
-        FloatingActionButton fabDel = findViewById(R.id.fabDelete);
-        fabDel.setOnClickListener(v -> Toast.makeText(MapsActivity.this, "Mensagem Delete", Toast.LENGTH_SHORT).show());
+        FloatingActionButton fabBack = findViewById(R.id.fabBack);
+        fabBack.setOnClickListener(view -> finish());
 
         //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 //.setAction("Action", null).show();
@@ -92,6 +97,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap)
     {
         mMap = googleMap;
+        mMap.clear();
         // Marcador no CTF
         LatLng ctf = new LatLng(-6.785604, -43.041879);
         mMap.addMarker(new MarkerOptions().position(ctf).title("CTF"));
@@ -99,6 +105,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ctf, zoom));
         setMapLongClick(mMap);
         markerClick(mMap);
+
+        Markers_ViewModel markers_viewModel = new Markers_ViewModel(getApplication());
+        new selectAsync(markers_viewModel, mList).execute();
+
+        mMap.setOnInfoWindowClickListener(marker -> {
+            markers_viewModel.deleteMarker(new Markers(marker.getId(),
+                    marker.getPosition().latitude,
+                    marker.getPosition().longitude));
+            marker.remove();
+        });
     }
 
     @Override
@@ -121,7 +137,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Intent edit = new Intent(MapsActivity.this, EditMarkerActivity.class);
             edit.putExtra("location", latLng);
             MapsActivity.this.startActivityForResult(edit, EDIT_REQUEST);
-
             /*
             MarkerOptions marker = new MarkerOptions();
             marker.position(latLng);
@@ -152,16 +167,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-
     private void markerClick(final GoogleMap map)
     {
         map.setOnMarkerClickListener(marker -> {
+
             Log.d("markerClick", "Entrou no evento. Lista de Pontos: " + listMark.size());
             listMark.add(marker);
             if (listMark.size() % 2 == 0) {
+                //calculateDirections(listMark.get(0), listMark.get(1));
                 String url = getRequestedUrl(listMark.get(0), listMark.get(1));
+                Log.d(TAG, "markerClick: " + url);
                 new TaskRequestDirections().execute(url);
-                Log.d("markerClick", "Traçou a rota. Lista de Pontos: " + listMark.size());
+                Log.d("markerClick", "Traçando a rota.... Lista de Pontos: " + listMark.size());
                 new Thread(new Task()).start();
                 listMark.clear();
                 return true;
@@ -172,6 +189,72 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
+    /*
+    private void calculateDirections(Marker orig, Marker dest) {
+        Log.d(TAG, "calculateDirections: calculating directions.");
+
+        com.google.maps.model.LatLng destination = new com.google.maps.model.LatLng(
+                dest.getPosition().latitude,
+                dest.getPosition().longitude
+        );
+        DirectionsApiRequest directions = new DirectionsApiRequest(mGeoApiContext);
+
+        directions.alternatives(true);
+        directions.origin(
+                new com.google.maps.model.LatLng(
+                        orig.getPosition().latitude,
+                        orig.getPosition().longitude
+                )
+        );
+        Log.d(TAG, "calculateDirections: destination: " + destination.toString());
+        directions.destination(destination).setCallback(new PendingResult.Callback<DirectionsResult>() {
+            @Override
+            public void onResult(DirectionsResult result) {
+                Log.d(TAG, "calculateDirections: routes: " + result.routes[0].toString());
+                Log.d(TAG, "calculateDirections: duration: " + result.routes[0].legs[0].duration);
+                Log.d(TAG, "calculateDirections: distance: " + result.routes[0].legs[0].distance);
+                Log.d(TAG, "calculateDirections: geocodedWayPoints: " + result.geocodedWaypoints[0].toString());
+                addPolylinesToMap(result);
+            }
+
+            @Override
+            public void onFailure(Throwable e) {
+                Log.e(TAG, "calculateDirections: Failed to get directions: " + e.getMessage());
+
+            }
+        });
+        listMark.clear();
+    }
+
+    private void addPolylinesToMap(final DirectionsResult result) {
+        new Handler(Looper.getMainLooper()).post(() -> {
+            Log.d(TAG, "run: result routes: " + result.routes.length);
+
+            for (DirectionsRoute route : result.routes) {
+                Log.d(TAG, "run: leg: " + route.legs[0].toString());
+                List<com.google.maps.model.LatLng> decodedPath = PolylineEncoding.decode(route.overviewPolyline.getEncodedPath());
+
+                List<LatLng> newDecodedPath = new ArrayList<>();
+
+                // This loops through all the LatLng coordinates of ONE polyline.
+                for (com.google.maps.model.LatLng latLng : decodedPath) {
+
+//                        Log.d(TAG, "run: latlng: " + latLng.toString());
+
+                    newDecodedPath.add(new LatLng(
+                            latLng.lat,
+                            latLng.lng
+                    ));
+                }
+                Polyline polyline = mMap.addPolyline(new PolylineOptions().addAll(newDecodedPath));
+                polyline.setColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+                polyline.setClickable(true);
+                polyline.setEndCap(new CustomCap(BitmapDescriptorFactory.fromResource(R.drawable.arrow), 16));
+            }
+        });
+    }
+    */
+
     private String getRequestedUrl(Marker orig, Marker dest) {
         Log.d("getRequestedUrl", "Teste de LatLong orig: "+orig.getPosition().latitude+ ", "+orig.getPosition().longitude);
         Log.d("getRequestedUrl", "Teste de LatLong dest: "+dest.getPosition().latitude+", "+dest.getPosition().longitude);
@@ -181,7 +264,40 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String mode = "mode=driving";
         String param = origem + "&" + destino + "&" + sensor + "&" + mode;
         String output = "json";
-        return "https://maps.googleapis.com/maps/api/directions/" + output + "?" + param;
+        Log.d(TAG, "getRequestedUrl: " + output + " " + param);
+        return "https://maps.googleapis.com/maps/api/directions/" + output + "?" + param + "&key=" + API_KEY;
+    }
+
+    private static class selectAsync extends AsyncTask<Void, Void, List<Markers>> {
+
+        private Markers_ViewModel markers_viewModel;
+        private List<Markers> mAsyncList;
+
+        private selectAsync(Markers_ViewModel markers_viewModel, List<Markers> mList) {
+            this.markers_viewModel = markers_viewModel;
+            this.mAsyncList = mList;
+        }
+
+        @Override
+        protected List<Markers> doInBackground(Void... voids) {
+            Log.d("asd", "doInBackground: " + mAsyncList.size());
+            mAsyncList.addAll(markers_viewModel.getAllMarkers());
+            Log.d("asd", "doInBackground: " + mAsyncList.size());
+            return mAsyncList;
+        }
+
+        @Override
+        protected void onPostExecute(List<Markers> list) {
+            Log.d("asd", "doInBackground: " + list.size());
+            mList = list;
+            Log.d("asd", "doInBackground: " + mList.size());
+            for (Markers markers : mList) {
+                mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
+                        .position(new LatLng(markers.getLatitude(), markers.getLongitude())).alpha(0.6f).title(markers.getNome()));
+            }
+            mAsyncList.clear();
+            mList.clear();
+        }
     }
 
     //Traça uma Rota Entre os Pontos Demarcados
@@ -227,65 +343,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     e.getStackTrace();
                 }
 
-            assert httpURLConnection != null;
-            httpURLConnection.disconnect();
+            if (httpURLConnection != null) {
+                httpURLConnection.disconnect();
+            }
         }
         return respString;
-    }
-
-    private static class selectAsync extends AsyncTask<Void, Void, List<Markers>> {
-
-        private Markers_ViewModel markers_viewModel;
-        private List<Markers> l;
-
-        private selectAsync(Markers_ViewModel markers_viewModel, List<Markers> mList) {
-            this.markers_viewModel = markers_viewModel;
-            this.l = mList;
-        }
-
-        @Override
-        protected List<Markers> doInBackground(Void... voids) {
-            l.addAll(markers_viewModel.getAllMarkers());
-            return l;
-        }
-
-        @Override
-        protected void onPostExecute(List<Markers> list) {
-            mList.addAll(list);
-            for (Markers markers : mList) {
-                mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
-                        .position(new LatLng(markers.getLatitude(), markers.getLongitude())).alpha(0.6f).title(markers.getNome()));
-            }
-        }
-    }
-
-    private class Task implements Runnable {
-        @Override
-        public void run()
-        {
-            for (int i = 0; i < 2; i++)
-            {
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException ieE) {
-                    Toast.makeText(getApplicationContext(), "Deu Pau.", Toast.LENGTH_LONG).show();
-                }
-            }
-        }
-    }
-
-    //Ativa a Localização Atual(GPS)
-    private void enableMyLocation()
-    {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
-                PackageManager.PERMISSION_GRANTED)
-        {
-            mMap.setMyLocationEnabled(true);
-        } else
-        {
-            ActivityCompat.requestPermissions(this, new String[]
-                    {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PERMISSION);
-        }
     }
 
     //CLASSES PARA TRAÇAR AS ROTAS(Utiliza Internet, estilo GoogleMaps)
@@ -298,6 +360,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             String responseString;
             responseString = requestDirections(strings[0]);
 
+            Log.d(TAG, "doInBackground: " + responseString);
             return responseString;
         }
 
@@ -306,8 +369,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         {
             super.onPostExecute(s);
             //passa o json
-            TaskParser taskParser = new TaskParser();
-            taskParser.execute(s);
+            new TaskParser().execute(s);
+        }
+    }
+
+    //Ativa a Localização Atual(GPS)
+    private void enableMyLocation() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
+                PackageManager.PERMISSION_GRANTED) {
+            mMap.setMyLocationEnabled(true);
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]
+                    {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PERMISSION);
         }
     }
 
@@ -321,8 +394,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             try
             {
                 jsonObject = new JSONObject(strings[0]);
-                DirectionsParser directionsParser = new DirectionsParser();
-                routes = directionsParser.parse(jsonObject);
+                routes = new DirectionsParser().parse(jsonObject);
             }catch(JSONException e)
             {
                 e.getStackTrace();
@@ -335,12 +407,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         protected void onPostExecute(List<List<HashMap<String, String>>> lists)
         {
             //mostra as rotas no mapa
-            ArrayList pontos;
+            ArrayList<LatLng> pontos;
             PolylineOptions polylineOptions = null;
 
             for(List<HashMap<String, String>> caminho : lists)
             {
-                pontos = new ArrayList();
+                pontos = new ArrayList<>();
                 polylineOptions = new PolylineOptions();
 
                 for(HashMap<String, String> ponto : caminho)
@@ -354,7 +426,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 polylineOptions.addAll(pontos);
                 polylineOptions.width(15);
                 polylineOptions.color(Color.GREEN);
-                polylineOptions.geodesic(true);
+                polylineOptions.geodesic(false);
+                //polylineOptions.endCap(new CustomCap(BitmapDescriptorFactory.fromResource(R.drawable.arrow), 16));
             }
 
             if(polylineOptions != null)
@@ -363,6 +436,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             } else
             {
                 Toast.makeText(ApplicationContextProvider.getContext(), "Rota não encontrada!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private class Task implements Runnable {
+        @Override
+        public void run() {
+            for (int i = 0; i < 2; i++) {
+                try {
+                    Thread.sleep(4000);
+                } catch (InterruptedException ieE) {
+                    Toast.makeText(getApplicationContext(), "Deu Pau.", Toast.LENGTH_LONG).show();
+                }
             }
         }
     }

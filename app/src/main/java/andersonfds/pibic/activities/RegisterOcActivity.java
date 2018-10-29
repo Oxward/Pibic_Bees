@@ -1,17 +1,23 @@
 package andersonfds.pibic.activities;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,46 +32,49 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.ByteArrayOutputStream;
+
 import andersonfds.pibic.R;
 import andersonfds.pibic.classes.RegisterContacts;
+import es.dmoral.toasty.Toasty;
 
 public class RegisterOcActivity extends AppCompatActivity {
 
     //Constantes
+    private static final String TAG = "RegisterOcActivity";
     private static final int REQUEST_IMAGE_CAPTURE = 101;
     private static final int REQUEST_CODE = 1000;
     private static final int PICK_IMAGE = 1;
 
-
-    private  ImageView imageView2;
-    private ImageView imageView;
     private FusedLocationProviderClient mFusedLocationProviderClient;
-    private LocationRequest mLocationRequest;
     private LocationCallback mLocationCallback;
-    private TextView lbTest;
-    private Button btEnv;
-    private Button btGal;
-    private Button btGal2;
+    private LocationRequest mLocationRequest;
 
+    private ImageView imageView;
+    private ImageView imageView2;
+    private TextView lbTest;
+    private TextView PI, SI;
 
     private LatLng location;
+    private byte img;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_oc);
 
-        imageView = findViewById(R.id.imgTiraFoto);
-        imageView2 = findViewById(R.id.imageView2);
+        PI = findViewById(R.id.primImg);
+        SI = findViewById(R.id.segImg);
         lbTest = findViewById(R.id.lbTest);
-        btEnv = findViewById(R.id.btEnv);
+        FloatingActionButton fabSaveOc = findViewById(R.id.fabSaveOc);
+
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                             Manifest.permission.ACCESS_COARSE_LOCATION,
                             Manifest.permission.ACCESS_NETWORK_STATE}, REQUEST_CODE);
-        } else
-        {
+        } else {
             //Permissions granted
             buildLocationRequest();
             buildLocationCallback();
@@ -73,50 +82,64 @@ public class RegisterOcActivity extends AppCompatActivity {
             //fusedProviderClient
             mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
-            btEnv.setOnClickListener(view ->
+            fabSaveOc.setOnClickListener(view ->
             {
-              if (ActivityCompat.checkSelfPermission(RegisterOcActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) !=
-                      PackageManager.PERMISSION_GRANTED) {
-                  ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
-              }
+                if (ActivityCompat.checkSelfPermission(RegisterOcActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                        PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
+                }
                 mFusedLocationProviderClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
+
+                final Handler handler = new Handler();
+                handler.postDelayed(() -> saveData(), 1500);
+
             });
         }
         mFusedLocationProviderClient.removeLocationUpdates(mLocationCallback);
 
-        btGal = findViewById(R.id.btGal);
-        btGal2 = findViewById(R.id.btGal2);
+        imageView = findViewById(R.id.imgTiraFoto1);
+        imageView2 = findViewById(R.id.imgTiraFoto2);
 
-        btGal.setOnClickListener(view ->
-        {
+        Button btGal = findViewById(R.id.btGal1);
+        btGal.setOnClickListener(view -> {
+            img = 1;
             openGallery();
+            PI.setText(null);
+        });
+        Button btGal2 = findViewById(R.id.btGal2);
+        btGal2.setOnClickListener(view -> {
+            img = 0;
+            openGallery();
+            SI.setText(null);
         });
 
-        btGal2.setOnClickListener(view ->
-        {
-            openGallery();
-        });
+        //Button cancel = findViewById(R.id.btCanc);
+        //cancel.setOnClickListener(view -> finish());
 
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-
-
+        super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            if( imageView.getDrawable() == null)
-                imageView.setImageBitmap(imageBitmap);
-            else
-                imageView2.setImageBitmap(imageBitmap);
+            if(extras != null){
+                Bitmap bitmap = (Bitmap) extras.get("data");
+                if (!hasImage(imageView)) {
+                    imageView.setImageBitmap(bitmap);
+                    PI.setText(null);
+                } else {
+                    imageView2.setImageBitmap(bitmap);
+                    SI.setText(null);
+                }
+            }
         } else if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
             Uri uri = data.getData();
-            imageView.setImageURI(uri);
-
-
+            if (img == 1)
+                imageView.setImageURI(uri);
+            else
+                imageView2.setImageURI(uri);
         }
     }
 
@@ -140,54 +163,80 @@ public class RegisterOcActivity extends AppCompatActivity {
         }
     }
 
+    private boolean hasImage(@NonNull ImageView view) {
+        Drawable drawable = view.getDrawable();
+        boolean hasImage = drawable != null;
+
+        if (hasImage && (drawable instanceof BitmapDrawable)) {
+            hasImage = ((BitmapDrawable) drawable).getBitmap() != null;
+        }
+
+        return hasImage;
+    }
+
     public void buttonPress(View view)
     {
         switch ( view.getId() )
         {
             case R.id.btFoto:
-                takePicture(view);
+                takePicture();
                 break;
 
-            case R.id.btGal:
+            case R.id.btGal1:
+                openGallery();
                 break;
-
 
             case R.id.btGal2:
+                openGallery();
                 break;
 
-
-            case R.id.btEnv:
+            case R.id.fabSaveOc:
                 saveData();
                 break;
 
             case R.id.btCanc:
+                finish();
                 break;
-
         }
     }
 
     private void saveData() {
-        EditText txtNome = findViewById(R.id.txtNome);
-        EditText txtCont = findViewById(R.id.txtCont);
-        EditText txtWpp = findViewById(R.id.txtWpp);
-        //ImageView imgTiraFoto = findViewById(R.id.imgTiraFoto);
+        try {
+            EditText txtNome = findViewById(R.id.txtNome);
+            EditText txtCont = findViewById(R.id.txtCont);
+            EditText txtWpp = findViewById(R.id.txtWpp);
+            ImageView imgTiraFoto = findViewById(R.id.imgTiraFoto1);
+            ImageView imgTiraFoto2 = findViewById(R.id.imgTiraFoto2);
 
-        String nome = txtNome.getText().toString();
-        long cont = Long.parseLong(txtCont.getText().toString());
-        long wpp = Long.parseLong(txtWpp.getText().toString());
+            Bitmap b1 = ((BitmapDrawable) imgTiraFoto.getDrawable()).getBitmap();
+            Bitmap b2 = ((BitmapDrawable) imgTiraFoto2.getDrawable()).getBitmap();
 
-        RegisterContacts registerContacts = new RegisterContacts(nome, cont, wpp, location.latitude, location.longitude);
+            ByteArrayOutputStream bb1 = new ByteArrayOutputStream();
+            ByteArrayOutputStream bb2 = new ByteArrayOutputStream();
 
+            b1.compress(Bitmap.CompressFormat.JPEG, 100, bb1);
+            b2.compress(Bitmap.CompressFormat.JPEG, 100, bb2);
 
+            String nome = txtNome.getText().toString();
+            long cont = Long.parseLong(txtCont.getText().toString());
+            long wpp = Long.parseLong(txtWpp.getText().toString());
+            byte[] i1 = bb1.toByteArray();
+            byte[] i2 = bb2.toByteArray();
+
+            RegisterContacts registerContacts = new RegisterContacts(nome, cont, wpp, location.latitude, location.longitude, i1, i2);
+            Log.d(TAG, "saveData: " + location.latitude + " " + location.longitude);
+            Toasty.success(this, "Salvo com sucesso", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toasty.error(getApplicationContext(), "Erro ao salvar", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    public void takePicture( View view )
-    {
+    private void takePicture() {
         Intent imageTakeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-        if( imageTakeIntent.resolveActivity( getPackageManager()) != null)
+        if (imageTakeIntent.resolveActivity(getPackageManager()) != null)
         {
-            startActivityForResult( imageTakeIntent, REQUEST_IMAGE_CAPTURE);
+            startActivityForResult(imageTakeIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
 
@@ -196,8 +245,7 @@ public class RegisterOcActivity extends AppCompatActivity {
         startActivityForResult(gallery, PICK_IMAGE);
     }
 
-    private void buildLocationRequest()
-    {
+    private void buildLocationRequest() {
         mLocationRequest = new LocationRequest();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mLocationRequest.setInterval(5000);
@@ -205,8 +253,7 @@ public class RegisterOcActivity extends AppCompatActivity {
         mLocationRequest.setSmallestDisplacement(10);
     }
 
-    private void buildLocationCallback()
-    {
+    private void buildLocationCallback() {
         mLocationCallback = new LocationCallback()
         {
             @Override
@@ -214,9 +261,9 @@ public class RegisterOcActivity extends AppCompatActivity {
             {
                 for ( Location l : locationResult.getLocations() )
                 {
-                    //lbTest.setText(String.valueOf(l.getLatitude() + "/" + String.valueOf(l.getLongitude())));
-                    lbTest.setText(String.valueOf(l.getLatitude() + "/" + String.valueOf(l.getLongitude())));
                     location = new LatLng(l.getLatitude(), l.getLongitude());
+                    lbTest.setText(String.valueOf(l.getLatitude() + "/" + String.valueOf(l.getLongitude())));
+                    Log.d(TAG, "onLocationResult: " + location.latitude + " " + location.longitude);
                 }
             }
         };

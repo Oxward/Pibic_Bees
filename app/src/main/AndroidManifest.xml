@@ -22,7 +22,6 @@
         android:name="android.hardware.camera2"
         android:required="true" />
 
-
     <application
         android:name=".ApplicationContextProvider"
         android:allowBackup="true"
@@ -54,6 +53,10 @@
         <activity
             android:name=".activities.EditMarkerActivity"
             android:label="Editar Título dos Marcadores" />
+        <activity
+            android:name=".activities.OcorrenciaReportActivity"
+            android:label="@string/title_activity_ocorrencia_report"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
