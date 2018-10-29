@@ -58,8 +58,8 @@ public class ListaAdapter extends ArrayAdapter<RegisterContacts> {
             mViewHolder.name = convertView.findViewById(R.id.TVnome);
             mViewHolder.cont = convertView.findViewById(R.id.TVcont);
             mViewHolder.wpp = convertView.findViewById(R.id.TVwpp);
-            //mViewHolder.img1 = convertView.findViewById(R.id.IVimg1);
-            //mViewHolder.img2 = convertView.findViewById(R.id.IVimg2);
+            mViewHolder.img1 = convertView.findViewById(R.id.IVimg1);
+            mViewHolder.img2 = convertView.findViewById(R.id.IVimg2);
 
             result = convertView;
             convertView.setTag(mViewHolder);
@@ -83,8 +83,8 @@ public class ListaAdapter extends ArrayAdapter<RegisterContacts> {
                 .showImageOnFail(defaultImage)
                 .showImageOnLoading(defaultImage).build();
 
-        //imageLoader.displayImage("", mViewHolder.img1, options);
-        //imageLoader.displayImage("", mViewHolder.img2, options);
+        imageLoader.displayImage("", mViewHolder.img1, options);
+        imageLoader.displayImage("", mViewHolder.img2, options);
 
         mViewHolder.name.setText(pessoa.getNome());
         mViewHolder.cont.setText(pessoa.getNumTel());
