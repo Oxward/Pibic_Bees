@@ -8,6 +8,8 @@
     tools:context=".activities.OcorrenciaReportActivity"
     tools:layout_editor_absoluteY="80dp">
 
+    <!--
+
     <EditText
         android:id="@+id/searchBar_ocFin"
         android:layout_width="match_parent"
@@ -25,6 +27,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
+      -->
+
     <ListView
         android:id="@+id/listViewOcFin"
         android:layout_width="match_parent"
@@ -37,6 +41,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchBar_ocFin" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

@@ -44,6 +44,9 @@ public class OcorrenciaPendente extends Fragment {
         lista.add(new RegisterContacts("Andu", "127", "321"));
         lista.add(new RegisterContacts("Andu", "127", "321"));
         lista.add(new RegisterContacts("Andu", "127", "321"));
+        lista.add(new RegisterContacts("Andu", "127", "321"));
+        lista.add(new RegisterContacts("Andu", "127", "321"));
+        lista.add(new RegisterContacts("Andu", "127", "321"));
 
         ListaAdapter adapter = new ListaAdapter(getContext(), R.layout.adapter_view_layout, lista);
         mListView.setAdapter(adapter);

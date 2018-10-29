@@ -17,6 +17,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -97,7 +98,7 @@ public class RegisterOcActivity extends AppCompatActivity {
                 mFusedLocationProviderClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
 
                 final Handler handler = new Handler();
-                handler.postDelayed(() -> saveData(), 1500);
+                handler.postDelayed(this::saveData, 1500);
 
             });
         }
@@ -118,9 +119,6 @@ public class RegisterOcActivity extends AppCompatActivity {
             openGallery();
             SI.setText(null);
         });
-
-        //Button cancel = findViewById(R.id.btCanc);
-        //cancel.setOnClickListener(view -> finish());
 
     }
 
@@ -223,9 +221,29 @@ public class RegisterOcActivity extends AppCompatActivity {
             b1.compress(Bitmap.CompressFormat.JPEG, 100, bb1);
             b2.compress(Bitmap.CompressFormat.JPEG, 100, bb2);
 
-            String nome = txtNome.getText().toString();
-            String cont = txtCont.getText().toString();
-            String wpp = txtWpp.getText().toString();
+            String nome;
+            String cont;
+            String wpp;
+
+            if (TextUtils.isEmpty(txtNome.getText().toString())) {
+                txtNome.setError("Preencha este campo.");
+                return;
+            } else
+                nome = txtNome.getText().toString();
+
+            if (TextUtils.isEmpty(txtCont.getText().toString())) {
+                txtCont.setError("Preencha este campo.");
+                return;
+            } else
+                cont = txtCont.getText().toString();
+
+            if (TextUtils.isEmpty(txtWpp.getText().toString())) {
+                txtWpp.setError("Preencha este campo.");
+                return;
+            } else
+                wpp = txtWpp.getText().toString();
+
+
             byte[] i1 = bb1.toByteArray();
             byte[] i2 = bb2.toByteArray();
 
