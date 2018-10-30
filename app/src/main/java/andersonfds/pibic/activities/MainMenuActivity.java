@@ -117,7 +117,7 @@ public class MainMenuActivity extends AppCompatActivity
                 }
                 break;
 
-            case R.id.teste:
+            case R.id.menuReports:
                 try {
                     Intent i = new Intent(MainMenuActivity.this, OcorrenciaReportActivity.class);
                     startActivity(i);

@@ -21,8 +21,9 @@
             android:icon="@drawable/location"
             android:title="@string/reg_loc" />
         <item
-            android:id="@+id/teste"
-            android:title="teste" />
+            android:id="@+id/menuReports"
+            android:icon="@drawable/reports"
+            android:title="@string/ocr_report" />
         <item
             android:id="@+id/menuInfo"
             android:icon="@drawable/info"

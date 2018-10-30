@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PIBIC</string>
+    <string name="app_name">BeeApp</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -38,7 +38,6 @@
     <string name="enviar">Enviar</string>
     <string name="cancelar">Cancelar</string>
     <string name="testar">Testar</string>
-    <string name="tirar_foto">Tirar Foto</string>
     <string name="galeria">Galeria</string>
     <string name="login">Login</string>
     <string name="reg_ocr">Registrar Ocorrência</string>
@@ -58,4 +57,8 @@
     <string name="ocr_pendente">Ocorrências Pendentes</string>
     <string name="ocr_finalizada">Ocorrências Finalizadas</string>
     <string name="pesquisar_nome">Pesquisar Nome</string>
+    <string name="tirar_foto">Tirar Foto</string>
+    <string name="carregar_primeira_imagem">Carregar primeira imagem</string>
+    <string name="carregar_segunda_imagem">Carregar Segunda Imagem</string>
+    <string name="ocr_report">Relatório de Ocorrências</string>
 </resources>

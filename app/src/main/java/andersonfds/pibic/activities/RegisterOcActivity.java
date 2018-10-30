@@ -20,8 +20,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,7 +54,6 @@ public class RegisterOcActivity extends AppCompatActivity {
 
     private ImageView imageView;
     private ImageView imageView2;
-    private TextView lbTest;
     private TextView PI, SI;
 
     private LatLng location;
@@ -73,7 +72,6 @@ public class RegisterOcActivity extends AppCompatActivity {
 
         PI = findViewById(R.id.primImg);
         SI = findViewById(R.id.segImg);
-        lbTest = findViewById(R.id.lbTest);
         FloatingActionButton fabSaveOc = findViewById(R.id.fabSaveOc);
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
@@ -98,7 +96,7 @@ public class RegisterOcActivity extends AppCompatActivity {
                 mFusedLocationProviderClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
 
                 final Handler handler = new Handler();
-                handler.postDelayed(this::saveData, 1500);
+                handler.postDelayed(this::saveData, 2000);
 
             });
         }
@@ -107,13 +105,13 @@ public class RegisterOcActivity extends AppCompatActivity {
         imageView = findViewById(R.id.imgTiraFoto1);
         imageView2 = findViewById(R.id.imgTiraFoto2);
 
-        Button btGal = findViewById(R.id.btGal1);
+        ImageButton btGal = findViewById(R.id.btGal1);
         btGal.setOnClickListener(view -> {
             img = 1;
             openGallery();
             PI.setText(null);
         });
-        Button btGal2 = findViewById(R.id.btGal2);
+        ImageButton btGal2 = findViewById(R.id.btGal2);
         btGal2.setOnClickListener(view -> {
             img = 0;
             openGallery();
@@ -198,7 +196,7 @@ public class RegisterOcActivity extends AppCompatActivity {
                 saveData();
                 break;
 
-            case R.id.btCanc:
+            case R.id.fabBackRegOc:
                 finish();
                 break;
         }
@@ -286,7 +284,6 @@ public class RegisterOcActivity extends AppCompatActivity {
                 for ( Location l : locationResult.getLocations() )
                 {
                     location = new LatLng(l.getLatitude(), l.getLongitude());
-                    lbTest.setText(String.valueOf(l.getLatitude() + "/" + String.valueOf(l.getLongitude())));
                     Log.d(TAG, "onLocationResult: " + location.latitude + " " + location.longitude);
                 }
             }
