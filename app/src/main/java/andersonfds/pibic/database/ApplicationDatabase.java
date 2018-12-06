@@ -50,7 +50,7 @@ public abstract class ApplicationDatabase extends RoomDatabase {
                             database.setDatabaseCreated();
                         });
                     }
-                }).fallbackToDestructiveMigration().build();
+                }).fallbackToDestructiveMigration().allowMainThreadQueries().build();
     }
 
     private static void addDelay() {

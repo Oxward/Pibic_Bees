@@ -17,10 +17,13 @@ public interface RegisterContacts_DAO {
     void insertContacts(RegisterContacts rc);
 
     @Query("SELECT * FROM contacts")
-    LiveData<List<RegisterContacts>> selectAllContacts();
+    List<RegisterContacts> selectAllContacts();
 
-    @Query("SELECT * FROM contacts WHERE idRegCon = :nome")
-    LiveData<List<RegisterContacts>> selectContacts(String nome);
+    @Query("SELECT * FROM contacts WHERE foiResolvido = 0")
+    List<RegisterContacts> selectUnsolved();
+
+    @Query("SELECT * FROM contacts WHERE foiResolvido = 1")
+    List<RegisterContacts> selectSolved();
 
     @Delete
     void deleteContact(RegisterContacts rc);

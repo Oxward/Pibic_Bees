@@ -38,6 +38,8 @@ import java.io.ByteArrayOutputStream;
 import andersonfds.pibic.MaskWatcher;
 import andersonfds.pibic.R;
 import andersonfds.pibic.classes.RegisterContacts;
+import andersonfds.pibic.database.RegisterContacts_Repository;
+import andersonfds.pibic.database.RegisterContacts_ViewModel;
 import es.dmoral.toasty.Toasty;
 
 public class RegisterOcActivity extends AppCompatActivity {
@@ -55,6 +57,9 @@ public class RegisterOcActivity extends AppCompatActivity {
     private ImageView imageView;
     private ImageView imageView2;
     private TextView PI, SI;
+    private EditText txtNome, txtCont, txtWpp;
+    private ImageView imgTiraFoto, imgTiraFoto2;
+    private ImageButton btGal, btGal2;
 
     private LatLng location;
     private byte img;
@@ -65,13 +70,11 @@ public class RegisterOcActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_oc);
 
-        EditText cont = findViewById(R.id.txtCont);
-        cont.addTextChangedListener(MaskWatcher.buildPhoneNumber());
-        EditText wpp = findViewById(R.id.txtWpp);
-        wpp.addTextChangedListener(MaskWatcher.buildPhoneNumber());
+        initializeFields();
 
-        PI = findViewById(R.id.primImg);
-        SI = findViewById(R.id.segImg);
+        txtCont.addTextChangedListener(MaskWatcher.buildPhoneNumber());
+        txtWpp.addTextChangedListener(MaskWatcher.buildPhoneNumber());
+
         FloatingActionButton fabSaveOc = findViewById(R.id.fabSaveOc);
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
@@ -102,16 +105,12 @@ public class RegisterOcActivity extends AppCompatActivity {
         }
         mFusedLocationProviderClient.removeLocationUpdates(mLocationCallback);
 
-        imageView = findViewById(R.id.imgTiraFoto1);
-        imageView2 = findViewById(R.id.imgTiraFoto2);
-
-        ImageButton btGal = findViewById(R.id.btGal1);
         btGal.setOnClickListener(view -> {
             img = 1;
             openGallery();
             PI.setText(null);
         });
-        ImageButton btGal2 = findViewById(R.id.btGal2);
+
         btGal2.setOnClickListener(view -> {
             img = 0;
             openGallery();
@@ -202,13 +201,25 @@ public class RegisterOcActivity extends AppCompatActivity {
         }
     }
 
+    private void initializeFields(){
+        txtNome = findViewById(R.id.txtNome);
+        txtCont = findViewById(R.id.txtCont);
+        txtWpp = findViewById(R.id.txtWpp);
+        imgTiraFoto = findViewById(R.id.imgTiraFoto1);
+        imgTiraFoto2 = findViewById(R.id.imgTiraFoto2);
+
+        PI = findViewById(R.id.primImg);
+        SI = findViewById(R.id.segImg);
+
+        btGal = findViewById(R.id.btGal1);
+        btGal2 = findViewById(R.id.btGal2);
+
+        imageView = findViewById(R.id.imgTiraFoto1);
+        imageView2 = findViewById(R.id.imgTiraFoto2);
+    }
+
     private void saveData() {
         try {
-            EditText txtNome = findViewById(R.id.txtNome);
-            EditText txtCont = findViewById(R.id.txtCont);
-            EditText txtWpp = findViewById(R.id.txtWpp);
-            ImageView imgTiraFoto = findViewById(R.id.imgTiraFoto1);
-            ImageView imgTiraFoto2 = findViewById(R.id.imgTiraFoto2);
 
             Bitmap b1 = ((BitmapDrawable) imgTiraFoto.getDrawable()).getBitmap();
             Bitmap b2 = ((BitmapDrawable) imgTiraFoto2.getDrawable()).getBitmap();
@@ -245,12 +256,28 @@ public class RegisterOcActivity extends AppCompatActivity {
             byte[] i1 = bb1.toByteArray();
             byte[] i2 = bb2.toByteArray();
 
-            RegisterContacts registerContacts = new RegisterContacts(nome, cont, wpp, location.latitude, location.longitude, i1, i2);
+            RegisterContacts registerContacts = new RegisterContacts(nome, cont, wpp, location.latitude, location.longitude, i1, i2, 0);
             Log.d(TAG, "saveData: " + location.latitude + " " + location.longitude);
+
+            RegisterContacts_ViewModel ctt = new RegisterContacts_ViewModel(getApplication());
+            ctt.insertContact(registerContacts);
             Toasty.success(this, "Salvo com sucesso", Toast.LENGTH_SHORT).show();
+            clearFields();
         } catch (Exception e) {
             Toasty.error(getApplicationContext(), "Erro ao salvar", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "saveData: "+e.getMessage());
         }
+    }
+
+    private void clearFields(){
+        txtNome.setText("");
+        txtNome.requestFocus();
+        txtCont.setText("");
+        txtWpp.setText("");
+        imgTiraFoto.setImageDrawable(getDrawable(android.R.drawable.ic_menu_camera));
+        imgTiraFoto2.setImageDrawable(getDrawable(android.R.drawable.ic_menu_camera));
+        PI.setText("Primeira Imagem");
+        SI.setText("Segunda Imagem");
     }
 
     private void takePicture() {

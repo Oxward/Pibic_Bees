@@ -77,11 +77,14 @@ public class ListaAdapter extends ArrayAdapter<RegisterContacts> {
         int defaultImage = mContext.getResources().getIdentifier("@drawable/image_failed", null, mContext.getPackageName());
 
         ImageLoader imageLoader = ImageLoader.getInstance();
-        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
-                .cacheOnDisk(true).resetViewBeforeLoading(true)
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .resetViewBeforeLoading(true)
                 .showImageForEmptyUri(defaultImage)
                 .showImageOnFail(defaultImage)
-                .showImageOnLoading(defaultImage).build();
+                .showImageOnLoading(defaultImage)
+                .build();
 
         imageLoader.displayImage("", mViewHolder.img1, options);
         imageLoader.displayImage("", mViewHolder.img2, options);

@@ -40,6 +40,10 @@ public class RegisterContacts {
     @ColumnInfo(name = "imgRegCon2", typeAffinity = ColumnInfo.BLOB)
     private byte[] img2;
 
+    @NonNull
+    @ColumnInfo(name = "foiResolvido", typeAffinity = ColumnInfo.INTEGER)
+    private int foiResolvido;
+
     public RegisterContacts() {
     }
 
@@ -79,7 +83,7 @@ public class RegisterContacts {
     }
 
     @Ignore
-    public RegisterContacts(String nome, String numTel, String numWpp, double locLat, double locLon, byte[] img1, byte[] img2) {
+    public RegisterContacts(String nome, String numTel, String numWpp, double locLat, double locLon, byte[] img1, byte[] img2, int foiResolvido) {
         this.nome = nome;
         this.numTel = numTel;
         this.numWpp = numWpp;
@@ -87,6 +91,7 @@ public class RegisterContacts {
         this.locLon = locLon;
         this.img1 = img1;
         this.img2 = img2;
+        this.foiResolvido = foiResolvido;
     }
 
     public RegisterContacts(String name, String cont, String wpp, byte[] img1, byte[] img2) {
@@ -161,4 +166,11 @@ public class RegisterContacts {
         this.img2 = img2;
     }
 
+    public int getFoiResolvido() {
+        return foiResolvido;
+    }
+
+    public void setFoiResolvido(int foiResolvido) {
+        this.foiResolvido = foiResolvido;
+    }
 }

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import andersonfds.pibic.R;
 import andersonfds.pibic.adapter.ListaAdapter;
 import andersonfds.pibic.classes.RegisterContacts;
+import andersonfds.pibic.database.RegisterContacts_ViewModel;
 
 public class OcorrenciaFinalizada extends Fragment {
 
@@ -26,7 +27,16 @@ public class OcorrenciaFinalizada extends Fragment {
 
         ListView mListView = view.findViewById(R.id.listViewOcFin);
 
-        ArrayList<RegisterContacts> lista = new ArrayList<>();
+        ArrayList<RegisterContacts> lista = new ArrayList<>(new RegisterContacts_ViewModel(getActivity().getApplication()).getSolved());
+
+        ListaAdapter adapter = new ListaAdapter(getContext(), R.layout.adapter_view_layout, lista);
+        mListView.setAdapter(adapter);
+
+        return view;
+    }
+}
+
+/*
         lista.add(new RegisterContacts("Dom pedro primeiro de seilaoque nunes silva camargo freire santos carvalho jorge", "(89) 98181-6457", "(89) 98181-6457"));
         lista.add(new RegisterContacts("Andq", "(89) 98181-6457", "(89) 98181-6457"));
         lista.add(new RegisterContacts("Andw", "(89) 98181-6457", "(89) 98181-6457"));
@@ -45,10 +55,4 @@ public class OcorrenciaFinalizada extends Fragment {
         lista.add(new RegisterContacts("Andu", "(89) 98181-6457", "(89) 98181-6457"));
         lista.add(new RegisterContacts("Andu", "(89) 98181-6457", "(89) 98181-6457"));
         lista.add(new RegisterContacts("Andu", "(89) 98181-6457", "(89) 98181-6457"));
-
-        ListaAdapter adapter = new ListaAdapter(getContext(), R.layout.adapter_view_layout, lista);
-        mListView.setAdapter(adapter);
-
-        return view;
-    }
-}
+        */

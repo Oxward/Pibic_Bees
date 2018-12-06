@@ -11,7 +11,7 @@ import andersonfds.pibic.classes.RegisterContacts;
 public class RegisterContacts_Repository {
 
     private RegisterContacts_DAO registerContactsDAO;
-    private LiveData<List<RegisterContacts>> allContacts;
+    private List<RegisterContacts> allContacts;
 
     //Administra o BD e inicializa as variáveis
     public RegisterContacts_Repository(Application application) {
@@ -21,8 +21,16 @@ public class RegisterContacts_Repository {
     }
 
     //Retorna todos os itens salvos
-    LiveData<List<RegisterContacts>> getAllContacts() {
+    List<RegisterContacts> getAllContacts() {
         return allContacts;
+    }
+
+    List<RegisterContacts> getSolved(){
+        return registerContactsDAO.selectSolved();
+    }
+
+    List<RegisterContacts> getUnsolved(){
+        return registerContactsDAO.selectUnsolved();
     }
 
     public void insertContact(RegisterContacts registerContacts) {

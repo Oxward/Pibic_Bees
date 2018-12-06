@@ -12,7 +12,7 @@ import andersonfds.pibic.classes.RegisterContacts;
 public class RegisterContacts_ViewModel extends AndroidViewModel {
 
     private RegisterContacts_Repository registerContacts_repository;
-    private LiveData<List<RegisterContacts>> allContacts;
+    private List<RegisterContacts> allContacts;
 
     public RegisterContacts_ViewModel(@NonNull Application application) {
         super(application);
@@ -20,7 +20,15 @@ public class RegisterContacts_ViewModel extends AndroidViewModel {
         allContacts = registerContacts_repository.getAllContacts();
     }
 
-    public LiveData<List<RegisterContacts>> getAllContacts() {
+    public List<RegisterContacts> getSolved(){
+        return registerContacts_repository.getSolved();
+    }
+
+    public List<RegisterContacts> getUnsolved(){
+        return registerContacts_repository.getUnsolved();
+    }
+
+    public List<RegisterContacts> getAllContacts() {
         return allContacts;
     }
 
