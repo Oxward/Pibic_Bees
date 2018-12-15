@@ -1,9 +1,12 @@
 package andersonfds.pibic.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +15,6 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import andersonfds.pibic.R;
-import andersonfds.pibic.activities.MainMenuActivity;
 import andersonfds.pibic.adapter.ListaAdapter;
 import andersonfds.pibic.classes.RegisterContacts;
 import andersonfds.pibic.database.RegisterContacts_ViewModel;
@@ -26,7 +28,30 @@ public class OcorrenciaPendente extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ocorrencia_pendente, container, false);
 
-        ListView mListView = view.findViewById(R.id.listViewOcPend);
+        final ListView mListView = view.findViewById(R.id.listViewOcPend);
+        mListView.setOnItemLongClickListener((adapterView, view1, position, id) -> {
+
+            AlertDialog.Builder alert;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                alert = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Dialog_Alert);
+            } else {
+                alert = new AlertDialog.Builder(getActivity());
+            }
+            alert.setTitle("Confirmar")
+                    .setMessage("Marcar ocorrência como resolvida?")
+                    .setPositiveButton(android.R.string.yes, (dialogInterface, i) -> {
+                        ((RegisterContacts) mListView.getItemAtPosition(position)).setFoiResolvido(1);
+                        Log.d(TAG, "onCreateView: Confirmou");
+                    })
+                    .setNegativeButton(android.R.string.no, (dialogInterface, i) -> {
+                        Log.d(TAG, "onCreateView: Cancelou");
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+
+            return true;
+        });
+
 
         ArrayList<RegisterContacts> lista = new ArrayList<>(new RegisterContacts_ViewModel(getActivity().getApplication()).getUnsolved());
 
@@ -38,7 +63,7 @@ public class OcorrenciaPendente extends Fragment {
 }
 
 /*
-        lista.add(new RegisterContacts("Andy", "(89) 98181-6457", "(89) 98181-6457"));
+        lista.add(new Registtacts("Andy", "(89) 98181-6457", "(89) 98181-6457"));
         lista.add(new RegisterContacts("Andq", "(89) 98181-6457", "(89) 98181-6457"));
         lista.add(new RegisterContacts("Andw", "(89) 98181-6457", "(89) 98181-6457"));
         lista.add(new RegisterContacts("Ande", "(89) 98181-6457", "(89) 98181-6457"));

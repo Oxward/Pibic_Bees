@@ -1,6 +1,8 @@
 package andersonfds.pibic.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -20,6 +22,7 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import andersonfds.pibic.R;
 import andersonfds.pibic.classes.RegisterContacts;
@@ -44,6 +47,9 @@ public class ListaAdapter extends ArrayAdapter<RegisterContacts> {
         String wpp = String.valueOf(getItem(position).getNumWpp());
         byte[] img1 = getItem(position).getImg1();
         byte[] img2 = getItem(position).getImg2();
+
+        Bitmap b1 = BitmapFactory.decodeByteArray(img1, 0, img1.length);
+        Bitmap b2 = BitmapFactory.decodeByteArray(img2, 0, img2.length);
 
         RegisterContacts pessoa = new RegisterContacts(name, cont, wpp, img1, img2);
 
@@ -74,24 +80,27 @@ public class ListaAdapter extends ArrayAdapter<RegisterContacts> {
         result.startAnimation(mAnimation);
         lastPosition = position;
 
-        int defaultImage = mContext.getResources().getIdentifier("@drawable/image_failed", null, mContext.getPackageName());
+        //int defaultImage = mContext.getResources()
+        //.getIdentifier("@drawable/image_failed", null, mContext.getPackageName());
 
         ImageLoader imageLoader = ImageLoader.getInstance();
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .cacheInMemory(true)
                 .cacheOnDisk(true)
                 .resetViewBeforeLoading(true)
-                .showImageForEmptyUri(defaultImage)
-                .showImageOnFail(defaultImage)
-                .showImageOnLoading(defaultImage)
+                //.showImageForEmptyUri(defaultImage)
+                //.showImageOnFail(defaultImage)
+                //.showImageOnLoading(defaultImage)
                 .build();
 
-        imageLoader.displayImage("", mViewHolder.img1, options);
-        imageLoader.displayImage("", mViewHolder.img2, options);
+        imageLoader.displayImage(Arrays.toString(pessoa.getImg1()), mViewHolder.img1, options);
+        imageLoader.displayImage(Arrays.toString(pessoa.getImg2()), mViewHolder.img2, options);
 
         mViewHolder.name.setText(pessoa.getNome());
         mViewHolder.cont.setText(pessoa.getNumTel());
         mViewHolder.wpp.setText(pessoa.getNumWpp());
+        mViewHolder.img1.setImageBitmap(b1);
+        mViewHolder.img2.setImageBitmap(b2);
 
         return convertView;
     }
