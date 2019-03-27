@@ -11,11 +11,12 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import andersonfds.pibic.classes.Markers;
+import andersonfds.pibic.classes.Products;
 import andersonfds.pibic.classes.RegisterContacts;
 
 import static andersonfds.pibic.database.ApplicationDatabase.DATABASE_VERSION;
 
-@Database(entities = {Markers.class, RegisterContacts.class}, exportSchema = false, version = DATABASE_VERSION)
+@Database(entities = {Markers.class, RegisterContacts.class, Products.class}, exportSchema = false, version = DATABASE_VERSION)
 public abstract class ApplicationDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "pibees_project";

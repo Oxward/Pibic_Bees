@@ -41,6 +41,8 @@ public class AddProductsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_products);
 
+        repository = new Repository(this);
+
         initializeFields();
         viewListeners();
     }

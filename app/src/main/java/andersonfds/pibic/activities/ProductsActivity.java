@@ -12,6 +12,7 @@ import andersonfds.pibic.R;
 import andersonfds.pibic.adapter.ProductsAdapter;
 import andersonfds.pibic.adapter.VerticalPadding;
 import andersonfds.pibic.classes.Products;
+import andersonfds.pibic.database.Repository;
 import andersonfds.pibic.interfaces.RecyclerViewClickListener;
 
 public class ProductsActivity extends AppCompatActivity implements RecyclerViewClickListener {
@@ -23,12 +24,14 @@ public class ProductsActivity extends AppCompatActivity implements RecyclerViewC
     private ProductsAdapter productsAdapter;
 
     private Context context;
+    private Repository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products);
         recyclerView = findViewById(R.id.productsList);
+        repository = new Repository(this);
         setRecyclerView();
     }
 

@@ -1,7 +1,9 @@
 package andersonfds.pibic.database;
 
+import android.arch.lifecycle.LiveData;
 import android.content.Context;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import andersonfds.pibic.AsyncTasks.InsertAsyncTask;
@@ -22,6 +24,10 @@ public class Repository {
             e.printStackTrace();
             return new long[]{-1};
         }
+    }
+
+    public LiveData<List<Products>> selectProducts() {
+        return applicationDatabase.products_dao().getAllProducts();
     }
 
 }

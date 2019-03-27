@@ -42,7 +42,6 @@ public class Products {
         this.imgProd = imgProd;
     }
 
-    @Ignore
     public Products(int idProd, String descProd, double valorProd, byte[] imgProd) {
         this.idProd = idProd;
         this.descProd = descProd;
