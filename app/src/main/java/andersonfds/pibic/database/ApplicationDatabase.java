@@ -81,4 +81,6 @@ public abstract class ApplicationDatabase extends RoomDatabase {
     //RegisterContacts DAO
     public abstract RegisterContacts_DAO regConDAO();
 
+    public abstract Products_DAO products_dao();
+
 }

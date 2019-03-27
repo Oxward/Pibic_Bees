@@ -126,6 +126,15 @@ public class MainMenuActivity extends AppCompatActivity
                 }
                 break;
 
+            case R.id.menuProducts:
+                try {
+                    Intent i = new Intent(MainMenuActivity.this, ProductsActivity.class);
+                    startActivity(i);
+                } catch (Exception e) {
+                    Log.d(TAG, "onNavigationItemSelected: erro ao abrir tela produtos " + e.getMessage());
+                }
+                break;
+
             case R.id.menuExit:
                 moveTaskToBack(true );
                 android.os.Process.killProcess( android.os.Process.myPid() );
