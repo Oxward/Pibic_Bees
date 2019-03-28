@@ -11,11 +11,12 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import andersonfds.pibic.classes.Markers;
+import andersonfds.pibic.classes.Products;
 import andersonfds.pibic.classes.RegisterContacts;
 
 import static andersonfds.pibic.database.ApplicationDatabase.DATABASE_VERSION;
 
-@Database(entities = {Markers.class, RegisterContacts.class}, exportSchema = false, version = DATABASE_VERSION)
+@Database(entities = {Markers.class, RegisterContacts.class, Products.class}, exportSchema = false, version = DATABASE_VERSION)
 public abstract class ApplicationDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "pibees_project";
@@ -25,7 +26,7 @@ public abstract class ApplicationDatabase extends RoomDatabase {
     private final MutableLiveData<Boolean> mIsDatabaseCreated = new MutableLiveData<>();
     private static volatile ApplicationDatabase INSTANCE;
 
-    public static ApplicationDatabase getDatabase(final Context context, final AppExecutors executors) {
+    static ApplicationDatabase getDatabase(final Context context, final AppExecutors executors) {
         if (INSTANCE == null) {
             synchronized (ApplicationDatabase.class) {
                 if (INSTANCE == null) {
@@ -80,5 +81,7 @@ public abstract class ApplicationDatabase extends RoomDatabase {
 
     //RegisterContacts DAO
     public abstract RegisterContacts_DAO regConDAO();
+
+    public abstract Products_DAO products_dao();
 
 }

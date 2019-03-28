@@ -24,6 +24,16 @@
             android:id="@+id/menuReports"
             android:icon="@drawable/reports"
             android:title="@string/ocr_report" />
+
+        <item
+            android:id="@+id/menuProducts"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Produtos" />
+
+        <item
+            android:id="@+id/addProduct"
+            android:icon="@drawable/ic_menu_share"
+            android:title="Adicionar Produto" />
         <item
             android:id="@+id/menuInfo"
             android:icon="@drawable/info"
