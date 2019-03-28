@@ -33,6 +33,8 @@ public class ProductsActivity extends AppCompatActivity implements RecyclerViewC
         recyclerView = findViewById(R.id.productsList);
         repository = new Repository(this);
         setRecyclerView();
+
+        retrieveData();
     }
 
     @Override
@@ -54,6 +56,18 @@ public class ProductsActivity extends AppCompatActivity implements RecyclerViewC
         productsAdapter = new ProductsAdapter(productsArrayList, ProductsActivity.this, this);
         recyclerView.setAdapter(productsAdapter);
         recyclerView.setAdapter(productsAdapter);
+    }
+
+    private void retrieveData() {
+        repository.selectProducts().observe(this, items -> {
+            if (items.size() > 0) {
+                productsArrayList.clear();
+            }
+            if (productsArrayList != null) {
+                productsArrayList.addAll(items);
+            }
+            productsAdapter.notifyDataSetChanged();
+        });
     }
 
 }
