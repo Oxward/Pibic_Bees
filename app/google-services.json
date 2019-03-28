@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "114372769046",
+    "firebase_url": "https://pibic-bees-1536772371558.firebaseio.com",
+    "project_id": "pibic---bees-1536772371558",
+    "storage_bucket": "pibic---bees-1536772371558.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:114372769046:android:465d58fd4af7edce",
+        "android_client_info": {
+          "package_name": "andersonfds.pibic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "114372769046-g74jcj5jnedvjecs840telgmmefv3qfa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "andersonfds.pibic",
+            "certificate_hash": "9f14a6bb5acb4b21356981b2e65f16ddb7fccfcf"
+          }
+        },
+        {
+          "client_id": "114372769046-820p1j600l0svoif8om4s7v97gptol2m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGbsjjHo8MezYjEZ4HJ0Yq_QlFpvBOgG0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "114372769046-820p1j600l0svoif8om4s7v97gptol2m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
