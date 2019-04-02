@@ -44,7 +44,6 @@ import andersonfds.pibic.ApplicationContextProvider;
 import andersonfds.pibic.MapsRouteTracer.DirectionsParser;
 import andersonfds.pibic.R;
 import andersonfds.pibic.classes.Markers;
-import andersonfds.pibic.database.Markers_ViewModel;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 {

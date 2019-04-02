@@ -15,17 +15,14 @@ public class OcorrenciaReportActivity extends AppCompatActivity {
 
     private static final String TAG = "OcorrenciaReportActivit";
 
-    private SectionsPageAdapter mSectionsPageAdapter;
-    private ViewPager mViewPager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ocorrencia_report);
         Log.d(TAG, "onCreate: Iniciou");
 
-        mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
-        mViewPager = findViewById(R.id.container);
+        SectionsPageAdapter mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
+        ViewPager mViewPager = findViewById(R.id.container);
         setupViewPager(mViewPager);
 
         TabLayout tabLayout = findViewById(R.id.tabs);

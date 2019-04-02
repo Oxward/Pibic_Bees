@@ -1,68 +1,75 @@
 package andersonfds.pibic.fragments;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 import andersonfds.pibic.R;
 import andersonfds.pibic.adapter.ListaAdapter;
+import andersonfds.pibic.adapter.VerticalPadding;
 import andersonfds.pibic.classes.RegisterContacts;
+import andersonfds.pibic.database.Repository;
+import andersonfds.pibic.interfaces.RecyclerViewClickListener;
 
-public class OcorrenciaFinalizada extends Fragment {
+public class OcorrenciaFinalizada extends Fragment implements RecyclerViewClickListener {
 
     private static final String TAG = "OcorrenciaFinalizada";
+    private RecyclerView recyclerView;
+
+    private ArrayList<RegisterContacts> mContactsArrayList;
+    private ListaAdapter listaAdapter;
+    private Repository repository;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mContactsArrayList = new ArrayList<>();
+        repository = new Repository(this.getContext());
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ocorrencia_finalizada, container, false);
 
-        ListView mListView = view.findViewById(R.id.listViewOcFin);
-
-        //ArrayList<RegisterContacts> lista = new ArrayList<>(new RegisterContacts_ViewModel(getActivity().getApplication()).getSolved());
-        ArrayList<RegisterContacts> lista = new ArrayList<>();
-
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.imag);
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-        byte[] bytes = byteArrayOutputStream.toByteArray();
-
-        lista.add(new RegisterContacts("Otávio", "(89) 98181-4321", "(89) 98181-4321", bytes, bytes));
-
-        ListaAdapter adapter = new ListaAdapter(getContext(), R.layout.adapter_view_layout, lista);
-        mListView.setAdapter(adapter);
+        recyclerView = view.findViewById(R.id.ocFinRecycler);
+        setRecyclerView();
+        retrieveData();
 
         return view;
     }
-}
 
-/*
-        lista.add(new RegisterContacts("Dom pedro primeiro de seilaoque nunes silva camargo freire santos carvalho jorge", "(89) 98181-6457", "(89) 98181-6457"));
-        lista.add(new RegisterContacts("Andq", "(89) 98181-6457", "(89) 98181-6457"));
-        lista.add(new RegisterContacts("Andw", "(89) 98181-6457", "(89) 98181-6457"));
-        lista.add(new RegisterContacts("Ande", "(89) 98181-6457", "(89) 98181-6457"));
-        lista.add(new RegisterContacts("Andr", "(89) 98181-6457", "(89) 98181-6457"));
-        lista.add(new RegisterContacts("Andt", "(89) 98181-6457", "(89) 98181-6457"));
-        lista.add(new RegisterContacts("Andu", "(89) 98181-6457", "(89) 98181-6457"));
-        lista.add(new RegisterContacts("Andu", "(89) 98181-6457", "(89) 98181-6457"));
-        lista.add(new RegisterContacts("Andu", "(89) 98181-6457", "(89) 98181-6457"));
-        lista.add(new RegisterContacts("Andu", "(89) 98181-6457", "(89) 98181-6457"));
-        lista.add(new RegisterContacts("Andu", "(89) 98181-6457", "(89) 98181-6457"));
-        lista.add(new RegisterContacts("Andu", "(89) 98181-6457", "(89) 98181-6457"));
-        lista.add(new RegisterContacts("Andu", "(89) 98181-6457", "(89) 98181-6457"));
-        lista.add(new RegisterContacts("Andu", "(89) 98181-6457", "(89) 98181-6457"));
-        lista.add(new RegisterContacts("Andu", "(89) 98181-6457", "(89) 98181-6457"));
-        lista.add(new RegisterContacts("Andu", "(89) 98181-6457", "(89) 98181-6457"));
-        lista.add(new RegisterContacts("Andu", "(89) 98181-6457", "(89) 98181-6457"));
-        lista.add(new RegisterContacts("Andu", "(89) 98181-6457", "(89) 98181-6457"));
-        */
+    private void setRecyclerView() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        VerticalPadding verticalPadding = new VerticalPadding(10);
+        recyclerView.addItemDecoration(verticalPadding);
+        listaAdapter = new ListaAdapter(mContactsArrayList, this.getContext(), this);
+        recyclerView.setAdapter(listaAdapter);
+    }
+
+    private void retrieveData() {
+        repository.selectFinContacts().observe(this, items -> {
+            if (items != null && items.size() > 0) {
+                mContactsArrayList.clear();
+            }
+            if (mContactsArrayList != null) {
+                mContactsArrayList.addAll(items);
+            }
+            listaAdapter.notifyDataSetChanged();
+        });
+    }
+
+    @Override
+    public void recyclerViewListItemClicked(int position) {
+
+    }
+}

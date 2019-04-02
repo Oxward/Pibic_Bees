@@ -1,5 +1,6 @@
 package andersonfds.pibic.database;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
@@ -13,13 +14,13 @@ public interface Markers_DAO
 {
 
     @Insert
-    void insertMarker(Markers m);
+    long[] insertMarker(Markers... m);
 
     @Query("SELECT * FROM mapMarkers")
-    List<Markers> selectAllMarkers();
+    LiveData<List<Markers>> selectAllMarkers();
 
     @Query("SELECT * FROM mapMarkers WHERE emailMarker = :email")
-    List<Markers> selectMarkersByEmail(String email);
+    LiveData<List<Markers>> selectMarkersByEmail(String email);
 
     @Query("DELETE FROM mapMarkers WHERE latMarker = :lat AND lonMarker = :lon")
     void deleteMarker(double lat, double lon);

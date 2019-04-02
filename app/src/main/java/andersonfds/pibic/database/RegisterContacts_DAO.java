@@ -14,16 +14,16 @@ import andersonfds.pibic.classes.RegisterContacts;
 public interface RegisterContacts_DAO {
 
     @Insert
-    void insertContacts(RegisterContacts rc);
+    long[] insertContacts(RegisterContacts... rc);
 
     @Query("SELECT * FROM contacts")
-    List<RegisterContacts> selectAllContacts();
+    LiveData<List<RegisterContacts>> selectAllContacts();
 
     @Query("SELECT * FROM contacts WHERE foiResolvido = 0")
-    List<RegisterContacts> selectUnsolved();
+    LiveData<List<RegisterContacts>> selectUnsolved();
 
     @Query("SELECT * FROM contacts WHERE foiResolvido = 1")
-    List<RegisterContacts> selectSolved();
+    LiveData<List<RegisterContacts>> selectSolved();
 
     @Delete
     void deleteContact(RegisterContacts rc);

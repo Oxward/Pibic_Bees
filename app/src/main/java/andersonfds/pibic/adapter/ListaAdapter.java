@@ -1,138 +1,83 @@
 package andersonfds.pibic.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import andersonfds.pibic.R;
 import andersonfds.pibic.classes.RegisterContacts;
+import andersonfds.pibic.interfaces.RecyclerViewClickListener;
 
-public class ListaAdapter extends ArrayAdapter<RegisterContacts> {
+public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> {
 
     private static final String TAG = "ListaAdapter";
 
+    private ArrayList<RegisterContacts> mContactsArrayList;
     private Context mContext;
+    private RecyclerViewClickListener mRecyclerViewClickListener;
+
     private int mResource;
     private int lastPosition = -1;
 
+    public ListaAdapter(ArrayList<RegisterContacts> mContactsArrayList, Context mContext, RecyclerViewClickListener mRecyclerViewClickListener) {
+        this.mContactsArrayList = mContactsArrayList;
+        this.mContext = mContext;
+        this.mRecyclerViewClickListener = mRecyclerViewClickListener;
+    }
+
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
-        //sets up the image loader
-        setupImageLoader();
-
-        String name = getItem(position).getNome();
-        String cont = String.valueOf(getItem(position).getNumTel());
-        String wpp = String.valueOf(getItem(position).getNumWpp());
-        byte[] img1 = getItem(position).getImg1();
-        byte[] img2 = getItem(position).getImg2();
-
-        Bitmap b1 = BitmapFactory.decodeByteArray(img1, 0, img1.length);
-        Bitmap b2 = BitmapFactory.decodeByteArray(img2, 0, img2.length);
-
-        RegisterContacts pessoa = new RegisterContacts(name, cont, wpp, img1, img2);
-
-        final View result;
-        ViewHolder mViewHolder;
-
-        if (convertView == null) {
-            LayoutInflater mLayoutInflater = LayoutInflater.from(mContext);
-            convertView = mLayoutInflater.inflate(mResource, parent, false);
-
-            mViewHolder = new ViewHolder();
-            mViewHolder.name = convertView.findViewById(R.id.TVnome);
-            mViewHolder.cont = convertView.findViewById(R.id.TVcont);
-            mViewHolder.wpp = convertView.findViewById(R.id.TVwpp);
-            mViewHolder.img1 = convertView.findViewById(R.id.IVimg1);
-            mViewHolder.img2 = convertView.findViewById(R.id.IVimg2);
-
-            result = convertView;
-            convertView.setTag(mViewHolder);
-        } else {
-            mViewHolder = (ViewHolder) convertView.getTag();
-            result = convertView;
-        }
-
-
-        Animation mAnimation = AnimationUtils.loadAnimation(mContext,
-                (position > lastPosition) ? R.anim.load_down_anim : R.anim.load_up_anim);
-        result.startAnimation(mAnimation);
-        lastPosition = position;
-
-        //int defaultImage = mContext.getResources()
-        //.getIdentifier("@drawable/image_failed", null, mContext.getPackageName());
-
-        ImageLoader imageLoader = ImageLoader.getInstance();
-        DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .resetViewBeforeLoading(true)
-                //.showImageForEmptyUri(defaultImage)
-                //.showImageOnFail(defaultImage)
-                //.showImageOnLoading(defaultImage)
-                .build();
-
-        imageLoader.displayImage(Arrays.toString(pessoa.getImg1()), mViewHolder.img1, options);
-        imageLoader.displayImage(Arrays.toString(pessoa.getImg2()), mViewHolder.img2, options);
-
-        mViewHolder.name.setText(pessoa.getNome());
-        mViewHolder.cont.setText(pessoa.getNumTel());
-        mViewHolder.wpp.setText(pessoa.getNumWpp());
-        mViewHolder.img1.setImageBitmap(b1);
-        mViewHolder.img2.setImageBitmap(b2);
-
-        return convertView;
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_view_layout, parent, false);
+        return new ViewHolder(view, mRecyclerViewClickListener);
     }
 
-    public ListaAdapter(Context mContext, int resource, ArrayList<RegisterContacts> mList) {
-        super(mContext, resource, mList);
-        this.mContext = mContext;
-        mResource = resource;
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        RegisterContacts rc = mContactsArrayList.get(holder.getAdapterPosition());
+        holder.name.setText(rc.getNome());
+        holder.cont.setText(rc.getNumTel());
+        holder.wpp.setText(rc.getNumWpp());
+        holder.img1.setImageDrawable(new BitmapDrawable(mContext.getResources(), BitmapFactory.decodeByteArray(rc.getImg1(), 0, rc.getImg1().length)));
+        holder.img2.setImageDrawable(new BitmapDrawable(mContext.getResources(), BitmapFactory.decodeByteArray(rc.getImg2(), 0, rc.getImg2().length)));
     }
 
-    private void setupImageLoader() {
-        // UNIVERSAL IMAGE LOADER SETUP
-        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-                .cacheOnDisk(true).cacheInMemory(true)
-                .imageScaleType(ImageScaleType.EXACTLY)
-                .displayer(new FadeInBitmapDisplayer(300)).build();
-
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-                getContext())
-                .defaultDisplayImageOptions(defaultOptions)
-                .memoryCache(new WeakMemoryCache())
-                .diskCacheSize(100 * 1024 * 1024).build();
-
-        ImageLoader.getInstance().init(config);
-        // END - UNIVERSAL IMAGE LOADER SETUP
+    @Override
+    public int getItemCount() {
+        return mContactsArrayList.size();
     }
 
-    static class ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView name;
         TextView cont;
         TextView wpp;
         ImageView img1;
         ImageView img2;
+
+        RecyclerViewClickListener recyclerViewClickListener;
+
+        ViewHolder(@NonNull View itemView, RecyclerViewClickListener listener) {
+            super(itemView);
+            name = itemView.findViewById(R.id.TVnome);
+            cont = itemView.findViewById(R.id.TVcont);
+            wpp = itemView.findViewById(R.id.TVwpp);
+            img1 = itemView.findViewById(R.id.IVimg1);
+            img2 = itemView.findViewById(R.id.IVimg2);
+            this.recyclerViewClickListener = listener;
+        }
+
+        @Override
+        public void onClick(View view) {
+            recyclerViewClickListener.recyclerViewListItemClicked(getAdapterPosition());
+        }
     }
 }

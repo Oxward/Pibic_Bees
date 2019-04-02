@@ -61,6 +61,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
             descProd = itemView.findViewById(R.id.descProd);
             valProd = itemView.findViewById(R.id.valProd);
             imgProd = itemView.findViewById(R.id.imgProd);
+            this.recyclerViewClickListener = listener;
         }
 
         @Override

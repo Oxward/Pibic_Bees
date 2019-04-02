@@ -14,7 +14,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import andersonfds.pibic.R;
 import andersonfds.pibic.classes.Markers;
-import andersonfds.pibic.database.Markers_ViewModel;
 
 public class EditMarkerActivity extends AppCompatActivity
 {

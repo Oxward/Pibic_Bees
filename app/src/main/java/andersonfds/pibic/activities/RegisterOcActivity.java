@@ -38,8 +38,6 @@ import java.io.ByteArrayOutputStream;
 import andersonfds.pibic.MaskWatcher;
 import andersonfds.pibic.R;
 import andersonfds.pibic.classes.RegisterContacts;
-import andersonfds.pibic.database.RegisterContacts_Repository;
-import andersonfds.pibic.database.RegisterContacts_ViewModel;
 import es.dmoral.toasty.Toasty;
 
 public class RegisterOcActivity extends AppCompatActivity {
@@ -259,8 +257,8 @@ public class RegisterOcActivity extends AppCompatActivity {
             RegisterContacts registerContacts = new RegisterContacts(nome, cont, wpp, location.latitude, location.longitude, i1, i2, 0);
             Log.d(TAG, "saveData: " + location.latitude + " " + location.longitude);
 
-            RegisterContacts_ViewModel ctt = new RegisterContacts_ViewModel(getApplication());
-            ctt.insertContact(registerContacts);
+            //RegisterContacts_ViewModel ctt = new RegisterContacts_ViewModel(getApplication());
+            //ctt.insertContact(registerContacts);
             Toasty.success(this, "Salvo com sucesso", Toast.LENGTH_SHORT).show();
             clearFields();
         } catch (Exception e) {

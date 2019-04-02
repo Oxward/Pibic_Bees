@@ -1,6 +1,5 @@
 package andersonfds.pibic.activities;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,7 +22,6 @@ public class ProductsActivity extends AppCompatActivity implements RecyclerViewC
     private ArrayList<Products> productsArrayList = new ArrayList<>();
     private ProductsAdapter productsAdapter;
 
-    private Context context;
     private Repository repository;
 
     @Override
@@ -43,11 +41,6 @@ public class ProductsActivity extends AppCompatActivity implements RecyclerViewC
         return true;
     }
 
-    @Override
-    public void recyclerViewListItemClicked(int position) {
-
-    }
-
     private void setRecyclerView() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -60,7 +53,7 @@ public class ProductsActivity extends AppCompatActivity implements RecyclerViewC
 
     private void retrieveData() {
         repository.selectProducts().observe(this, items -> {
-            if (items.size() > 0) {
+            if (items != null && items.size() > 0) {
                 productsArrayList.clear();
             }
             if (productsArrayList != null) {
@@ -70,4 +63,8 @@ public class ProductsActivity extends AppCompatActivity implements RecyclerViewC
         });
     }
 
+    @Override
+    public void recyclerViewListItemClicked(int position) {
+
+    }
 }
