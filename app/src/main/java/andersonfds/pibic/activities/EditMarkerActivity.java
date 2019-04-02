@@ -14,6 +14,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import andersonfds.pibic.R;
 import andersonfds.pibic.classes.Markers;
+import andersonfds.pibic.database.Repository;
 
 public class EditMarkerActivity extends AppCompatActivity
 {
@@ -21,7 +22,7 @@ public class EditMarkerActivity extends AppCompatActivity
     private final String TAG = EditMarkerActivity.class.toString();
 
     private EditText txtMarkerTitle;
-    private Markers_ViewModel markers_viewModel;
+    private Repository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -29,7 +30,7 @@ public class EditMarkerActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_marker);
 
-        markers_viewModel = new Markers_ViewModel(getApplication());
+        repository = new Repository(this);
         final LatLng latLng = getIntent().getParcelableExtra("location");
         txtMarkerTitle = findViewById( R.id.txtMarkerTitle );
         Button btSaveMTitle = findViewById(R.id.btSaveMTitle);
@@ -45,7 +46,7 @@ public class EditMarkerActivity extends AppCompatActivity
             marker.title(txtMarkerTitle.getText().toString());
             Markers m = new Markers("teste@teste.com", marker.getTitle(),
                     latLng.latitude, latLng.longitude);
-            markers_viewModel.insertMarker(m);
+            repository.insertMarker(m);
             Log.d(TAG, "onCreate: Saved the marker in database");
             Intent intent = new Intent();
             intent.putExtra("marker", marker);

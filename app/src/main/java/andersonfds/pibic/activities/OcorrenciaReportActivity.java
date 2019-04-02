@@ -21,7 +21,6 @@ public class OcorrenciaReportActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ocorrencia_report);
         Log.d(TAG, "onCreate: Iniciou");
 
-        SectionsPageAdapter mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
         ViewPager mViewPager = findViewById(R.id.container);
         setupViewPager(mViewPager);
 

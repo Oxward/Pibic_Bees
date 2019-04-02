@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -44,6 +43,7 @@ import andersonfds.pibic.ApplicationContextProvider;
 import andersonfds.pibic.MapsRouteTracer.DirectionsParser;
 import andersonfds.pibic.R;
 import andersonfds.pibic.classes.Markers;
+import andersonfds.pibic.database.Repository;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 {
@@ -59,8 +59,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private static GoogleMap mMap;
     private GeoApiContext mGeoApiContext = null;
-    private Handler mHandler = new Handler();
-    private Runnable mRunnable;
+
+    private Repository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -78,6 +78,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         FloatingActionButton fabBack = findViewById(R.id.fabBack);
         fabBack.setOnClickListener(view -> finish());
+        repository = new Repository(this);
 
         //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 //.setAction("Action", null).show();
@@ -105,15 +106,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setMapLongClick(mMap);
         markerClick(mMap);
 
-        Markers_ViewModel markers_viewModel = new Markers_ViewModel(getApplication());
+        /*Markers_ViewModel markers_viewModel = new Markers_ViewModel(getApplication());
         new selectAsync(markers_viewModel, mList).execute();
 
         mMap.setOnInfoWindowClickListener(marker -> {
-            markers_viewModel.deleteMarker(new Markers(marker.getId(),
+            repository.deleteMarker(new Markers(marker.getId(),
                     marker.getPosition().latitude,
                     marker.getPosition().longitude));
             marker.remove();
-        });
+        });*/
     }
 
     @Override
@@ -267,6 +268,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return "https://maps.googleapis.com/maps/api/directions/" + output + "?" + param + "&key=" + API_KEY;
     }
 
+    /*
     private static class selectAsync extends AsyncTask<Void, Void, List<Markers>> {
 
         private Markers_ViewModel markers_viewModel;
@@ -298,6 +300,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mList.clear();
         }
     }
+    */
 
     //Traça uma Rota Entre os Pontos Demarcados
     private static String requestDirections(String reqUrl)
