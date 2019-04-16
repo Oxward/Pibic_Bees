@@ -41,6 +41,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
         Products p = productsArrayList.get(holder.getAdapterPosition());
         holder.descProd.setText(p.getDescProd());
         holder.valProd.setText(String.valueOf(p.getValorProd()));
+        holder.catProd.setText(p.getCatProd());
         holder.imgProd.setImageDrawable(new BitmapDrawable(context.getResources(), BitmapFactory.decodeByteArray(p.getImgProd(), 0, p.getImgProd().length)));
     }
 
@@ -51,7 +52,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView descProd, valProd;
+        TextView descProd, valProd, catProd;
         ImageView imgProd;
 
         RecyclerViewClickListener recyclerViewClickListener;
@@ -60,6 +61,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
             super(itemView);
             descProd = itemView.findViewById(R.id.descProd);
             valProd = itemView.findViewById(R.id.valProd);
+            catProd = itemView.findViewById(R.id.catProd);
             imgProd = itemView.findViewById(R.id.imgProd);
             this.recyclerViewClickListener = listener;
         }
