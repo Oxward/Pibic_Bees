@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -33,6 +34,7 @@ public class AddProductsActivity extends AppCompatActivity {
     private EditText txtDesc, txtVal;
     private ImageView imgProd;
     private Button btFoto, btSave;
+    private Spinner spinner;
 
     private Repository repository;
 
@@ -86,6 +88,7 @@ public class AddProductsActivity extends AppCompatActivity {
         imgProd = findViewById(R.id.imgProdSave);
         btFoto = findViewById(R.id.btFotoProd);
         btSave = findViewById(R.id.prodSave);
+        spinner = findViewById(R.id.spinner);
     }
 
     private void viewListeners() {
@@ -105,8 +108,9 @@ public class AddProductsActivity extends AppCompatActivity {
             String desc = txtDesc.getText().toString();
             double val = Double.parseDouble(txtVal.getText().toString());
             byte[] foto = convertBitmapToByteArray(((BitmapDrawable) imgProd.getDrawable()).getBitmap());
+            String categoria = spinner.getSelectedItem().toString();
 
-            Products products = new Products(desc, val, foto);
+            Products products = new Products(categoria, desc, val, foto);
             long[] salvo = saveProductToDatabase(products);
             if (salvo[0] != -1) {
                 Toasty.success(getApplicationContext(), "Produto salvo").show();

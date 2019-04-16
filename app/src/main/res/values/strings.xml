@@ -25,7 +25,6 @@
     <string name="title_activity_delete">Delete</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="descricao">Descrição</string>
     <string name="salvar">Salvar</string>
     <string name="nome">Nome</string>
@@ -61,4 +60,11 @@
     <string name="carregar_primeira_imagem">Carregar primeira imagem</string>
     <string name="carregar_segunda_imagem">Carregar Segunda Imagem</string>
     <string name="ocr_report">Relatório de Ocorrências</string>
+
+    <!-- Spinner Itens -->
+    <array name="categories">
+        <item>Equipamento</item>
+        <item>Diversos</item>
+    </array>
+
 </resources>

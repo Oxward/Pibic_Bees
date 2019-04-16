@@ -2,7 +2,6 @@ package andersonfds.pibic.classes;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
@@ -14,9 +13,13 @@ public class Products {
     @ColumnInfo(name = "idProd", typeAffinity = ColumnInfo.INTEGER)
     private int idProd;
 
-    @ForeignKey(entity = Category.class, parentColumns = "prodCat", childColumns = "idCat")
-    @ColumnInfo(name = "prodCat", typeAffinity = ColumnInfo.INTEGER)
-    private int category;
+    //@ForeignKey(entity = Category.class, parentColumns = "prodCat", childColumns = "idCat")
+    //@ColumnInfo(name = "prodCat", typeAffinity = ColumnInfo.INTEGER)
+    //private int category;
+
+    @NonNull
+    @ColumnInfo(name = "catProd", typeAffinity = ColumnInfo.TEXT)
+    private String catProd;
 
     @NonNull
     @ColumnInfo(name = "descProd", typeAffinity = ColumnInfo.TEXT)
@@ -47,8 +50,26 @@ public class Products {
         this.imgProd = imgProd;
     }
 
+
+    @Ignore
     public Products(int idProd, String descProd, double valorProd, byte[] imgProd) {
         this.idProd = idProd;
+        this.descProd = descProd;
+        this.valorProd = valorProd;
+        this.imgProd = imgProd;
+    }
+
+    @Ignore
+    public Products(@NonNull String catProd, @NonNull String descProd, double valorProd, @NonNull byte[] imgProd) {
+        this.catProd = catProd;
+        this.descProd = descProd;
+        this.valorProd = valorProd;
+        this.imgProd = imgProd;
+    }
+
+    public Products(int idProd, @NonNull String catProd, @NonNull String descProd, double valorProd, @NonNull byte[] imgProd) {
+        this.idProd = idProd;
+        this.catProd = catProd;
         this.descProd = descProd;
         this.valorProd = valorProd;
         this.imgProd = imgProd;
@@ -84,5 +105,14 @@ public class Products {
 
     public void setImgProd(byte[] imgProd) {
         this.imgProd = imgProd;
+    }
+
+    @NonNull
+    public String getCatProd() {
+        return catProd;
+    }
+
+    public void setCatProd(@NonNull String catProd) {
+        this.catProd = catProd;
     }
 }
