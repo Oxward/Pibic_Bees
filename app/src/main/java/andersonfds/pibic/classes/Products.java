@@ -2,6 +2,7 @@ package andersonfds.pibic.classes;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
@@ -12,6 +13,10 @@ public class Products {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "idProd", typeAffinity = ColumnInfo.INTEGER)
     private int idProd;
+
+    @ForeignKey(entity = Category.class, parentColumns = "prodCat", childColumns = "idCat")
+    @ColumnInfo(name = "prodCat", typeAffinity = ColumnInfo.INTEGER)
+    private int category;
 
     @NonNull
     @ColumnInfo(name = "descProd", typeAffinity = ColumnInfo.TEXT)
