@@ -34,6 +34,11 @@
             android:id="@+id/addProduct"
             android:icon="@drawable/ic_menu_share"
             android:title="Adicionar Produto" />
+
+        <item
+            android:id="@+id/chartReport"
+            android:icon="@drawable/ic_menu_share"
+            android:title="Relatório de gastos" />
         <item
             android:id="@+id/menuInfo"
             android:icon="@drawable/info"

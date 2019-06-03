@@ -144,6 +144,15 @@ public class MainMenuActivity extends AppCompatActivity
                 }
                 break;
 
+            case R.id.chartReport:
+                try {
+                    Intent i = new Intent(MainMenuActivity.this, ChartsActivity.class);
+                    startActivity(i);
+                } catch (Exception e) {
+                    Log.d(TAG, "onNavigationItemSelected: erro ao abrir gráficos " + e.getMessage());
+                }
+                break;
+
             case R.id.menuExit:
                 moveTaskToBack(true );
                 android.os.Process.killProcess( android.os.Process.myPid() );

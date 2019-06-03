@@ -25,7 +25,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".activities.AddProductsActivity"></activity>
+        <activity android:name=".activities.ChartsActivity"></activity>
+        <activity android:name=".activities.AddProductsActivity" />
         <activity android:name=".activities.ProductsActivity" />
 
         <meta-data
